@@ -1,0 +1,7 @@
+{
+  "scope": "EXTRACTED ZIP: SYNTHETIC SOFTWARE TESTS ONLY",
+  "manifest_verified": true,
+  "exit_code": 0,
+  "stdout": "-m pytest -q 0\nscripts/experiment.py suite --config configs/research_smoke.yaml 0\nscripts/verify_research.py --config configs/research_smoke.yaml 0\n",
+  "stderr": ""
+}

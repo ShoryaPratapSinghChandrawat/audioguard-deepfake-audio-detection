@@ -1,0 +1,12 @@
+# Versioned frontend parameters; cache identity includes audio bytes and all settings.
+sample_rate: 16000
+n_fft: 512
+win_length: 512
+hop_length: 160
+n_mels: 64
+f_min: 0.0
+f_max: 8000.0
+eps: 1.0e-8
+n_mfcc: 20
+delta_width: 9
+cache_dir: data/feature_cache

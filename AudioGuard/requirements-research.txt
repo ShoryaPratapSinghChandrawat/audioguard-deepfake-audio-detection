@@ -1,0 +1,2 @@
+# Full environment alias; use requirements-core.txt for the original baseline only.
+-r requirements.txt

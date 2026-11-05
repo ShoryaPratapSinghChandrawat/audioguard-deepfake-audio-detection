@@ -1,0 +1,44 @@
+{
+  "scope": "SYNTHETIC TONE SOFTWARE TEST ONLY; NOT ASVSPOOF",
+  "fixture_counts": {
+    "train": 64,
+    "dev": 16,
+    "eval": 16
+  },
+  "records": [
+    {
+      "command": [
+        "/home/user/audioguard-deepfake-audio-detection/AudioGuard/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_tail": ".......................                                                  [100%]\n23 passed in 3.13s\n"
+    },
+    {
+      "command": [
+        "/home/user/audioguard-deepfake-audio-detection/AudioGuard/.venv/bin/python",
+        "scripts/experiment.py",
+        "suite",
+        "--config",
+        "configs/research_smoke.yaml"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_tail": "lts/research_smoke/fixture/train.txt', 'preview': ['speaker_train_0 synthetic_train_0000 - - bonafide', 'speaker_train_0 synthetic_train_0001 - A01 spoof', 'speaker_train_0 synthetic_train_0002 - - bonafide'], 'preview_field_counts': [5, 5, 5]}], 'instruction': 'Map actual train/dev/eval protocol and audio paths in YAML; do not random-split.'}, 'checks': {'train_dev_speaker_overlap': [], 'train_dev_utterance_overlap': [], 'train_eval_speaker_overlap': [], 'train_eval_utterance_overlap': [], 'dev_eval_speaker_overlap': [], 'dev_eval_utterance_overlap': []}, 'protocol_sha256': {'train': 'e714d2d58042eeeef39302e17df32c6be1428ea4f617290b658d87033110996b', 'dev': '815f3577c85eeb334527f0bb142e7c8fabfa6732f468d4bbcdd31218da132dda', 'eval': '5f78f5e09f8cb81abde6a19b0020dae3c3e6ac6e6ef3a8d959e19146f76eb247'}, 'full_counts': {'train': {'total': 64, 'bonafide': 32, 'spoof': 32, 'speakers': 8, 'attacks': {'-': 32, 'A01': 32}}, 'dev': {'total': 16, 'bonafide': 8, 'spoof': 8, 'speakers': 2, 'attacks': {'-': 8, 'A01': 8}}, 'eval': {'total': 16, 'bonafide': 8, 'spoof': 8, 'speakers': 2, 'attacks': {'-': 8, 'A07': 8}}}, 'used_counts': {'train': {'total': 64, 'bonafide': 32, 'spoof': 32, 'speakers': 8, 'attacks': {'-': 32, 'A01': 32}}, 'dev': {'total': 16, 'bonafide': 8, 'spoof': 8, 'speakers': 2, 'attacks': {'-': 8, 'A01': 8}}, 'eval': {'total': 16, 'bonafide': 8, 'spoof': 8, 'speakers': 2, 'attacks': {'-': 8, 'A07': 8}}}, 'subset_requested': False, 'subset_selection': 'all protocol trials'}\n"
+    },
+    {
+      "command": [
+        "/home/user/audioguard-deepfake-audio-detection/AudioGuard/.venv/bin/python",
+        "scripts/verify_research.py",
+        "--config",
+        "configs/research_smoke.yaml"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_tail": "Verified metrics, plot arrays, thresholds, checkpoints and demo for: ['svm_mfcc', 'cnn_logmel', 'cnn_mfcc', 'shortcut']\n"
+    }
+  ]
+}

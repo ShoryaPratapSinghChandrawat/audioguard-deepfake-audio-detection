@@ -1,0 +1,11 @@
+dataset:
+  root: results/research_smoke/fixture
+  protocols:
+    train: results/research_smoke/fixture/train.txt
+    dev: results/research_smoke/fixture/dev.txt
+    eval: results/research_smoke/fixture/eval.txt
+  audio_roots:
+    train: results/research_smoke/fixture/train
+    dev: results/research_smoke/fixture/dev
+    eval: results/research_smoke/fixture/eval
+  max_samples_per_partition: null
