@@ -1,0 +1,46 @@
+seed: 2026
+scope: official_ASVspoof_LA_pending_user_protocol_verification
+# Reuses the existing baseline loader/checks without altering their policy.
+dataset_config: configs/baseline.yaml
+features_config: configs/features.yaml
+output: results/research
+models: [svm_mfcc, cnn_logmel, cnn_mfcc, shortcut]
+svm:
+  C: 1.0
+  kernel: rbf
+  gamma: scale
+  class_weight: balanced
+shortcut:
+  C: 1.0
+  max_iter: 1000
+  class_weight: balanced
+  silence_dbfs: -40.0
+cnn:
+  channels: [16, 32, 64, 128]
+  dropout: 0.3
+  frames: 400
+  batch_size: 32
+  epochs: 50
+  learning_rate: 0.001
+  weight_decay: 0.01
+  patience: 7
+  min_delta: 0.0001
+  device: auto
+  num_workers: 0
+  cpu_threads: 2
+  sanity:
+    samples: 64
+    epochs: 200
+    learning_rate: 0.01
+    minimum_accuracy: 0.95
+    maximum_loss: 0.2
+analysis:
+  top_errors: 20
+  # Silence removal is fixed a priori, not optimized on eval.
+  trim_dbfs: -40.0
+  noise_snr_db: [20, 10, 0]
+  mp3_bitrates_kbps: [64, 32]
+  seed: 2026
+# Protocols identify IDs but do not identify synthesis algorithms.
+# Optional CSV columns: attack_id,reuses_training_attack,source
+attack_reuse_evidence: null

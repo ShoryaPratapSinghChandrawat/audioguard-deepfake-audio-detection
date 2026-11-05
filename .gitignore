@@ -1,0 +1,7 @@
+# Datasets, caches, virtual environments and model weights live outside version control.
+*.zip
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/

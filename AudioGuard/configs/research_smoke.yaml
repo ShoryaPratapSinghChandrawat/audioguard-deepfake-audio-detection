@@ -1,0 +1,65 @@
+# Synthetic smoke parameters, never official dataset settings.
+seed: 2026
+scope: SYNTHETIC TONE SOFTWARE TEST ONLY; NOT ASVSPOOF
+dataset_config: configs/research_smoke_dataset.yaml
+features_config: configs/features.yaml
+output: results/research_smoke/run
+models:
+- svm_mfcc
+- cnn_logmel
+- cnn_mfcc
+- shortcut
+svm:
+  C: 1.0
+  kernel: rbf
+  gamma: scale
+  class_weight: balanced
+shortcut:
+  C: 1.0
+  max_iter: 1000
+  class_weight: balanced
+  silence_dbfs: -40.0
+cnn:
+  channels:
+  - 16
+  - 32
+  - 64
+  - 128
+  dropout: 0.3
+  frames: 64
+  batch_size: 16
+  epochs: 4
+  learning_rate: 0.001
+  weight_decay: 0.01
+  patience: 2
+  min_delta: 0.0001
+  device: auto
+  num_workers: 0
+  cpu_threads: 1
+  sanity:
+    samples: 64
+    epochs: 100
+    learning_rate: 0.01
+    minimum_accuracy: 0.95
+    maximum_loss: 0.2
+analysis:
+  top_errors: 20
+  trim_dbfs: -40.0
+  noise_snr_db:
+  - 10
+  mp3_bitrates_kbps:
+  - 32
+  seed: 2026
+attack_reuse_evidence: null
+fixture:
+  counts:
+    train: 64
+    dev: 16
+    eval: 16
+  sample_rate: 16000
+  duration_samples: 8000
+  amplitude: 0.2
+  bonafide_hz: 200
+  spoof_hz: 1100
+  frequency_jitter_hz: 20
+  noise_std: 0.0001

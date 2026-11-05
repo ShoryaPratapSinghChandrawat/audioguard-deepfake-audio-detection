@@ -1,0 +1,31 @@
+# SYNTHETIC integration fixture only: never report as ASVspoof performance.
+seed: 2026
+dataset:
+  root: results/smoke/fixture
+  protocols:
+    train: results/smoke/fixture/train.txt
+    dev: results/smoke/fixture/dev.txt
+    eval: results/smoke/fixture/eval.txt
+  audio_roots:
+    train: results/smoke/fixture/train
+    dev: results/smoke/fixture/dev
+    eval: results/smoke/fixture/eval
+  max_samples_per_partition: null
+features:
+  sample_rate: 16000
+  frame_length: 400
+  hop_length: 160
+  fft_size: 512
+  bands: 64
+  log_floor: 1.0e-10
+model:
+  epochs: 5
+  learning_rate: 0.05
+  l2: 0.001
+  batch_size: 4
+  device: auto
+robustness:
+  snr_db: [10]
+  mp3_bitrates_kbps: [32]
+  seed: 2026
+output: results/smoke/run

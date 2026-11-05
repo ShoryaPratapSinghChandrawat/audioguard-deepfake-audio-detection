@@ -1,0 +1,13 @@
+data/*
+!data/.gitkeep
+models/*
+!models/.gitkeep
+results/*
+!results/.gitkeep
+reports/figures/*
+!reports/figures/.gitkeep
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.zip
