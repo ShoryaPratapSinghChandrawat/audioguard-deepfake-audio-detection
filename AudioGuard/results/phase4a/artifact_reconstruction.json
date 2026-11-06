@@ -1,0 +1,338 @@
+{
+  "status": "passed",
+  "n_clips": 20,
+  "protocol_selection": "7 bona fide clips plus one spoof clip per EVAL attack A07-A19",
+  "feature_caches_used": false,
+  "cnn": {
+    "checkpoint": "results\\real_cnn_logmel\\cnn_logmel\\model.pt",
+    "checkpoint_sha256": "73547c913e80a3a1fa03b91d5bb1b843022cf6140472e6a1ae57cfa4bbad9893",
+    "checkpoint_bytes": 400760,
+    "normalization_statistics": "results\\real_cnn_logmel\\cnn_logmel\\scaler.npz",
+    "normalization_sha256": "7d88e55a521c6272610f3886d5b1eabe7bb31ce29bb74e3370a1af1c85266663",
+    "normalization_bytes": 1012,
+    "architecture_definition": "src/models/cnn.py",
+    "frontend_configuration": "configs/features_cnn_logmel.local.yaml",
+    "frontend": {
+      "cache_dir": "data/feature_cache_cnn_logmel",
+      "delta_width": 9,
+      "eps": 1e-08,
+      "f_max": 8000.0,
+      "f_min": 0.0,
+      "hop_length": 160,
+      "n_fft": 512,
+      "n_mels": 64,
+      "n_mfcc": 20,
+      "sample_rate": 16000,
+      "win_length": 512
+    },
+    "resolved_config": "results/real_cnn_logmel/resolved_config_resume.json",
+    "score_type": "raw CNN logit",
+    "device": "cuda",
+    "threshold": "0.1990397870540619",
+    "max_absolute_difference": 0.0
+  },
+  "svm": {
+    "model": "results\\phase4a\\artifact_inputs\\svm_mfcc\\model.joblib",
+    "model_sha256": "51f67bf06ca01307ed44c6c10eb9e4937466ba770277c53b57ff71938535bf5e",
+    "model_bytes": 4268938,
+    "scaler": "results\\phase4a\\artifact_inputs\\svm_mfcc\\scaler.joblib",
+    "scaler_sha256": "37da090cbb2788689d32ed4a2e7fb32264418184470fe5b5d55e03e6587d2b11",
+    "scaler_bytes": 3495,
+    "source_original_workspace": "C:\\Games\\projects\\audioguarddeepfake\\audioguard-deepfake-audio-detection-main\\audioguard-deepfake-audio-detection-main\\AudioGuard\\results\\real_svm\\svm_mfcc",
+    "training_config": {
+      "seed": 2026,
+      "scope": "real_ASVspoof2019_LA",
+      "dataset_config": "configs/baseline.local.yaml",
+      "features_config": "configs/features.yaml",
+      "output": "results/real_svm",
+      "models": [
+        "svm_mfcc"
+      ],
+      "svm": {
+        "C": 1.0,
+        "kernel": "rbf",
+        "gamma": "scale",
+        "class_weight": "balanced"
+      },
+      "shortcut": {
+        "C": 1.0,
+        "max_iter": 1000,
+        "class_weight": "balanced",
+        "silence_dbfs": -40.0
+      },
+      "cnn": {
+        "channels": [
+          16,
+          32,
+          64,
+          128
+        ],
+        "dropout": 0.3,
+        "frames": 400,
+        "batch_size": 32,
+        "epochs": 50,
+        "learning_rate": 0.001,
+        "weight_decay": 0.01,
+        "patience": 7,
+        "min_delta": 0.0001,
+        "device": "auto",
+        "num_workers": 0,
+        "cpu_threads": 2,
+        "sanity": {
+          "samples": 64,
+          "epochs": 200,
+          "learning_rate": 0.01,
+          "minimum_accuracy": 0.95,
+          "maximum_loss": 0.2
+        }
+      },
+      "analysis": {
+        "top_errors": 20,
+        "trim_dbfs": -40.0,
+        "noise_snr_db": [
+          20,
+          10,
+          0
+        ],
+        "mp3_bitrates_kbps": [
+          64,
+          32
+        ],
+        "seed": 2026
+      },
+      "attack_reuse_evidence": "results/real_svm/attack_reuse_evidence.csv",
+      "dataset": {
+        "root": "C:/Games/projects/LA/LA",
+        "protocols": {
+          "train": "C:/Games/projects/LA/LA/ASVspoof2019_LA_cm_protocols/ASVspoof2019.LA.cm.train.trn.txt",
+          "dev": "C:/Games/projects/LA/LA/ASVspoof2019_LA_cm_protocols/ASVspoof2019.LA.cm.dev.trl.txt",
+          "eval": "C:/Games/projects/LA/LA/ASVspoof2019_LA_cm_protocols/ASVspoof2019.LA.cm.eval.trl.txt"
+        },
+        "audio_roots": {
+          "train": "C:/Games/projects/LA/LA/ASVspoof2019_LA_train/flac",
+          "dev": "C:/Games/projects/LA/LA/ASVspoof2019_LA_dev/flac",
+          "eval": "C:/Games/projects/LA/LA/ASVspoof2019_LA_eval/flac"
+        },
+        "max_samples_per_partition": null
+      },
+      "frontend": {
+        "sample_rate": 16000,
+        "n_fft": 512,
+        "win_length": 512,
+        "hop_length": 160,
+        "n_mels": 64,
+        "f_min": 0.0,
+        "f_max": 8000.0,
+        "eps": 1e-08,
+        "n_mfcc": 20,
+        "delta_width": 9,
+        "cache_dir": "data/feature_cache"
+      }
+    },
+    "score_type": "SVM decision function",
+    "threshold": "0.8227455542399777",
+    "max_absolute_difference": 0.0
+  },
+  "clips": [
+    {
+      "utterance": "LA_E_1002903",
+      "speaker": "LA_0028",
+      "label": 0,
+      "attack": "-",
+      "cnn_saved": -15.518588066101074,
+      "cnn_reproduced": -15.518588066101074,
+      "svm_saved": -0.322137985443794,
+      "svm_reproduced": -0.322137985443794
+    },
+    {
+      "utterance": "LA_E_1000147",
+      "speaker": "LA_0044",
+      "label": 1,
+      "attack": "A10",
+      "cnn_saved": 11.364766120910645,
+      "cnn_reproduced": 11.364766120910645,
+      "svm_saved": 2.3135741480246463,
+      "svm_reproduced": 2.3135741480246463
+    },
+    {
+      "utterance": "LA_E_1000273",
+      "speaker": "LA_0001",
+      "label": 1,
+      "attack": "A15",
+      "cnn_saved": 5.826873302459717,
+      "cnn_reproduced": 5.826873302459717,
+      "svm_saved": 1.8598186640762016,
+      "svm_reproduced": 1.8598186640762016
+    },
+    {
+      "utterance": "LA_E_1000791",
+      "speaker": "LA_0023",
+      "label": 1,
+      "attack": "A11",
+      "cnn_saved": 9.967604637145996,
+      "cnn_reproduced": 9.967604637145996,
+      "svm_saved": 1.0050619527774505,
+      "svm_reproduced": 1.0050619527774505
+    },
+    {
+      "utterance": "LA_E_1000841",
+      "speaker": "LA_0043",
+      "label": 1,
+      "attack": "A09",
+      "cnn_saved": 28.827993392944336,
+      "cnn_reproduced": 28.827993392944336,
+      "svm_saved": 2.2246522449859008,
+      "svm_reproduced": 2.2246522449859008
+    },
+    {
+      "utterance": "LA_E_1000989",
+      "speaker": "LA_0014",
+      "label": 1,
+      "attack": "A14",
+      "cnn_saved": -0.6780250072479248,
+      "cnn_reproduced": -0.6780250072479248,
+      "svm_saved": 1.8422563641944405,
+      "svm_reproduced": 1.8422563641944405
+    },
+    {
+      "utterance": "LA_E_1001232",
+      "speaker": "LA_0026",
+      "label": 1,
+      "attack": "A17",
+      "cnn_saved": -3.951570987701416,
+      "cnn_reproduced": -3.951570987701416,
+      "svm_saved": -1.5070857650043965,
+      "svm_reproduced": -1.5070857650043965
+    },
+    {
+      "utterance": "LA_E_1001476",
+      "speaker": "LA_0023",
+      "label": 1,
+      "attack": "A12",
+      "cnn_saved": 5.413804054260254,
+      "cnn_reproduced": 5.413804054260254,
+      "svm_saved": 1.1117245885223144,
+      "svm_reproduced": 1.1117245885223144
+    },
+    {
+      "utterance": "LA_E_1001964",
+      "speaker": "LA_0007",
+      "label": 1,
+      "attack": "A13",
+      "cnn_saved": 5.5819807052612305,
+      "cnn_reproduced": 5.5819807052612305,
+      "svm_saved": 2.882439563643765,
+      "svm_reproduced": 2.882439563643765
+    },
+    {
+      "utterance": "LA_E_1001976",
+      "speaker": "LA_0043",
+      "label": 1,
+      "attack": "A18",
+      "cnn_saved": 4.327049255371094,
+      "cnn_reproduced": 4.327049255371094,
+      "svm_saved": 0.4459882576956725,
+      "svm_reproduced": 0.4459882576956725
+    },
+    {
+      "utterance": "LA_E_1002073",
+      "speaker": "LA_0014",
+      "label": 1,
+      "attack": "A08",
+      "cnn_saved": 14.28746509552002,
+      "cnn_reproduced": 14.28746509552002,
+      "svm_saved": 0.8563456558257775,
+      "svm_reproduced": 0.8563456558257775
+    },
+    {
+      "utterance": "LA_E_1002282",
+      "speaker": "LA_0033",
+      "label": 1,
+      "attack": "A19",
+      "cnn_saved": 8.61480712890625,
+      "cnn_reproduced": 8.61480712890625,
+      "svm_saved": 0.15908504877529794,
+      "svm_reproduced": 0.15908504877529794
+    },
+    {
+      "utterance": "LA_E_1002769",
+      "speaker": "LA_0012",
+      "label": 1,
+      "attack": "A07",
+      "cnn_saved": 21.090208053588867,
+      "cnn_reproduced": 21.090208053588867,
+      "svm_saved": 1.6327895808575574,
+      "svm_reproduced": 1.6327895808575574
+    },
+    {
+      "utterance": "LA_E_1003846",
+      "speaker": "LA_0029",
+      "label": 1,
+      "attack": "A16",
+      "cnn_saved": 10.979175567626953,
+      "cnn_reproduced": 10.979175567626953,
+      "svm_saved": 1.2670430293177257,
+      "svm_reproduced": 1.2670430293177257
+    },
+    {
+      "utterance": "LA_E_1003128",
+      "speaker": "LA_0027",
+      "label": 0,
+      "attack": "-",
+      "cnn_saved": -13.011756896972656,
+      "cnn_reproduced": -13.011756896972656,
+      "svm_saved": -0.556995131713403,
+      "svm_reproduced": -0.556995131713403
+    },
+    {
+      "utterance": "LA_E_1004363",
+      "speaker": "LA_0009",
+      "label": 0,
+      "attack": "-",
+      "cnn_saved": -14.92769718170166,
+      "cnn_reproduced": -14.92769718170166,
+      "svm_saved": -1.4295410346214334,
+      "svm_reproduced": -1.4295410346214334
+    },
+    {
+      "utterance": "LA_E_1005795",
+      "speaker": "LA_0039",
+      "label": 0,
+      "attack": "-",
+      "cnn_saved": -12.90787410736084,
+      "cnn_reproduced": -12.90787410736084,
+      "svm_saved": 0.4254512200246836,
+      "svm_reproduced": 0.4254512200246836
+    },
+    {
+      "utterance": "LA_E_1007872",
+      "speaker": "LA_0068",
+      "label": 0,
+      "attack": "-",
+      "cnn_saved": -18.224605560302734,
+      "cnn_reproduced": -18.224605560302734,
+      "svm_saved": -0.26245069587565006,
+      "svm_reproduced": -0.26245069587565006
+    },
+    {
+      "utterance": "LA_E_1008476",
+      "speaker": "LA_0065",
+      "label": 0,
+      "attack": "-",
+      "cnn_saved": -10.5430269241333,
+      "cnn_reproduced": -10.5430269241333,
+      "svm_saved": -0.4029906610093341,
+      "svm_reproduced": -0.4029906610093341
+    },
+    {
+      "utterance": "LA_E_1010349",
+      "speaker": "LA_0065",
+      "label": 0,
+      "attack": "-",
+      "cnn_saved": -9.91938591003418,
+      "cnn_reproduced": -9.91938591003418,
+      "svm_saved": -0.11262044780366143,
+      "svm_reproduced": -0.11262044780366143
+    }
+  ]
+}

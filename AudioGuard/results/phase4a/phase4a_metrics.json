@@ -1,0 +1,2344 @@
+{
+  "status": "completed",
+  "dataset_audit_sha256": "1af315158a68ee41a5d70d98dfbfcfc661fca48a239d0edf6e830ba14d341b42",
+  "taxonomy": {
+    "unknown": [
+      "A07",
+      "A08",
+      "A09",
+      "A10",
+      "A11",
+      "A12",
+      "A13",
+      "A14",
+      "A15",
+      "A17",
+      "A18"
+    ],
+    "reused_known": {
+      "A16": "A04",
+      "A19": "A06"
+    },
+    "source": "Wang et al., ASVspoof 2019 database paper, Section 3.1, Table 1 and system details"
+  },
+  "thresholds": {
+    "CNN": "0.1990397870540619",
+    "SVM": "0.8227455542399777"
+  },
+  "full_eval_metrics": {
+    "CNN": {
+      "n": 71237,
+      "bonafide": 7355,
+      "spoof": 63882,
+      "threshold": 0.1990397870540619,
+      "tn": 7281,
+      "fp": 74,
+      "fn": 14089,
+      "tp": 49793,
+      "far": 0.010061182868796736,
+      "frr": 0.22054725900879746,
+      "accuracy": 0.801184777573452,
+      "roc_auc": 0.9692367115261014,
+      "diagnostic_eer": 0.08456524117769743,
+      "eer": {
+        "eer": 0.08456524117769743,
+        "threshold": -5.49644660949707,
+        "far": 0.08456832087015635,
+        "frr": 0.08456216148523843,
+        "method": "nearest finite empirical ROC; mean FAR/FRR"
+      },
+      "spoof_recall": 0.7794527409912025,
+      "bona_fide_fpr": 0.010061182868796736
+    },
+    "SVM": {
+      "n": 71237,
+      "bonafide": 7355,
+      "spoof": 63882,
+      "threshold": 0.8227455542399777,
+      "tn": 7028,
+      "fp": 327,
+      "fn": 13400,
+      "tp": 50482,
+      "far": 0.04445955132562882,
+      "frr": 0.2097617482232867,
+      "accuracy": 0.8073051925263557,
+      "roc_auc": 0.9389919798380812,
+      "diagnostic_eer": 0.12782465210170063,
+      "eer": {
+        "eer": 0.12782465210170063,
+        "threshold": 0.283843335332293,
+        "far": 0.12780421481985044,
+        "frr": 0.12784508938355088,
+        "method": "nearest finite empirical ROC; mean FAR/FRR"
+      },
+      "spoof_recall": 0.7902382517767134,
+      "bona_fide_fpr": 0.04445955132562882
+    }
+  },
+  "unknown_vs_reused": {
+    "CNN": {
+      "unknown_11": {
+        "attacks": [
+          "A07",
+          "A08",
+          "A09",
+          "A10",
+          "A11",
+          "A12",
+          "A13",
+          "A14",
+          "A15",
+          "A17",
+          "A18"
+        ],
+        "n_bona_fide": 7355,
+        "n_spoof": 54054,
+        "eer": {
+          "eer": 0.09298027676681653,
+          "threshold": -5.818758010864258,
+          "far": 0.09299796057104011,
+          "frr": 0.09296259296259302,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "spoof_recall_at_frozen_threshold": 0.7462537462537463,
+        "miss_rate_at_frozen_threshold": 0.25374625374625376
+      },
+      "known_reused_A16_A19": {
+        "attacks": [
+          "A16",
+          "A19"
+        ],
+        "n_bona_fide": 7355,
+        "n_spoof": 9828,
+        "eer": {
+          "eer": 0.020253298958261556,
+          "threshold": -1.5062894821166992,
+          "far": 0.02025832766825289,
+          "frr": 0.02024827024827025,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "spoof_recall_at_frozen_threshold": 0.962047212047212,
+        "miss_rate_at_frozen_threshold": 0.037952787952787954
+      }
+    },
+    "SVM": {
+      "unknown_11": {
+        "attacks": [
+          "A07",
+          "A08",
+          "A09",
+          "A10",
+          "A11",
+          "A12",
+          "A13",
+          "A14",
+          "A15",
+          "A17",
+          "A18"
+        ],
+        "n_bona_fide": 7355,
+        "n_spoof": 54054,
+        "eer": {
+          "eer": 0.10603695596897506,
+          "threshold": 0.3961578898966407,
+          "far": 0.10605030591434399,
+          "frr": 0.10602360602360605,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "spoof_recall_at_frozen_threshold": 0.8413438413438413,
+        "miss_rate_at_frozen_threshold": 0.15865615865615865
+      },
+      "known_reused_A16_A19": {
+        "attacks": [
+          "A16",
+          "A19"
+        ],
+        "n_bona_fide": 7355,
+        "n_spoof": 9828,
+        "eer": {
+          "eer": 0.21399227141919192,
+          "threshold": -0.03229982447321733,
+          "far": 0.21400407885791978,
+          "frr": 0.213980463980464,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "spoof_recall_at_frozen_threshold": 0.5091575091575091,
+        "miss_rate_at_frozen_threshold": 0.4908424908424908
+      }
+    }
+  },
+  "per_attack": {
+    "CNN": {
+      "A07": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.0036669878954039836,
+          "threshold": 2.9133424758911133,
+          "far": 0.003670972127804215,
+          "frr": 0.00366300366300365,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 0,
+        "spoof_recall": 1.0,
+        "miss_rate": 0.0
+      },
+      "A08": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.019726999842567483,
+          "threshold": -1.4556514024734497,
+          "far": 0.01971447994561523,
+          "frr": 0.019739519739519706,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 187,
+        "spoof_recall": 0.9619454619454619,
+        "miss_rate": 0.038054538054538053
+      },
+      "A09": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.005059048260951771,
+          "threshold": 2.3273844718933105,
+          "far": 0.005030591434398368,
+          "frr": 0.0050875050875051064,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 9,
+        "spoof_recall": 0.9981684981684982,
+        "miss_rate": 0.0018315018315018315
+      },
+      "A10": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.05150756160273495,
+          "threshold": -4.273386001586914,
+          "far": 0.05152957171991842,
+          "frr": 0.05148555148555145,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 1065,
+        "spoof_recall": 0.7832722832722833,
+        "miss_rate": 0.21672771672771673
+      },
+      "A11": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.017282341245631494,
+          "threshold": -1.1522047519683838,
+          "far": 0.01726716519374575,
+          "frr": 0.017297517297517273,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 129,
+        "spoof_recall": 0.9737484737484737,
+        "miss_rate": 0.026251526251526252
+      },
+      "A12": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.09805782504626825,
+          "threshold": -5.9606733322143555,
+          "far": 0.09802855200543847,
+          "frr": 0.09808709808709803,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 1711,
+        "spoof_recall": 0.6518111518111518,
+        "miss_rate": 0.3481888481888482
+      },
+      "A13": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.07955315450216877,
+          "threshold": -5.393409252166748,
+          "far": 0.07953772943575799,
+          "frr": 0.07956857956857954,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 2073,
+        "spoof_recall": 0.5781440781440782,
+        "miss_rate": 0.42185592185592186
+      },
+      "A14": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.07473181827362657,
+          "threshold": -5.209661483764648,
+          "far": 0.07477906186267845,
+          "frr": 0.07468457468457468,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 1390,
+        "spoof_recall": 0.7171347171347171,
+        "miss_rate": 0.28286528286528284
+      },
+      "A15": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.10539180083707617,
+          "threshold": -6.189266204833984,
+          "far": 0.1053704962610469,
+          "frr": 0.10541310541310545,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 2371,
+        "spoof_recall": 0.5175010175010175,
+        "miss_rate": 0.4824989824989825
+      },
+      "A16": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.011408406785701208,
+          "threshold": -0.12058950215578079,
+          "far": 0.01142080217539089,
+          "frr": 0.01139601139601143,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 64,
+        "spoof_recall": 0.986975986975987,
+        "miss_rate": 0.013024013024013023
+      },
+      "A17": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.3022205870268413,
+          "threshold": -9.372279167175293,
+          "far": 0.30224337185588035,
+          "frr": 0.30219780219780223,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 4716,
+        "spoof_recall": 0.040293040293040296,
+        "miss_rate": 0.9597069597069597
+      },
+      "A18": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.011646118818110618,
+          "threshold": -0.16204169392585754,
+          "far": 0.01169272603670972,
+          "frr": 0.011599511599511558,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 65,
+        "spoof_recall": 0.9867724867724867,
+        "miss_rate": 0.013227513227513227
+      },
+      "A19": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.02607635836731692,
+          "threshold": -2.2103774547576904,
+          "far": 0.02610469068660775,
+          "frr": 0.02604802604802603,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 309,
+        "spoof_recall": 0.9371184371184371,
+        "miss_rate": 0.06288156288156288
+      }
+    },
+    "SVM": {
+      "A07": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.0572117649955855,
+          "threshold": 0.7230161378498433,
+          "far": 0.057239972807613865,
+          "frr": 0.057183557183557165,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 500,
+        "spoof_recall": 0.8982498982498982,
+        "miss_rate": 0.10175010175010175
+      },
+      "A08": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.04539591511039509,
+          "threshold": 0.8096400783575872,
+          "far": 0.04541128484024473,
+          "frr": 0.04538054538054537,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 254,
+        "spoof_recall": 0.9483109483109483,
+        "miss_rate": 0.05168905168905169
+      },
+      "A09": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.02787586183235402,
+          "threshold": 1.0252279531585695,
+          "far": 0.02787219578518015,
+          "frr": 0.027879527879527854,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 0,
+        "spoof_recall": 1.0,
+        "miss_rate": 0.0
+      },
+      "A10": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.04074430994893269,
+          "threshold": 0.8525649687894042,
+          "far": 0.04078857919782461,
+          "frr": 0.04070004070004074,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 150,
+        "spoof_recall": 0.9694749694749695,
+        "miss_rate": 0.030525030525030524
+      },
+      "A11": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.03863911348615634,
+          "threshold": 0.8802414914534552,
+          "far": 0.03861318830727396,
+          "frr": 0.038665038665038676,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 5,
+        "spoof_recall": 0.998982498982499,
+        "miss_rate": 0.0010175010175010174
+      },
+      "A12": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.03863911348615634,
+          "threshold": 0.8777428835407539,
+          "far": 0.03861318830727396,
+          "frr": 0.038665038665038676,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 137,
+        "spoof_recall": 0.9721204721204721,
+        "miss_rate": 0.02787952787952788
+      },
+      "A13": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.03863911348615634,
+          "threshold": 0.8777054706113817,
+          "far": 0.03861318830727396,
+          "frr": 0.038665038665038676,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 3,
+        "spoof_recall": 0.9993894993894994,
+        "miss_rate": 0.0006105006105006105
+      },
+      "A14": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.028928460063742167,
+          "threshold": 0.9949207169844222,
+          "far": 0.028959891230455472,
+          "frr": 0.028897028897028942,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 49,
+        "spoof_recall": 0.99002849002849,
+        "miss_rate": 0.009971509971509971
+      },
+      "A15": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.025668915267827608,
+          "threshold": 1.0559400723089103,
+          "far": 0.025696804894629503,
+          "frr": 0.02564102564102566,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 46,
+        "spoof_recall": 0.9906389906389906,
+        "miss_rate": 0.009361009361009361
+      },
+      "A16": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.09544343538225253,
+          "threshold": 0.45148800706346626,
+          "far": 0.09544527532290958,
+          "frr": 0.09544159544159547,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 900,
+        "spoof_recall": 0.8168498168498168,
+        "miss_rate": 0.18315018315018314
+      },
+      "A17": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.34354207114234303,
+          "threshold": -0.4004283478938149,
+          "far": 0.34357579877634264,
+          "frr": 0.34350834350834347,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 4016,
+        "spoof_recall": 0.18274318274318274,
+        "miss_rate": 0.8172568172568172
+      },
+      "A18": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.22551953422109783,
+          "threshold": -0.07600248983680835,
+          "far": 0.22556084296397008,
+          "frr": 0.2254782254782255,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 3416,
+        "spoof_recall": 0.30484330484330485,
+        "miss_rate": 0.6951566951566952
+      },
+      "A19": {
+        "n_spoof": 4914,
+        "shared_bona_fide_n": 7355,
+        "eer": {
+          "eer": 0.28453080268172043,
+          "threshold": -0.25033276759608314,
+          "far": 0.2845683208701564,
+          "frr": 0.2844932844932845,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "misses": 3924,
+        "spoof_recall": 0.20146520146520147,
+        "miss_rate": 0.7985347985347986
+      }
+    }
+  },
+  "per_speaker": {
+    "CNN": {
+      "LA_0001": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 101,
+        "spoof_miss_rate": 0.10790598290598291
+      },
+      "LA_0002": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 79,
+        "spoof_miss_rate": 0.08440170940170941
+      },
+      "LA_0003": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 279,
+        "spoof_miss_rate": 0.2980769230769231
+      },
+      "LA_0004": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 459,
+        "spoof_miss_rate": 0.2802197802197802
+      },
+      "LA_0005": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 209,
+        "spoof_miss_rate": 0.2232905982905983
+      },
+      "LA_0006": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 609,
+        "spoof_miss_rate": 0.3717948717948718
+      },
+      "LA_0007": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 100,
+        "spoof_miss_rate": 0.10683760683760683
+      },
+      "LA_0008": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 421,
+        "spoof_miss_rate": 0.257020757020757
+      },
+      "LA_0009": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 353,
+        "spoof_miss_rate": 0.21550671550671552
+      },
+      "LA_0010": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 219,
+        "spoof_miss_rate": 0.1336996336996337
+      },
+      "LA_0011": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 393,
+        "spoof_miss_rate": 0.4198717948717949
+      },
+      "LA_0012": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 6,
+        "bona_fide_fpr": 0.0410958904109589,
+        "spoof_n": 1638,
+        "spoof_fn": 244,
+        "spoof_miss_rate": 0.14896214896214896
+      },
+      "LA_0013": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 126,
+        "spoof_miss_rate": 0.1346153846153846
+      },
+      "LA_0014": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 268,
+        "spoof_miss_rate": 0.16361416361416362
+      },
+      "LA_0015": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 462,
+        "spoof_miss_rate": 0.4935897435897436
+      },
+      "LA_0016": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 234,
+        "spoof_miss_rate": 0.14285714285714285
+      },
+      "LA_0017": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 564,
+        "spoof_miss_rate": 0.3443223443223443
+      },
+      "LA_0018": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 115,
+        "spoof_miss_rate": 0.12286324786324786
+      },
+      "LA_0019": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 1,
+        "bona_fide_fpr": 0.00684931506849315,
+        "spoof_n": 1638,
+        "spoof_fn": 376,
+        "spoof_miss_rate": 0.22954822954822954
+      },
+      "LA_0020": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 290,
+        "spoof_miss_rate": 0.17704517704517705
+      },
+      "LA_0021": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 188,
+        "spoof_miss_rate": 0.20085470085470086
+      },
+      "LA_0022": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 179,
+        "spoof_miss_rate": 0.10927960927960928
+      },
+      "LA_0023": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 1,
+        "bona_fide_fpr": 0.014705882352941176,
+        "spoof_n": 936,
+        "spoof_fn": 111,
+        "spoof_miss_rate": 0.11858974358974358
+      },
+      "LA_0024": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 211,
+        "spoof_miss_rate": 0.1288156288156288
+      },
+      "LA_0025": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 115,
+        "spoof_miss_rate": 0.12286324786324786
+      },
+      "LA_0026": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 660,
+        "spoof_miss_rate": 0.40293040293040294
+      },
+      "LA_0027": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 604,
+        "spoof_miss_rate": 0.36874236874236876
+      },
+      "LA_0028": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 189,
+        "spoof_miss_rate": 0.20192307692307693
+      },
+      "LA_0029": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 283,
+        "spoof_miss_rate": 0.17277167277167277
+      },
+      "LA_0030": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 140,
+        "spoof_miss_rate": 0.14957264957264957
+      },
+      "LA_0031": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 450,
+        "spoof_miss_rate": 0.27472527472527475
+      },
+      "LA_0032": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 417,
+        "spoof_miss_rate": 0.44551282051282054
+      },
+      "LA_0033": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 1,
+        "bona_fide_fpr": 0.00684931506849315,
+        "spoof_n": 1638,
+        "spoof_fn": 415,
+        "spoof_miss_rate": 0.25335775335775335
+      },
+      "LA_0034": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 320,
+        "spoof_miss_rate": 0.19536019536019536
+      },
+      "LA_0035": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 369,
+        "spoof_miss_rate": 0.22527472527472528
+      },
+      "LA_0036": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 130,
+        "spoof_miss_rate": 0.1388888888888889
+      },
+      "LA_0037": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 502,
+        "spoof_miss_rate": 0.3064713064713065
+      },
+      "LA_0038": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 84,
+        "spoof_miss_rate": 0.08974358974358974
+      },
+      "LA_0039": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 540,
+        "spoof_miss_rate": 0.32967032967032966
+      },
+      "LA_0040": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 209,
+        "spoof_miss_rate": 0.2232905982905983
+      },
+      "LA_0041": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 53,
+        "bona_fide_fpr": 0.363013698630137,
+        "spoof_n": 1638,
+        "spoof_fn": 167,
+        "spoof_miss_rate": 0.10195360195360195
+      },
+      "LA_0042": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 612,
+        "spoof_miss_rate": 0.37362637362637363
+      },
+      "LA_0043": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 1,
+        "bona_fide_fpr": 0.00684931506849315,
+        "spoof_n": 1638,
+        "spoof_fn": 258,
+        "spoof_miss_rate": 0.1575091575091575
+      },
+      "LA_0044": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 86,
+        "spoof_miss_rate": 0.09188034188034189
+      },
+      "LA_0045": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 383,
+        "spoof_miss_rate": 0.23382173382173382
+      },
+      "LA_0046": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 216,
+        "spoof_miss_rate": 0.23076923076923078
+      },
+      "LA_0047": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 169,
+        "spoof_miss_rate": 0.10317460317460317
+      },
+      "LA_0048": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 181,
+        "spoof_miss_rate": 0.19337606837606838
+      },
+      "LA_0049": {
+        "bona_fide_n": 95,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0050": {
+        "bona_fide_n": 113,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0051": {
+        "bona_fide_n": 113,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0052": {
+        "bona_fide_n": 95,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0053": {
+        "bona_fide_n": 113,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0054": {
+        "bona_fide_n": 95,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0055": {
+        "bona_fide_n": 113,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0056": {
+        "bona_fide_n": 95,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0057": {
+        "bona_fide_n": 95,
+        "bona_fide_fp": 5,
+        "bona_fide_fpr": 0.05263157894736842,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0058": {
+        "bona_fide_n": 113,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0059": {
+        "bona_fide_n": 95,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0060": {
+        "bona_fide_n": 113,
+        "bona_fide_fp": 4,
+        "bona_fide_fpr": 0.035398230088495575,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0061": {
+        "bona_fide_n": 113,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0063": {
+        "bona_fide_n": 113,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0064": {
+        "bona_fide_n": 95,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0065": {
+        "bona_fide_n": 95,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0066": {
+        "bona_fide_n": 113,
+        "bona_fide_fp": 2,
+        "bona_fide_fpr": 0.017699115044247787,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0067": {
+        "bona_fide_n": 113,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0068": {
+        "bona_fide_n": 95,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      }
+    },
+    "SVM": {
+      "LA_0001": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 15,
+        "bona_fide_fpr": 0.22058823529411764,
+        "spoof_n": 936,
+        "spoof_fn": 134,
+        "spoof_miss_rate": 0.14316239316239315
+      },
+      "LA_0002": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 176,
+        "spoof_miss_rate": 0.18803418803418803
+      },
+      "LA_0003": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 167,
+        "spoof_miss_rate": 0.17841880341880342
+      },
+      "LA_0004": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 406,
+        "spoof_miss_rate": 0.24786324786324787
+      },
+      "LA_0005": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 234,
+        "spoof_miss_rate": 0.25
+      },
+      "LA_0006": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 372,
+        "spoof_miss_rate": 0.2271062271062271
+      },
+      "LA_0007": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 182,
+        "spoof_miss_rate": 0.19444444444444445
+      },
+      "LA_0008": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 1,
+        "bona_fide_fpr": 0.00684931506849315,
+        "spoof_n": 1638,
+        "spoof_fn": 342,
+        "spoof_miss_rate": 0.2087912087912088
+      },
+      "LA_0009": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 1,
+        "bona_fide_fpr": 0.00684931506849315,
+        "spoof_n": 1638,
+        "spoof_fn": 329,
+        "spoof_miss_rate": 0.20085470085470086
+      },
+      "LA_0010": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 10,
+        "bona_fide_fpr": 0.0684931506849315,
+        "spoof_n": 1638,
+        "spoof_fn": 340,
+        "spoof_miss_rate": 0.20757020757020758
+      },
+      "LA_0011": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 8,
+        "bona_fide_fpr": 0.11764705882352941,
+        "spoof_n": 936,
+        "spoof_fn": 155,
+        "spoof_miss_rate": 0.1655982905982906
+      },
+      "LA_0012": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 333,
+        "spoof_miss_rate": 0.2032967032967033
+      },
+      "LA_0013": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 158,
+        "spoof_miss_rate": 0.16880341880341881
+      },
+      "LA_0014": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 4,
+        "bona_fide_fpr": 0.0273972602739726,
+        "spoof_n": 1638,
+        "spoof_fn": 325,
+        "spoof_miss_rate": 0.1984126984126984
+      },
+      "LA_0015": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 1,
+        "bona_fide_fpr": 0.014705882352941176,
+        "spoof_n": 936,
+        "spoof_fn": 201,
+        "spoof_miss_rate": 0.21474358974358973
+      },
+      "LA_0016": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 8,
+        "bona_fide_fpr": 0.0547945205479452,
+        "spoof_n": 1638,
+        "spoof_fn": 349,
+        "spoof_miss_rate": 0.21306471306471306
+      },
+      "LA_0017": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 413,
+        "spoof_miss_rate": 0.25213675213675213
+      },
+      "LA_0018": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 194,
+        "spoof_miss_rate": 0.20726495726495728
+      },
+      "LA_0019": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 365,
+        "spoof_miss_rate": 0.22283272283272285
+      },
+      "LA_0020": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 340,
+        "spoof_miss_rate": 0.20757020757020758
+      },
+      "LA_0021": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 3,
+        "bona_fide_fpr": 0.04411764705882353,
+        "spoof_n": 936,
+        "spoof_fn": 148,
+        "spoof_miss_rate": 0.1581196581196581
+      },
+      "LA_0022": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 415,
+        "spoof_miss_rate": 0.25335775335775335
+      },
+      "LA_0023": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 5,
+        "bona_fide_fpr": 0.07352941176470588,
+        "spoof_n": 936,
+        "spoof_fn": 191,
+        "spoof_miss_rate": 0.20405982905982906
+      },
+      "LA_0024": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 380,
+        "spoof_miss_rate": 0.231990231990232
+      },
+      "LA_0025": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 187,
+        "spoof_miss_rate": 0.1997863247863248
+      },
+      "LA_0026": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 527,
+        "spoof_miss_rate": 0.32173382173382176
+      },
+      "LA_0027": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 413,
+        "spoof_miss_rate": 0.25213675213675213
+      },
+      "LA_0028": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 16,
+        "bona_fide_fpr": 0.23529411764705882,
+        "spoof_n": 936,
+        "spoof_fn": 152,
+        "spoof_miss_rate": 0.1623931623931624
+      },
+      "LA_0029": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 390,
+        "spoof_miss_rate": 0.23809523809523808
+      },
+      "LA_0030": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 18,
+        "bona_fide_fpr": 0.2647058823529412,
+        "spoof_n": 936,
+        "spoof_fn": 120,
+        "spoof_miss_rate": 0.1282051282051282
+      },
+      "LA_0031": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 308,
+        "spoof_miss_rate": 0.18803418803418803
+      },
+      "LA_0032": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 51,
+        "bona_fide_fpr": 0.75,
+        "spoof_n": 936,
+        "spoof_fn": 156,
+        "spoof_miss_rate": 0.16666666666666666
+      },
+      "LA_0033": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 6,
+        "bona_fide_fpr": 0.0410958904109589,
+        "spoof_n": 1638,
+        "spoof_fn": 360,
+        "spoof_miss_rate": 0.21978021978021978
+      },
+      "LA_0034": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 5,
+        "bona_fide_fpr": 0.03424657534246575,
+        "spoof_n": 1638,
+        "spoof_fn": 344,
+        "spoof_miss_rate": 0.21001221001221002
+      },
+      "LA_0035": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 334,
+        "spoof_miss_rate": 0.2039072039072039
+      },
+      "LA_0036": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 5,
+        "bona_fide_fpr": 0.07352941176470588,
+        "spoof_n": 936,
+        "spoof_fn": 123,
+        "spoof_miss_rate": 0.13141025641025642
+      },
+      "LA_0037": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 370,
+        "spoof_miss_rate": 0.2258852258852259
+      },
+      "LA_0038": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 936,
+        "spoof_fn": 163,
+        "spoof_miss_rate": 0.17414529914529914
+      },
+      "LA_0039": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 1638,
+        "spoof_fn": 377,
+        "spoof_miss_rate": 0.23015873015873015
+      },
+      "LA_0040": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 17,
+        "bona_fide_fpr": 0.25,
+        "spoof_n": 936,
+        "spoof_fn": 161,
+        "spoof_miss_rate": 0.172008547008547
+      },
+      "LA_0041": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 1,
+        "bona_fide_fpr": 0.00684931506849315,
+        "spoof_n": 1638,
+        "spoof_fn": 366,
+        "spoof_miss_rate": 0.22344322344322345
+      },
+      "LA_0042": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 2,
+        "bona_fide_fpr": 0.0136986301369863,
+        "spoof_n": 1638,
+        "spoof_fn": 440,
+        "spoof_miss_rate": 0.2686202686202686
+      },
+      "LA_0043": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 9,
+        "bona_fide_fpr": 0.06164383561643835,
+        "spoof_n": 1638,
+        "spoof_fn": 306,
+        "spoof_miss_rate": 0.18681318681318682
+      },
+      "LA_0044": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 2,
+        "bona_fide_fpr": 0.029411764705882353,
+        "spoof_n": 936,
+        "spoof_fn": 191,
+        "spoof_miss_rate": 0.20405982905982906
+      },
+      "LA_0045": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 1,
+        "bona_fide_fpr": 0.00684931506849315,
+        "spoof_n": 1638,
+        "spoof_fn": 359,
+        "spoof_miss_rate": 0.21916971916971917
+      },
+      "LA_0046": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 3,
+        "bona_fide_fpr": 0.04411764705882353,
+        "spoof_n": 936,
+        "spoof_fn": 175,
+        "spoof_miss_rate": 0.18696581196581197
+      },
+      "LA_0047": {
+        "bona_fide_n": 146,
+        "bona_fide_fp": 36,
+        "bona_fide_fpr": 0.2465753424657534,
+        "spoof_n": 1638,
+        "spoof_fn": 312,
+        "spoof_miss_rate": 0.19047619047619047
+      },
+      "LA_0048": {
+        "bona_fide_n": 68,
+        "bona_fide_fp": 4,
+        "bona_fide_fpr": 0.058823529411764705,
+        "spoof_n": 936,
+        "spoof_fn": 117,
+        "spoof_miss_rate": 0.125
+      },
+      "LA_0049": {
+        "bona_fide_n": 95,
+        "bona_fide_fp": 1,
+        "bona_fide_fpr": 0.010526315789473684,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0050": {
+        "bona_fide_n": 113,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0051": {
+        "bona_fide_n": 113,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0052": {
+        "bona_fide_n": 95,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0053": {
+        "bona_fide_n": 113,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0054": {
+        "bona_fide_n": 95,
+        "bona_fide_fp": 1,
+        "bona_fide_fpr": 0.010526315789473684,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0055": {
+        "bona_fide_n": 113,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0056": {
+        "bona_fide_n": 95,
+        "bona_fide_fp": 4,
+        "bona_fide_fpr": 0.042105263157894736,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0057": {
+        "bona_fide_n": 95,
+        "bona_fide_fp": 48,
+        "bona_fide_fpr": 0.5052631578947369,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0058": {
+        "bona_fide_n": 113,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0059": {
+        "bona_fide_n": 95,
+        "bona_fide_fp": 10,
+        "bona_fide_fpr": 0.10526315789473684,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0060": {
+        "bona_fide_n": 113,
+        "bona_fide_fp": 3,
+        "bona_fide_fpr": 0.02654867256637168,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0061": {
+        "bona_fide_n": 113,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0063": {
+        "bona_fide_n": 113,
+        "bona_fide_fp": 12,
+        "bona_fide_fpr": 0.10619469026548672,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0064": {
+        "bona_fide_n": 95,
+        "bona_fide_fp": 13,
+        "bona_fide_fpr": 0.1368421052631579,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0065": {
+        "bona_fide_n": 95,
+        "bona_fide_fp": 1,
+        "bona_fide_fpr": 0.010526315789473684,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0066": {
+        "bona_fide_n": 113,
+        "bona_fide_fp": 0,
+        "bona_fide_fpr": 0.0,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0067": {
+        "bona_fide_n": 113,
+        "bona_fide_fp": 1,
+        "bona_fide_fpr": 0.008849557522123894,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      },
+      "LA_0068": {
+        "bona_fide_n": 95,
+        "bona_fide_fp": 1,
+        "bona_fide_fpr": 0.010526315789473684,
+        "spoof_n": 0,
+        "spoof_fn": 0,
+        "spoof_miss_rate": null
+      }
+    }
+  },
+  "duration_spearman": {
+    "CNN": {
+      "bona_fide": {
+        "n": 7355,
+        "spearman_rho": -0.48828158894106105,
+        "p_value": 0.0
+      },
+      "spoof": {
+        "n": 63882,
+        "spearman_rho": -0.025572847306674508,
+        "p_value": 1.0167508826870671e-10
+      }
+    },
+    "SVM": {
+      "bona_fide": {
+        "n": 7355,
+        "spearman_rho": -0.15213304191538188,
+        "p_value": 2.4846611286792793e-39
+      },
+      "spoof": {
+        "n": 63882,
+        "spearman_rho": 0.22390795077563116,
+        "p_value": 0.0
+      }
+    }
+  },
+  "cnn_bona_fide_false_positives": [
+    {
+      "file_id": "LA_E_1026533",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.407375,
+      "score": 2.412062406539917
+    },
+    {
+      "file_id": "LA_E_1027220",
+      "speaker": "LA_0057",
+      "duration_seconds": 2.21225,
+      "score": 4.2437591552734375
+    },
+    {
+      "file_id": "LA_E_1139127",
+      "speaker": "LA_0066",
+      "duration_seconds": 5.3741875,
+      "score": 4.68931245803833
+    },
+    {
+      "file_id": "LA_E_1147824",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.8371875,
+      "score": 1.477055311203003
+    },
+    {
+      "file_id": "LA_E_1234103",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.753125,
+      "score": 1.0825223922729492
+    },
+    {
+      "file_id": "LA_E_1285825",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.0676875,
+      "score": 2.967888355255127
+    },
+    {
+      "file_id": "LA_E_1450790",
+      "speaker": "LA_0057",
+      "duration_seconds": 1.813625,
+      "score": 6.752161026000977
+    },
+    {
+      "file_id": "LA_E_1602221",
+      "speaker": "LA_0012",
+      "duration_seconds": 2.77325,
+      "score": 3.450129270553589
+    },
+    {
+      "file_id": "LA_E_1614102",
+      "speaker": "LA_0041",
+      "duration_seconds": 2.424875,
+      "score": 0.21358078718185425
+    },
+    {
+      "file_id": "LA_E_1723311",
+      "speaker": "LA_0060",
+      "duration_seconds": 2.598125,
+      "score": 3.7015950679779053
+    },
+    {
+      "file_id": "LA_E_1728154",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.2836875,
+      "score": 3.2521166801452637
+    },
+    {
+      "file_id": "LA_E_2055100",
+      "speaker": "LA_0012",
+      "duration_seconds": 4.7308125,
+      "score": 8.131124496459961
+    },
+    {
+      "file_id": "LA_E_2168860",
+      "speaker": "LA_0057",
+      "duration_seconds": 1.6923125,
+      "score": 1.259474754333496
+    },
+    {
+      "file_id": "LA_E_2366048",
+      "speaker": "LA_0041",
+      "duration_seconds": 1.867125,
+      "score": 2.483398199081421
+    },
+    {
+      "file_id": "LA_E_2378111",
+      "speaker": "LA_0012",
+      "duration_seconds": 2.897625,
+      "score": 0.36657389998435974
+    },
+    {
+      "file_id": "LA_E_2484014",
+      "speaker": "LA_0041",
+      "duration_seconds": 1.40225,
+      "score": 0.4211850166320801
+    },
+    {
+      "file_id": "LA_E_2541554",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.1114375,
+      "score": 6.664200305938721
+    },
+    {
+      "file_id": "LA_E_2553182",
+      "speaker": "LA_0041",
+      "duration_seconds": 1.4420625,
+      "score": 0.5912314653396606
+    },
+    {
+      "file_id": "LA_E_2670831",
+      "speaker": "LA_0041",
+      "duration_seconds": 1.8334375,
+      "score": 0.9839767217636108
+    },
+    {
+      "file_id": "LA_E_2983735",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.58625,
+      "score": 4.919498443603516
+    },
+    {
+      "file_id": "LA_E_3205722",
+      "speaker": "LA_0019",
+      "duration_seconds": 1.8764375,
+      "score": 0.2657073140144348
+    },
+    {
+      "file_id": "LA_E_3268226",
+      "speaker": "LA_0060",
+      "duration_seconds": 2.7669375,
+      "score": 2.812023401260376
+    },
+    {
+      "file_id": "LA_E_3413362",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.492625,
+      "score": 1.7996842861175537
+    },
+    {
+      "file_id": "LA_E_3462351",
+      "speaker": "LA_0057",
+      "duration_seconds": 0.9026875,
+      "score": 2.3052315711975098
+    },
+    {
+      "file_id": "LA_E_3601447",
+      "speaker": "LA_0041",
+      "duration_seconds": 2.68675,
+      "score": 5.134113311767578
+    },
+    {
+      "file_id": "LA_E_3608439",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.3668125,
+      "score": 0.7534872889518738
+    },
+    {
+      "file_id": "LA_E_3715266",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.15525,
+      "score": 7.254995346069336
+    },
+    {
+      "file_id": "LA_E_3752390",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.4505625,
+      "score": 2.6349592208862305
+    },
+    {
+      "file_id": "LA_E_3757529",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.580875,
+      "score": 6.51572322845459
+    },
+    {
+      "file_id": "LA_E_3768434",
+      "speaker": "LA_0041",
+      "duration_seconds": 2.1716875,
+      "score": 0.4071149230003357
+    },
+    {
+      "file_id": "LA_E_3890504",
+      "speaker": "LA_0041",
+      "duration_seconds": 2.2554375,
+      "score": 0.5005737543106079
+    },
+    {
+      "file_id": "LA_E_4152575",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.3659375,
+      "score": 3.8333160877227783
+    },
+    {
+      "file_id": "LA_E_4201069",
+      "speaker": "LA_0066",
+      "duration_seconds": 5.6739375,
+      "score": 2.9165866374969482
+    },
+    {
+      "file_id": "LA_E_4322315",
+      "speaker": "LA_0057",
+      "duration_seconds": 3.1521875,
+      "score": 1.8707631826400757
+    },
+    {
+      "file_id": "LA_E_4446740",
+      "speaker": "LA_0041",
+      "duration_seconds": 2.6875625,
+      "score": 3.698662042617798
+    },
+    {
+      "file_id": "LA_E_4755971",
+      "speaker": "LA_0041",
+      "duration_seconds": 4.091875,
+      "score": 1.7685829401016235
+    },
+    {
+      "file_id": "LA_E_4847066",
+      "speaker": "LA_0041",
+      "duration_seconds": 2.0438125,
+      "score": 1.8572801351547241
+    },
+    {
+      "file_id": "LA_E_5007470",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.282125,
+      "score": 1.4761013984680176
+    },
+    {
+      "file_id": "LA_E_5068554",
+      "speaker": "LA_0041",
+      "duration_seconds": 2.7755625,
+      "score": 6.825331687927246
+    },
+    {
+      "file_id": "LA_E_5142468",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.9633125,
+      "score": 4.331079483032227
+    },
+    {
+      "file_id": "LA_E_5159838",
+      "speaker": "LA_0041",
+      "duration_seconds": 2.16775,
+      "score": 2.3273844718933105
+    },
+    {
+      "file_id": "LA_E_5304204",
+      "speaker": "LA_0041",
+      "duration_seconds": 1.6665625,
+      "score": 0.24328747391700745
+    },
+    {
+      "file_id": "LA_E_5318318",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.7930625,
+      "score": 7.535379409790039
+    },
+    {
+      "file_id": "LA_E_5423246",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.835875,
+      "score": 2.273139238357544
+    },
+    {
+      "file_id": "LA_E_5719896",
+      "speaker": "LA_0041",
+      "duration_seconds": 1.913625,
+      "score": 0.7579287886619568
+    },
+    {
+      "file_id": "LA_E_5725530",
+      "speaker": "LA_0041",
+      "duration_seconds": 4.607,
+      "score": 2.4139208793640137
+    },
+    {
+      "file_id": "LA_E_5927801",
+      "speaker": "LA_0041",
+      "duration_seconds": 1.9580625,
+      "score": 0.714966356754303
+    },
+    {
+      "file_id": "LA_E_6067970",
+      "speaker": "LA_0041",
+      "duration_seconds": 2.341,
+      "score": 2.4542324542999268
+    },
+    {
+      "file_id": "LA_E_6189517",
+      "speaker": "LA_0041",
+      "duration_seconds": 2.2973125,
+      "score": 0.3423960506916046
+    },
+    {
+      "file_id": "LA_E_6298619",
+      "speaker": "LA_0041",
+      "duration_seconds": 4.8624375,
+      "score": 5.878350734710693
+    },
+    {
+      "file_id": "LA_E_6404712",
+      "speaker": "LA_0012",
+      "duration_seconds": 4.732125,
+      "score": 1.3853728771209717
+    },
+    {
+      "file_id": "LA_E_6411489",
+      "speaker": "LA_0041",
+      "duration_seconds": 2.0879375,
+      "score": 1.4190186262130737
+    },
+    {
+      "file_id": "LA_E_6453309",
+      "speaker": "LA_0012",
+      "duration_seconds": 4.5185,
+      "score": 1.2694281339645386
+    },
+    {
+      "file_id": "LA_E_6577326",
+      "speaker": "LA_0060",
+      "duration_seconds": 2.942875,
+      "score": 1.2720510959625244
+    },
+    {
+      "file_id": "LA_E_6592171",
+      "speaker": "LA_0033",
+      "duration_seconds": 2.0050625,
+      "score": 0.5019865036010742
+    },
+    {
+      "file_id": "LA_E_6626476",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.792875,
+      "score": 7.3526930809021
+    },
+    {
+      "file_id": "LA_E_6677864",
+      "speaker": "LA_0041",
+      "duration_seconds": 1.4861875,
+      "score": 1.3839147090911865
+    },
+    {
+      "file_id": "LA_E_6754209",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.7076875,
+      "score": 6.8283796310424805
+    },
+    {
+      "file_id": "LA_E_7247798",
+      "speaker": "LA_0043",
+      "duration_seconds": 3.668625,
+      "score": 0.28036099672317505
+    },
+    {
+      "file_id": "LA_E_7464302",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.451125,
+      "score": 1.4805470705032349
+    },
+    {
+      "file_id": "LA_E_7487210",
+      "speaker": "LA_0041",
+      "duration_seconds": 4.1764375,
+      "score": 0.9830484390258789
+    },
+    {
+      "file_id": "LA_E_7790286",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.4579375,
+      "score": 3.401643753051758
+    },
+    {
+      "file_id": "LA_E_8006424",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.15,
+      "score": 3.1035103797912598
+    },
+    {
+      "file_id": "LA_E_8041591",
+      "speaker": "LA_0023",
+      "duration_seconds": 3.4075,
+      "score": 0.3328132927417755
+    },
+    {
+      "file_id": "LA_E_8097112",
+      "speaker": "LA_0041",
+      "duration_seconds": 1.957,
+      "score": 1.1160399913787842
+    },
+    {
+      "file_id": "LA_E_8511513",
+      "speaker": "LA_0041",
+      "duration_seconds": 2.85725,
+      "score": 2.4231066703796387
+    },
+    {
+      "file_id": "LA_E_8531546",
+      "speaker": "LA_0012",
+      "duration_seconds": 4.3033125,
+      "score": 0.8457765579223633
+    },
+    {
+      "file_id": "LA_E_8596423",
+      "speaker": "LA_0041",
+      "duration_seconds": 1.8304375,
+      "score": 0.8655518293380737
+    },
+    {
+      "file_id": "LA_E_8640731",
+      "speaker": "LA_0041",
+      "duration_seconds": 1.876,
+      "score": 2.9436821937561035
+    },
+    {
+      "file_id": "LA_E_8893147",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.5810625,
+      "score": 4.292543888092041
+    },
+    {
+      "file_id": "LA_E_9115741",
+      "speaker": "LA_0041",
+      "duration_seconds": 2.6384375,
+      "score": 2.7930922508239746
+    },
+    {
+      "file_id": "LA_E_9465809",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.7493125,
+      "score": 0.2632724642753601
+    },
+    {
+      "file_id": "LA_E_9683949",
+      "speaker": "LA_0060",
+      "duration_seconds": 4.1348125,
+      "score": 3.5319294929504395
+    },
+    {
+      "file_id": "LA_E_9797501",
+      "speaker": "LA_0041",
+      "duration_seconds": 3.621625,
+      "score": 2.6468405723571777
+    }
+  ],
+  "cnn_top30_spoof_false_negatives_lowest_scores": [
+    {
+      "file_id": "LA_E_5916365",
+      "attack": "A17",
+      "score": -22.71110725402832,
+      "distance_below_threshold": 22.910147041082382
+    },
+    {
+      "file_id": "LA_E_3174266",
+      "attack": "A17",
+      "score": -21.859405517578125,
+      "distance_below_threshold": 22.058445304632187
+    },
+    {
+      "file_id": "LA_E_7052999",
+      "attack": "A17",
+      "score": -21.828472137451172,
+      "distance_below_threshold": 22.027511924505234
+    },
+    {
+      "file_id": "LA_E_3049658",
+      "attack": "A17",
+      "score": -21.532958984375,
+      "distance_below_threshold": 21.731998771429062
+    },
+    {
+      "file_id": "LA_E_3987416",
+      "attack": "A17",
+      "score": -21.50897216796875,
+      "distance_below_threshold": 21.708011955022812
+    },
+    {
+      "file_id": "LA_E_3037919",
+      "attack": "A17",
+      "score": -21.159351348876953,
+      "distance_below_threshold": 21.358391135931015
+    },
+    {
+      "file_id": "LA_E_5325058",
+      "attack": "A17",
+      "score": -21.047470092773438,
+      "distance_below_threshold": 21.2465098798275
+    },
+    {
+      "file_id": "LA_E_8875888",
+      "attack": "A17",
+      "score": -20.742877960205078,
+      "distance_below_threshold": 20.94191774725914
+    },
+    {
+      "file_id": "LA_E_9689693",
+      "attack": "A17",
+      "score": -20.503093719482422,
+      "distance_below_threshold": 20.702133506536484
+    },
+    {
+      "file_id": "LA_E_5277157",
+      "attack": "A17",
+      "score": -20.399242401123047,
+      "distance_below_threshold": 20.59828218817711
+    },
+    {
+      "file_id": "LA_E_6890294",
+      "attack": "A17",
+      "score": -20.20968246459961,
+      "distance_below_threshold": 20.40872225165367
+    },
+    {
+      "file_id": "LA_E_3564335",
+      "attack": "A17",
+      "score": -20.186391830444336,
+      "distance_below_threshold": 20.385431617498398
+    },
+    {
+      "file_id": "LA_E_9930337",
+      "attack": "A17",
+      "score": -19.97040557861328,
+      "distance_below_threshold": 20.169445365667343
+    },
+    {
+      "file_id": "LA_E_2198170",
+      "attack": "A17",
+      "score": -19.875551223754883,
+      "distance_below_threshold": 20.074591010808945
+    },
+    {
+      "file_id": "LA_E_7194091",
+      "attack": "A17",
+      "score": -19.86711311340332,
+      "distance_below_threshold": 20.066152900457382
+    },
+    {
+      "file_id": "LA_E_6553850",
+      "attack": "A15",
+      "score": -19.346515655517578,
+      "distance_below_threshold": 19.54555544257164
+    },
+    {
+      "file_id": "LA_E_4074640",
+      "attack": "A17",
+      "score": -19.345165252685547,
+      "distance_below_threshold": 19.54420503973961
+    },
+    {
+      "file_id": "LA_E_3144031",
+      "attack": "A14",
+      "score": -19.247196197509766,
+      "distance_below_threshold": 19.446235984563828
+    },
+    {
+      "file_id": "LA_E_3474270",
+      "attack": "A17",
+      "score": -19.164562225341797,
+      "distance_below_threshold": 19.36360201239586
+    },
+    {
+      "file_id": "LA_E_4046878",
+      "attack": "A17",
+      "score": -19.164499282836914,
+      "distance_below_threshold": 19.363539069890976
+    },
+    {
+      "file_id": "LA_E_4923566",
+      "attack": "A17",
+      "score": -19.1297607421875,
+      "distance_below_threshold": 19.328800529241562
+    },
+    {
+      "file_id": "LA_E_4527822",
+      "attack": "A17",
+      "score": -19.110965728759766,
+      "distance_below_threshold": 19.310005515813828
+    },
+    {
+      "file_id": "LA_E_4914681",
+      "attack": "A17",
+      "score": -18.989408493041992,
+      "distance_below_threshold": 19.188448280096054
+    },
+    {
+      "file_id": "LA_E_3106668",
+      "attack": "A17",
+      "score": -18.926679611206055,
+      "distance_below_threshold": 19.125719398260117
+    },
+    {
+      "file_id": "LA_E_1486512",
+      "attack": "A17",
+      "score": -18.87813949584961,
+      "distance_below_threshold": 19.07717928290367
+    },
+    {
+      "file_id": "LA_E_2669982",
+      "attack": "A17",
+      "score": -18.86812973022461,
+      "distance_below_threshold": 19.06716951727867
+    },
+    {
+      "file_id": "LA_E_1086548",
+      "attack": "A17",
+      "score": -18.8624324798584,
+      "distance_below_threshold": 19.06147226691246
+    },
+    {
+      "file_id": "LA_E_6591492",
+      "attack": "A17",
+      "score": -18.826339721679688,
+      "distance_below_threshold": 19.02537950873375
+    },
+    {
+      "file_id": "LA_E_1267821",
+      "attack": "A17",
+      "score": -18.78516387939453,
+      "distance_below_threshold": 18.984203666448593
+    },
+    {
+      "file_id": "LA_E_4864883",
+      "attack": "A17",
+      "score": -18.766345977783203,
+      "distance_below_threshold": 18.965385764837265
+    }
+  ],
+  "cnn_representative_spectrograms": [
+    "01_false_positive_LA_E_2055100.png",
+    "02_false_positive_LA_E_5318318.png",
+    "03_false_positive_LA_E_6626476.png",
+    "04_false_negative_LA_E_5916365.png",
+    "05_false_negative_LA_E_3174266.png",
+    "06_false_negative_LA_E_7052999.png"
+  ],
+  "shortcut_baseline": {
+    "all_partition_cue_extraction_seconds": 231.5035244999999,
+    "fit_dev_selection_eval_seconds_including_cue_arrays": 232.08883889999925,
+    "threshold_selected_on_dev": -0.027975853990524976,
+    "features": [
+      "duration_seconds",
+      "leading_silence_seconds_at_-40_dBFS",
+      "waveform_RMS"
+    ],
+    "results": {
+      "dev": {
+        "n": 24844,
+        "bonafide": 2548,
+        "spoof": 22296,
+        "threshold": -0.027975853990524976,
+        "tn": 1648,
+        "fp": 900,
+        "fn": 7875,
+        "tp": 14421,
+        "far": 0.3532182103610675,
+        "frr": 0.35320236813778255,
+        "accuracy": 0.6467960070842055,
+        "roc_auc": 0.6869967629761187,
+        "diagnostic_eer": 0.35321028924942505,
+        "eer": {
+          "eer": 0.35321028924942505,
+          "threshold": -0.027975853990524976,
+          "far": 0.3532182103610675,
+          "frr": 0.3532023681377826,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "spoof_recall": 0.6467976318622174,
+        "bona_fide_fpr": 0.3532182103610675
+      },
+      "eval": {
+        "n": 71237,
+        "bonafide": 7355,
+        "spoof": 63882,
+        "threshold": -0.027975853990524976,
+        "tn": 4878,
+        "fp": 2477,
+        "fn": 7411,
+        "tp": 56471,
+        "far": 0.33677770224337183,
+        "frr": 0.1160107698569237,
+        "accuracy": 0.8611957269396522,
+        "roc_auc": 0.8688842453000796,
+        "diagnostic_eer": 0.1730743169377275,
+        "eer": {
+          "eer": 0.1730743169377275,
+          "threshold": 0.12781247818119595,
+          "far": 0.17307953772943577,
+          "frr": 0.17306909614601917,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "spoof_recall": 0.8839892301430763,
+        "bona_fide_fpr": 0.33677770224337183
+      }
+    }
+  },
+  "runtime_seconds": {
+    "all_partition_cue_extraction": 231.5035244999999,
+    "phase4a_analysis_total": 236.15680430000066
+  }
+}

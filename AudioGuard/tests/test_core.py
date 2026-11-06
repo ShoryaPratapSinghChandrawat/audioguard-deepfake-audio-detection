@@ -63,6 +63,15 @@ def test_noise_reproducible_and_snr():
         noise(np.zeros(10), 10, 1, "silent")
 
 
+@pytest.mark.parametrize("snr_db", [20, 10, 0])
+def test_noise_conditions_match_requested_snr(snr_db):
+    x = np.asarray(.08 * np.sin(np.arange(4000) * .013), dtype=np.float32)
+    a = noise(x, snr_db, 2026, "snr-test-utterance")
+    measured = 10 * np.log10(np.mean(x.astype(np.float64) ** 2) /
+                             np.mean((a - x).astype(np.float64) ** 2))
+    assert abs(measured - snr_db) < .001
+
+
 def test_model_seed_and_training_only_scaler():
     cfg = load_config("configs/smoke.yaml")["model"]
     cfg["device"] = "cpu"

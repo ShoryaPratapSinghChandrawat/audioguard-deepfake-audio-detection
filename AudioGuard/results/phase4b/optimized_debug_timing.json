@@ -1,0 +1,171 @@
+{
+  "status": "pass",
+  "scope": "500-clip timing only; no benchmark metrics",
+  "conditions": {
+    "noise_20dB": {
+      "wall_seconds": 9.610281000001123,
+      "waveform_generation_or_validation_seconds": 3.1703048999443126,
+      "waveform_components": {
+        "source_decode_seconds": 0.5079690999773447,
+        "transform_encode_decode_seconds": 0.4605855000190786,
+        "waveform_disk_seconds": 1.0277206999417103,
+        "waveform_validation_seconds": 0.48193600002559833
+      },
+      "cnn_feature_cache_seconds": 2.1552349000339746,
+      "svm_feature_cache_seconds": 2.1468698999851767,
+      "cnn_inference_seconds": 1.7830559999965772,
+      "svm_inference_seconds": 0.22253769999588258,
+      "measured_snr_db_min": 19.999999957397122,
+      "measured_snr_db_max": 20.00000004158059,
+      "measured_snr_samples": 500,
+      "optimization_equivalence": {
+        "clips_checked": 20,
+        "max_waveform_roundtrip_abs_diff": 0.0,
+        "max_cnn_feature_abs_diff": 0.0,
+        "max_svm_feature_abs_diff": 0.0,
+        "previous_mp3_64_waveform_abs_diff": null,
+        "previous_mp3_64_cnn_feature_abs_diff": null,
+        "previous_mp3_64_svm_feature_abs_diff": null
+      }
+    },
+    "noise_10dB": {
+      "wall_seconds": 9.252599100000225,
+      "waveform_generation_or_validation_seconds": 3.0822337999888987,
+      "waveform_components": {
+        "source_decode_seconds": 0.3760330000295653,
+        "transform_encode_decode_seconds": 0.4621243999899889,
+        "waveform_disk_seconds": 1.0549845000241476,
+        "waveform_validation_seconds": 0.4895782999956282
+      },
+      "cnn_feature_cache_seconds": 2.1661457999762206,
+      "svm_feature_cache_seconds": 2.1955176999726973,
+      "cnn_inference_seconds": 1.4271244000083243,
+      "svm_inference_seconds": 0.24273709999761195,
+      "measured_snr_db_min": 9.999999984552682,
+      "measured_snr_db_max": 10.000000015686695,
+      "measured_snr_samples": 500,
+      "optimization_equivalence": {
+        "clips_checked": 20,
+        "max_waveform_roundtrip_abs_diff": 0.0,
+        "max_cnn_feature_abs_diff": 0.0,
+        "max_svm_feature_abs_diff": 0.0,
+        "previous_mp3_64_waveform_abs_diff": null,
+        "previous_mp3_64_cnn_feature_abs_diff": null,
+        "previous_mp3_64_svm_feature_abs_diff": null
+      }
+    },
+    "noise_0dB": {
+      "wall_seconds": 10.436628100000235,
+      "waveform_generation_or_validation_seconds": 3.578347600046982,
+      "waveform_components": {
+        "source_decode_seconds": 0.4495970999960264,
+        "transform_encode_decode_seconds": 0.5795218000203022,
+        "waveform_disk_seconds": 1.1929544000049646,
+        "waveform_validation_seconds": 0.5609266000319622
+      },
+      "cnn_feature_cache_seconds": 2.6105587000020023,
+      "svm_feature_cache_seconds": 2.6490198000064993,
+      "cnn_inference_seconds": 1.1236215000026277,
+      "svm_inference_seconds": 0.3076966000007815,
+      "measured_snr_db_min": -8.419552279749063e-09,
+      "measured_snr_db_max": 8.149740671255386e-09,
+      "measured_snr_samples": 500,
+      "optimization_equivalence": {
+        "clips_checked": 20,
+        "max_waveform_roundtrip_abs_diff": 0.0,
+        "max_cnn_feature_abs_diff": 0.0,
+        "max_svm_feature_abs_diff": 0.0,
+        "previous_mp3_64_waveform_abs_diff": null,
+        "previous_mp3_64_cnn_feature_abs_diff": null,
+        "previous_mp3_64_svm_feature_abs_diff": null
+      }
+    },
+    "mp3_128kbps": {
+      "wall_seconds": 80.65938390000156,
+      "waveform_generation_or_validation_seconds": 71.78860750001331,
+      "waveform_components": {
+        "source_decode_seconds": 0.6414139999760664,
+        "transform_encode_decode_seconds": 68.65118140000413,
+        "waveform_disk_seconds": 1.2766377999942051,
+        "waveform_validation_seconds": 0.5045233000382723
+      },
+      "cnn_feature_cache_seconds": 2.3746147999481764,
+      "svm_feature_cache_seconds": 2.349442500020814,
+      "cnn_inference_seconds": 3.758066200007306,
+      "svm_inference_seconds": 0.25064890000066953,
+      "optimization_equivalence": {
+        "clips_checked": 20,
+        "max_waveform_roundtrip_abs_diff": 0.0,
+        "max_cnn_feature_abs_diff": 0.0,
+        "max_svm_feature_abs_diff": 0.0,
+        "previous_mp3_64_waveform_abs_diff": null,
+        "previous_mp3_64_cnn_feature_abs_diff": null,
+        "previous_mp3_64_svm_feature_abs_diff": null
+      }
+    },
+    "mp3_64kbps": {
+      "wall_seconds": 80.09377299999687,
+      "waveform_generation_or_validation_seconds": 71.37823959999878,
+      "waveform_components": {
+        "source_decode_seconds": 0.7093419999764592,
+        "transform_encode_decode_seconds": 68.20982370002821,
+        "waveform_disk_seconds": 1.2587325999702443,
+        "waveform_validation_seconds": 0.48208389999490464
+      },
+      "cnn_feature_cache_seconds": 2.354310099970462,
+      "svm_feature_cache_seconds": 2.2936557000102766,
+      "cnn_inference_seconds": 3.565307099997881,
+      "svm_inference_seconds": 0.2549429000027885,
+      "optimization_equivalence": {
+        "clips_checked": 20,
+        "max_waveform_roundtrip_abs_diff": 0.0,
+        "max_cnn_feature_abs_diff": 0.0,
+        "max_svm_feature_abs_diff": 0.0,
+        "previous_mp3_64_waveform_abs_diff": 0.0,
+        "previous_mp3_64_cnn_feature_abs_diff": 0.0,
+        "previous_mp3_64_svm_feature_abs_diff": 0.0
+      }
+    },
+    "trimmed": {
+      "wall_seconds": 7.963789999997971,
+      "waveform_generation_or_validation_seconds": 2.6523866999887105,
+      "waveform_components": {
+        "source_decode_seconds": 0.5477338999698986,
+        "transform_encode_decode_seconds": 0.03665259997433168,
+        "waveform_disk_seconds": 0.9908622000511969,
+        "waveform_validation_seconds": 0.4417589999757183
+      },
+      "cnn_feature_cache_seconds": 1.8865260000202397,
+      "svm_feature_cache_seconds": 1.8655824000379653,
+      "cnn_inference_seconds": 1.2217736000093282,
+      "svm_inference_seconds": 0.23525610000433517,
+      "optimization_equivalence": {
+        "clips_checked": 20,
+        "max_waveform_roundtrip_abs_diff": 0.0,
+        "max_cnn_feature_abs_diff": 0.0,
+        "max_svm_feature_abs_diff": 0.0,
+        "previous_mp3_64_waveform_abs_diff": null,
+        "previous_mp3_64_cnn_feature_abs_diff": null,
+        "previous_mp3_64_svm_feature_abs_diff": null
+      }
+    }
+  },
+  "clips_per_condition": 500,
+  "free_disk_preflight": {
+    "free_disk_bytes_before": 132417196032,
+    "subset_wave_samples_clean": 502282041,
+    "estimated_waveform_bytes_all_conditions": 12057408984,
+    "estimated_feature_cache_bytes_all_conditions": 9277689792,
+    "estimated_total_bytes": 21335098776,
+    "estimated_free_after_bytes": 111082097256,
+    "estimate_note": "Uses clean durations and uncompressed float32 WAVs; assumes every condition has clean-length cache arrays, including trimmed. It is conservative for trimmed clips."
+  },
+  "ffmpeg": "C:\\Games\\projects\\audioguarddeepfake\\audioguard-deepfake-audio-detection-main\\audioguard-deepfake-audio-detection-main\\AudioGuard\\.venv\\Lib\\site-packages\\imageio_ffmpeg\\binaries\\ffmpeg-win64-v4.2.2.exe",
+  "seed": 2026,
+  "ffmpeg_version": "ffmpeg version 4.2.2 Copyright (c) 2000-2019 the FFmpeg developers",
+  "measured_seconds_all_six_conditions": 198.01645509999798,
+  "total_six_conditions_both_models_estimate_seconds": 5010.41137749995,
+  "total_estimate_method": "Sum of measured wall times for each of six conditions on the identical first 500 fixed-manifest clips, scaled by 10,000/500 and a 25% safety margin plus 60 seconds for startup/reporting. Every timing includes source decode, the condition transform (including actual FFmpeg MP3 encode and decode), float-WAV persistence and hash/manifest I/O, separate CNN and SVM feature cache lookup/extraction/persistence, and batched inference. The first 20 clips per condition also include equivalence validation, making the timing conservative.",
+  "runtime_gate_seconds": 10800,
+  "free_disk_bytes_after_debug": 131328950272
+}

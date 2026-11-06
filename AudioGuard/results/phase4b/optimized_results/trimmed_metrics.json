@@ -1,0 +1,417 @@
+{
+  "CNN": {
+    "n": 10000,
+    "bonafide": 1030,
+    "spoof": 8970,
+    "threshold": 0.1990397870540619,
+    "tn": 836,
+    "fp": 194,
+    "fn": 1880,
+    "tp": 7090,
+    "far": 0.1883495145631068,
+    "frr": 0.20958751393534003,
+    "accuracy": 0.7926,
+    "roc_auc": 0.888638287279064,
+    "diagnostic_eer": 0.20191847690792397,
+    "balanced_accuracy": 0.8010314857507765,
+    "spoof_recall": 0.79041248606466,
+    "bona_fide_fpr": 0.1883495145631068,
+    "pooled_eer": {
+      "eer": 0.20191847690792397,
+      "threshold": -0.01642075926065445,
+      "far": 0.20194174757281552,
+      "frr": 0.20189520624303237,
+      "method": "nearest finite empirical ROC; mean FAR/FRR"
+    },
+    "per_attack": {
+      "A07": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.02445476290980725,
+          "threshold": 4.216392517089844,
+          "far": 0.024271844660194174,
+          "frr": 0.024637681159420333,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.0,
+        "spoof_recall": 1.0
+      },
+      "A08": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.053510623329112106,
+          "threshold": 3.020350456237793,
+          "far": 0.05339805825242718,
+          "frr": 0.05362318840579705,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.021739130434782608,
+        "spoof_recall": 0.9782608695652174
+      },
+      "A09": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.020339102293513434,
+          "threshold": 4.395792484283447,
+          "far": 0.020388349514563107,
+          "frr": 0.020289855072463725,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.004347826086956522,
+        "spoof_recall": 0.9956521739130435
+      },
+      "A10": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.22736034895173773,
+          "threshold": -0.3842126429080963,
+          "far": 0.22718446601941747,
+          "frr": 0.22753623188405792,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.28840579710144926,
+        "spoof_recall": 0.7115942028985507
+      },
+      "A11": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.0854720697903476,
+          "threshold": 2.037362813949585,
+          "far": 0.0854368932038835,
+          "frr": 0.08550724637681162,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.034782608695652174,
+        "spoof_recall": 0.9652173913043478
+      },
+      "A12": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.3663430420711974,
+          "threshold": -2.661433458328247,
+          "far": 0.36601941747572814,
+          "frr": 0.3666666666666667,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.6333333333333333,
+        "spoof_recall": 0.36666666666666664
+      },
+      "A13": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.29128324187420845,
+          "threshold": -1.4443191289901733,
+          "far": 0.2912621359223301,
+          "frr": 0.29130434782608694,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.42028985507246375,
+        "spoof_recall": 0.5797101449275363
+      },
+      "A14": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.24939496271281836,
+          "threshold": -0.872594952583313,
+          "far": 0.24951456310679612,
+          "frr": 0.24927536231884062,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.2971014492753623,
+        "spoof_recall": 0.7028985507246377
+      },
+      "A15": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.30290558604193046,
+          "threshold": -1.5903116464614868,
+          "far": 0.3029126213592233,
+          "frr": 0.30289855072463767,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.4434782608695652,
+        "spoof_recall": 0.5565217391304348
+      },
+      "A16": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.05641620937104258,
+          "threshold": 2.9406676292419434,
+          "far": 0.05631067961165048,
+          "frr": 0.05652173913043479,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.011594202898550725,
+        "spoof_recall": 0.9884057971014493
+      },
+      "A17": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.36222738145490363,
+          "threshold": -2.5916037559509277,
+          "far": 0.36213592233009706,
+          "frr": 0.3623188405797102,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.553623188405797,
+        "spoof_recall": 0.4463768115942029
+      },
+      "A18": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.02445476290980725,
+          "threshold": 4.019259452819824,
+          "far": 0.024271844660194174,
+          "frr": 0.024637681159420333,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.0014492753623188406,
+        "spoof_recall": 0.9985507246376811
+      },
+      "A19": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.05060503728718169,
+          "threshold": 3.2768774032592773,
+          "far": 0.05048543689320388,
+          "frr": 0.050724637681159424,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.014492753623188406,
+        "spoof_recall": 0.9855072463768116
+      }
+    }
+  },
+  "SVM": {
+    "n": 10000,
+    "bonafide": 1030,
+    "spoof": 8970,
+    "threshold": 0.8227455542399777,
+    "tn": 541,
+    "fp": 489,
+    "fn": 1134,
+    "tp": 7836,
+    "far": 0.4747572815533981,
+    "frr": 0.12642140468227425,
+    "accuracy": 0.8377,
+    "roc_auc": 0.7645467632128671,
+    "diagnostic_eer": 0.30389269517593703,
+    "balanced_accuracy": 0.6994106568821639,
+    "spoof_recall": 0.8735785953177257,
+    "bona_fide_fpr": 0.4747572815533981,
+    "pooled_eer": {
+      "eer": 0.30389269517593703,
+      "threshold": 0.8777681639623947,
+      "far": 0.30388349514563107,
+      "frr": 0.303901895206243,
+      "method": "nearest finite empirical ROC; mean FAR/FRR"
+    },
+    "per_attack": {
+      "A07": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.27675531166455614,
+          "threshold": 0.8780724000033666,
+          "far": 0.2766990291262136,
+          "frr": 0.2768115942028986,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.043478260869565216,
+        "spoof_recall": 0.9565217391304348
+      },
+      "A08": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.2953989024905023,
+          "threshold": 0.8778221368294696,
+          "far": 0.29514563106796116,
+          "frr": 0.29565217391304344,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.002898550724637681,
+        "spoof_recall": 0.9971014492753624
+      },
+      "A09": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.2755452370901928,
+          "threshold": 0.8781620202604922,
+          "far": 0.2757281553398058,
+          "frr": 0.2753623188405797,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.0014492753623188406,
+        "spoof_recall": 0.9985507246376811
+      },
+      "A10": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.27215421415505836,
+          "threshold": 0.8783329667487882,
+          "far": 0.27184466019417475,
+          "frr": 0.2724637681159421,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.02753623188405797,
+        "spoof_recall": 0.972463768115942
+      },
+      "A11": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.2651329674968341,
+          "threshold": 0.8785264405075347,
+          "far": 0.2650485436893204,
+          "frr": 0.26521739130434785,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.007246376811594203,
+        "spoof_recall": 0.9927536231884058
+      },
+      "A12": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.27384972562262555,
+          "threshold": 0.8782214254323407,
+          "far": 0.2737864077669903,
+          "frr": 0.27391304347826084,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.03188405797101449,
+        "spoof_recall": 0.9681159420289855
+      },
+      "A13": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.27384972562262555,
+          "threshold": 0.8782214254323407,
+          "far": 0.2737864077669903,
+          "frr": 0.27391304347826084,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.008695652173913044,
+        "spoof_recall": 0.991304347826087
+      },
+      "A14": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.21743351625158297,
+          "threshold": 0.8866616933996294,
+          "far": 0.2174757281553398,
+          "frr": 0.21739130434782605,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.007246376811594203,
+        "spoof_recall": 0.9927536231884058
+      },
+      "A15": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.22784578584494164,
+          "threshold": 0.882769604994971,
+          "far": 0.22815533980582525,
+          "frr": 0.22753623188405792,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.013043478260869565,
+        "spoof_recall": 0.9869565217391304
+      },
+      "A16": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.2581117208386098,
+          "threshold": 0.8789023509418991,
+          "far": 0.258252427184466,
+          "frr": 0.2579710144927536,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.04782608695652174,
+        "spoof_recall": 0.9521739130434783
+      },
+      "A17": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.44479386520332065,
+          "threshold": 0.856819994759928,
+          "far": 0.4446601941747573,
+          "frr": 0.4449275362318841,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.4072463768115942,
+        "spoof_recall": 0.5927536231884057
+      },
+      "A18": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.488377655832278,
+          "threshold": 0.8099349658880037,
+          "far": 0.4883495145631068,
+          "frr": 0.48840579710144927,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.4985507246376812,
+        "spoof_recall": 0.5014492753623189
+      },
+      "A19": {
+        "n_spoof": 690,
+        "shared_bona_fide_n": 1030,
+        "eer": {
+          "eer": 0.5070212466582242,
+          "threshold": 0.7923147516362024,
+          "far": 0.5067961165048543,
+          "frr": 0.5072463768115942,
+          "method": "nearest finite empirical ROC; mean FAR/FRR"
+        },
+        "miss_rate": 0.5463768115942029,
+        "spoof_recall": 0.45362318840579713
+      }
+    }
+  },
+  "runtime": {
+    "wall_seconds": 167.61217350000152,
+    "waveform_generation_or_validation_seconds": 58.990122899849666,
+    "waveform_components": {
+      "source_decode_seconds": 13.836360999946919,
+      "transform_encode_decode_seconds": 0.737464700028795,
+      "waveform_disk_seconds": 21.381315300051938,
+      "waveform_validation_seconds": 9.827894499885588
+    },
+    "cnn_feature_cache_seconds": 40.51442880012473,
+    "svm_feature_cache_seconds": 40.62203519998002,
+    "cnn_inference_seconds": 22.583157000008214,
+    "svm_inference_seconds": 4.746361000023171,
+    "optimization_equivalence": {
+      "clips_checked": 20,
+      "max_waveform_roundtrip_abs_diff": 0.0,
+      "max_cnn_feature_abs_diff": 0.0,
+      "max_svm_feature_abs_diff": 0.0,
+      "previous_mp3_64_waveform_abs_diff": null,
+      "previous_mp3_64_cnn_feature_abs_diff": null,
+      "previous_mp3_64_svm_feature_abs_diff": null
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "all_partition_cue_extraction_seconds": 231.5035244999999,
+  "fit_dev_selection_eval_seconds_including_cue_arrays": 232.08883889999925,
+  "threshold_selected_on_dev": -0.027975853990524976,
+  "features": [
+    "duration_seconds",
+    "leading_silence_seconds_at_-40_dBFS",
+    "waveform_RMS"
+  ],
+  "results": {
+    "dev": {
+      "n": 24844,
+      "bonafide": 2548,
+      "spoof": 22296,
+      "threshold": -0.027975853990524976,
+      "tn": 1648,
+      "fp": 900,
+      "fn": 7875,
+      "tp": 14421,
+      "far": 0.3532182103610675,
+      "frr": 0.35320236813778255,
+      "accuracy": 0.6467960070842055,
+      "roc_auc": 0.6869967629761187,
+      "diagnostic_eer": 0.35321028924942505,
+      "eer": {
+        "eer": 0.35321028924942505,
+        "threshold": -0.027975853990524976,
+        "far": 0.3532182103610675,
+        "frr": 0.3532023681377826,
+        "method": "nearest finite empirical ROC; mean FAR/FRR"
+      },
+      "spoof_recall": 0.6467976318622174,
+      "bona_fide_fpr": 0.3532182103610675
+    },
+    "eval": {
+      "n": 71237,
+      "bonafide": 7355,
+      "spoof": 63882,
+      "threshold": -0.027975853990524976,
+      "tn": 4878,
+      "fp": 2477,
+      "fn": 7411,
+      "tp": 56471,
+      "far": 0.33677770224337183,
+      "frr": 0.1160107698569237,
+      "accuracy": 0.8611957269396522,
+      "roc_auc": 0.8688842453000796,
+      "diagnostic_eer": 0.1730743169377275,
+      "eer": {
+        "eer": 0.1730743169377275,
+        "threshold": 0.12781247818119595,
+        "far": 0.17307953772943577,
+        "frr": 0.17306909614601917,
+        "method": "nearest finite empirical ROC; mean FAR/FRR"
+      },
+      "spoof_recall": 0.8839892301430763,
+      "bona_fide_fpr": 0.33677770224337183
+    }
+  }
+}

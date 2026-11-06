@@ -1,0 +1,15 @@
+{
+  "model.joblib": {
+    "original_sha256": "51f67bf06ca01307ed44c6c10eb9e4937466ba770277c53b57ff71938535bf5e",
+    "phase4_copy_sha256": "51f67bf06ca01307ed44c6c10eb9e4937466ba770277c53b57ff71938535bf5e",
+    "identical": true,
+    "bytes": 4268938
+  },
+  "scaler.joblib": {
+    "original_sha256": "37da090cbb2788689d32ed4a2e7fb32264418184470fe5b5d55e03e6587d2b11",
+    "phase4_copy_sha256": "37da090cbb2788689d32ed4a2e7fb32264418184470fe5b5d55e03e6587d2b11",
+    "identical": true,
+    "bytes": 3495
+  },
+  "model_matches_phase2_artifact_sha256": true
+}

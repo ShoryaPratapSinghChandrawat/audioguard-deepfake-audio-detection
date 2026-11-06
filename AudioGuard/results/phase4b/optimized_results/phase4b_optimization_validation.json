@@ -1,0 +1,109 @@
+{
+  "feature_waveform_validation_clips_per_condition": 20,
+  "batch_inference_validation_clips_per_condition": 32,
+  "reference_batch_size": 32,
+  "inference_equivalence": {
+    "noise_20dB": {
+      "cnn_batch_vs_saved_max_abs": 0.0,
+      "svm_batch_vs_saved_max_abs": 0.0
+    },
+    "noise_10dB": {
+      "cnn_batch_vs_saved_max_abs": 0.0,
+      "svm_batch_vs_saved_max_abs": 0.0
+    },
+    "noise_0dB": {
+      "cnn_batch_vs_saved_max_abs": 0.0,
+      "svm_batch_vs_saved_max_abs": 0.0
+    },
+    "mp3_128kbps": {
+      "cnn_batch_vs_saved_max_abs": 0.0,
+      "svm_batch_vs_saved_max_abs": 0.0
+    },
+    "mp3_64kbps": {
+      "cnn_batch_vs_saved_max_abs": 0.0,
+      "svm_batch_vs_saved_max_abs": 0.0
+    },
+    "trimmed": {
+      "cnn_batch_vs_saved_max_abs": 0.0,
+      "svm_batch_vs_saved_max_abs": 0.0
+    }
+  },
+  "mp3_roundtrip": {
+    "mp3_128kbps": {
+      "clips": 20,
+      "sample_count_delta_min": 0,
+      "sample_count_delta_max": 8,
+      "clips_with_length_change": 2,
+      "mean_common_prefix_error_rms": 0.006359331570134142,
+      "max_common_prefix_error_rms": 0.010515390867515136
+    },
+    "mp3_64kbps": {
+      "clips": 20,
+      "sample_count_delta_min": 0,
+      "sample_count_delta_max": 8,
+      "clips_with_length_change": 2,
+      "mean_common_prefix_error_rms": 0.006778780420585053,
+      "max_common_prefix_error_rms": 0.011637372187918294
+    }
+  },
+  "ffmpeg_version": "ffmpeg version 4.2.2 Copyright (c) 2000-2019 the FFmpeg developers",
+  "mp3_encoder": "libmp3lame",
+  "sample_rate": 16000,
+  "score_tolerance": 1e-06,
+  "waveform_feature_max_abs_diff_by_condition": {
+    "noise_20dB": {
+      "clips_checked": 20,
+      "max_waveform_roundtrip_abs_diff": 0.0,
+      "max_cnn_feature_abs_diff": 0.0,
+      "max_svm_feature_abs_diff": 0.0,
+      "previous_mp3_64_waveform_abs_diff": null,
+      "previous_mp3_64_cnn_feature_abs_diff": null,
+      "previous_mp3_64_svm_feature_abs_diff": null
+    },
+    "noise_10dB": {
+      "clips_checked": 20,
+      "max_waveform_roundtrip_abs_diff": 0.0,
+      "max_cnn_feature_abs_diff": 0.0,
+      "max_svm_feature_abs_diff": 0.0,
+      "previous_mp3_64_waveform_abs_diff": null,
+      "previous_mp3_64_cnn_feature_abs_diff": null,
+      "previous_mp3_64_svm_feature_abs_diff": null
+    },
+    "noise_0dB": {
+      "clips_checked": 20,
+      "max_waveform_roundtrip_abs_diff": 0.0,
+      "max_cnn_feature_abs_diff": 0.0,
+      "max_svm_feature_abs_diff": 0.0,
+      "previous_mp3_64_waveform_abs_diff": null,
+      "previous_mp3_64_cnn_feature_abs_diff": null,
+      "previous_mp3_64_svm_feature_abs_diff": null
+    },
+    "mp3_128kbps": {
+      "clips_checked": 20,
+      "max_waveform_roundtrip_abs_diff": 0.0,
+      "max_cnn_feature_abs_diff": 0.0,
+      "max_svm_feature_abs_diff": 0.0,
+      "previous_mp3_64_waveform_abs_diff": null,
+      "previous_mp3_64_cnn_feature_abs_diff": null,
+      "previous_mp3_64_svm_feature_abs_diff": null
+    },
+    "mp3_64kbps": {
+      "clips_checked": 20,
+      "max_waveform_roundtrip_abs_diff": 0.0,
+      "max_cnn_feature_abs_diff": 0.0,
+      "max_svm_feature_abs_diff": 0.0,
+      "previous_mp3_64_waveform_abs_diff": 0.0,
+      "previous_mp3_64_cnn_feature_abs_diff": 0.0,
+      "previous_mp3_64_svm_feature_abs_diff": 0.0
+    },
+    "trimmed": {
+      "clips_checked": 20,
+      "max_waveform_roundtrip_abs_diff": 0.0,
+      "max_cnn_feature_abs_diff": 0.0,
+      "max_svm_feature_abs_diff": 0.0,
+      "previous_mp3_64_waveform_abs_diff": null,
+      "previous_mp3_64_cnn_feature_abs_diff": null,
+      "previous_mp3_64_svm_feature_abs_diff": null
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "AudioGuard/results/real_cnn_logmel/cnn_logmel/model.pt": {
+    "sha256_after_staging": "73547c913e80a3a1fa03b91d5bb1b843022cf6140472e6a1ae57cfa4bbad9893",
+    "identical": true
+  },
+  "AudioGuard/results/real_cnn_logmel/cnn_logmel/scaler.npz": {
+    "sha256_after_staging": "7d88e55a521c6272610f3886d5b1eabe7bb31ce29bb74e3370a1af1c85266663",
+    "identical": true
+  },
+  "AudioGuard/results/real_cnn_logmel/cnn_logmel/training.json": {
+    "sha256_after_staging": "1bcef2b28742d9806adf4fdd9f696296ca7a8269b941172bc6f0ed1e70369fb3",
+    "identical": true
+  },
+  "AudioGuard/results/real_cnn_logmel/resolved_config_resume.json": {
+    "sha256_after_staging": "2bc639610807aa681df6bba510da81549174bcb624b39257c85b55296061724b",
+    "identical": true
+  },
+  "AudioGuard/results/real_cnn_logmel/pos_weight_train.json": {
+    "sha256_after_staging": "a9c8b5b55059eb876a10c5b2bdc72191fd3e7ad14abf8d381d4502e48bc47ffc",
+    "identical": true
+  },
+  "AudioGuard/results/real_cnn_logmel/cnn_logmel/sanity.json": {
+    "sha256_after_staging": "8dbfebcd5e39932acdfdba82398b01eef184a4b064594b559ffb47b799f61933",
+    "identical": true
+  }
+}
