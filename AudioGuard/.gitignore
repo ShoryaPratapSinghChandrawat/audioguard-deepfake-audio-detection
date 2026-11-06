@@ -11,3 +11,12 @@ __pycache__/
 .pytest_cache/
 *.pyc
 *.zip
+
+configs/*.local.yaml
+
+# Per-clip score CSVs are local verification data; never commit them, regardless of size.
+results/real_svm/svm_mfcc/dev_scores.csv
+results/real_svm/svm_mfcc/eval_clean_scores.csv
+
+# Phase 2.5 explicitly force-stages this named report when generated.
+# results/real_svm/phase2_addendum.md
