@@ -144,12 +144,20 @@ def test_loaded_models_reject_tampering(tmp_path):
         load_model(tmp_path, meta)
 
 
-def test_source_zip_contains_data_and_model_code():
+def test_source_zip_contains_data_and_model_code(tmp_path):
     import subprocess
     import sys
     from zipfile import ZipFile
-    subprocess.run([sys.executable, "scripts/package.py"], check=True, capture_output=True)
-    with ZipFile("../AudioGuard-source.zip") as archive:
+    project_root = Path(__file__).resolve().parents[1]
+    tracked_manifest = project_root / "MANIFEST.sha256.json"
+    manifest_before = tracked_manifest.read_bytes()
+    output_dir = tmp_path / "package"
+    subprocess.run(
+        [sys.executable, "scripts/package.py", "--output-dir", str(output_dir)],
+        check=True,
+        capture_output=True,
+    )
+    with ZipFile(output_dir / "AudioGuard-source.zip") as archive:
         names = set(archive.namelist())
         assert "AudioGuard/src/data/protocol.py" in names
         assert "AudioGuard/src/models/cnn.py" in names
@@ -160,3 +168,4 @@ def test_source_zip_contains_data_and_model_code():
         import hashlib
         for path, expected in manifest.items():
             assert hashlib.sha256(archive.read("AudioGuard/" + path)).hexdigest() == expected
+    assert tracked_manifest.read_bytes() == manifest_before
