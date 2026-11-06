@@ -1,0 +1,287 @@
+{
+  "status": "passed",
+  "train_only": true,
+  "samples": 64,
+  "utterances": [
+    "LA_T_2545938",
+    "LA_T_9219481",
+    "LA_T_8631342",
+    "LA_T_6704810",
+    "LA_T_8025784",
+    "LA_T_6774071",
+    "LA_T_6684256",
+    "LA_T_8374631",
+    "LA_T_3624315",
+    "LA_T_1797843",
+    "LA_T_9644594",
+    "LA_T_2547751",
+    "LA_T_7740663",
+    "LA_T_5688847",
+    "LA_T_1669827",
+    "LA_T_6441166",
+    "LA_T_8520270",
+    "LA_T_7374710",
+    "LA_T_7474358",
+    "LA_T_3508808",
+    "LA_T_1947138",
+    "LA_T_1269462",
+    "LA_T_7222998",
+    "LA_T_8405652",
+    "LA_T_5148524",
+    "LA_T_6670899",
+    "LA_T_4255653",
+    "LA_T_4215705",
+    "LA_T_4123333",
+    "LA_T_6742582",
+    "LA_T_9047102",
+    "LA_T_2441274",
+    "LA_T_9054425",
+    "LA_T_3813028",
+    "LA_T_8127280",
+    "LA_T_9582904",
+    "LA_T_2858016",
+    "LA_T_5724131",
+    "LA_T_5134436",
+    "LA_T_6635819",
+    "LA_T_4672943",
+    "LA_T_7230881",
+    "LA_T_4742309",
+    "LA_T_6217090",
+    "LA_T_3050892",
+    "LA_T_4637300",
+    "LA_T_6349300",
+    "LA_T_6065801",
+    "LA_T_7275220",
+    "LA_T_3352541",
+    "LA_T_4823694",
+    "LA_T_5224670",
+    "LA_T_5832256",
+    "LA_T_8104376",
+    "LA_T_1963537",
+    "LA_T_9489221",
+    "LA_T_8816430",
+    "LA_T_3861482",
+    "LA_T_4864122",
+    "LA_T_1038101",
+    "LA_T_5404386",
+    "LA_T_1713000",
+    "LA_T_6448583",
+    "LA_T_4083542"
+  ],
+  "history": [
+    {
+      "epoch": 1,
+      "loss": 0.6731206774711609,
+      "accuracy": 0.609375,
+      "n": 64
+    },
+    {
+      "epoch": 2,
+      "loss": 0.6532594710588455,
+      "accuracy": 0.625,
+      "n": 64
+    },
+    {
+      "epoch": 3,
+      "loss": 0.6382458508014679,
+      "accuracy": 0.703125,
+      "n": 64
+    },
+    {
+      "epoch": 4,
+      "loss": 0.6756542026996613,
+      "accuracy": 0.65625,
+      "n": 64
+    },
+    {
+      "epoch": 5,
+      "loss": 0.5872270911931992,
+      "accuracy": 0.625,
+      "n": 64
+    },
+    {
+      "epoch": 6,
+      "loss": 1.5019967462867498,
+      "accuracy": 0.5,
+      "n": 64
+    },
+    {
+      "epoch": 7,
+      "loss": 1.1572936996817589,
+      "accuracy": 0.5,
+      "n": 64
+    },
+    {
+      "epoch": 8,
+      "loss": 2.6642613576259464,
+      "accuracy": 0.5,
+      "n": 64
+    },
+    {
+      "epoch": 9,
+      "loss": 4.848692334780935,
+      "accuracy": 0.5,
+      "n": 64
+    },
+    {
+      "epoch": 10,
+      "loss": 4.1642942320904694,
+      "accuracy": 0.5,
+      "n": 64
+    },
+    {
+      "epoch": 11,
+      "loss": 4.247747476241784,
+      "accuracy": 0.5,
+      "n": 64
+    },
+    {
+      "epoch": 12,
+      "loss": 2.1870437739416957,
+      "accuracy": 0.5,
+      "n": 64
+    },
+    {
+      "epoch": 13,
+      "loss": 2.1368753886781633,
+      "accuracy": 0.5,
+      "n": 64
+    },
+    {
+      "epoch": 14,
+      "loss": 2.170939487637952,
+      "accuracy": 0.5,
+      "n": 64
+    },
+    {
+      "epoch": 15,
+      "loss": 3.2617370181251317,
+      "accuracy": 0.5,
+      "n": 64
+    },
+    {
+      "epoch": 16,
+      "loss": 2.155639285570942,
+      "accuracy": 0.5,
+      "n": 64
+    },
+    {
+      "epoch": 17,
+      "loss": 1.5237949755974114,
+      "accuracy": 0.53125,
+      "n": 64
+    },
+    {
+      "epoch": 18,
+      "loss": 0.15184240555390716,
+      "accuracy": 0.953125,
+      "n": 64
+    }
+  ],
+  "scope": "official_ASVspoof_LA_pending_user_protocol_verification",
+  "config": {
+    "seed": 2026,
+    "scope": "official_ASVspoof_LA_pending_user_protocol_verification",
+    "dataset_config": "configs/baseline.local.yaml",
+    "features_config": "configs/features_cnn_logmel.local.yaml",
+    "output": "results/real_cnn_logmel",
+    "models": [
+      "cnn_logmel"
+    ],
+    "svm": {
+      "C": 1.0,
+      "kernel": "rbf",
+      "gamma": "scale",
+      "class_weight": "balanced"
+    },
+    "shortcut": {
+      "C": 1.0,
+      "max_iter": 1000,
+      "class_weight": "balanced",
+      "silence_dbfs": -40.0
+    },
+    "cnn": {
+      "channels": [
+        16,
+        32,
+        64,
+        128
+      ],
+      "dropout": 0.3,
+      "frames": 400,
+      "batch_size": 32,
+      "epochs": 50,
+      "learning_rate": 0.001,
+      "weight_decay": 0.01,
+      "patience": 7,
+      "min_delta": 0.0001,
+      "device": "auto",
+      "num_workers": 0,
+      "cpu_threads": 2,
+      "sanity": {
+        "samples": 64,
+        "epochs": 200,
+        "learning_rate": 0.01,
+        "minimum_accuracy": 0.95,
+        "maximum_loss": 0.2
+      }
+    },
+    "analysis": {
+      "top_errors": 20,
+      "trim_dbfs": -40.0,
+      "noise_snr_db": [
+        20,
+        10,
+        0
+      ],
+      "mp3_bitrates_kbps": [
+        64,
+        32
+      ],
+      "seed": 2026
+    },
+    "attack_reuse_evidence": null,
+    "dataset": {
+      "root": "C:/Games/projects/LA/LA",
+      "protocols": {
+        "train": "C:/Games/projects/LA/LA/ASVspoof2019_LA_cm_protocols/ASVspoof2019.LA.cm.train.trn.txt",
+        "dev": "C:/Games/projects/LA/LA/ASVspoof2019_LA_cm_protocols/ASVspoof2019.LA.cm.dev.trl.txt",
+        "eval": "C:/Games/projects/LA/LA/ASVspoof2019_LA_cm_protocols/ASVspoof2019.LA.cm.eval.trl.txt"
+      },
+      "audio_roots": {
+        "train": "C:/Games/projects/LA/LA/ASVspoof2019_LA_train/flac",
+        "dev": "C:/Games/projects/LA/LA/ASVspoof2019_LA_dev/flac",
+        "eval": "C:/Games/projects/LA/LA/ASVspoof2019_LA_eval/flac"
+      },
+      "max_samples_per_partition": null
+    },
+    "frontend": {
+      "sample_rate": 16000,
+      "n_fft": 512,
+      "win_length": 512,
+      "hop_length": 160,
+      "n_mels": 64,
+      "f_min": 0.0,
+      "f_max": 8000.0,
+      "eps": 1e-08,
+      "n_mfcc": 20,
+      "delta_width": 9,
+      "cache_dir": "data/feature_cache_cnn_logmel"
+    }
+  },
+  "counts": {
+    "total": 25380,
+    "bonafide": 2580,
+    "spoof": 22800,
+    "speakers": 20,
+    "attacks": {
+      "A04": 3800,
+      "-": 2580,
+      "A01": 3800,
+      "A03": 3800,
+      "A05": 3800,
+      "A02": 3800,
+      "A06": 3800
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "counts_train": {
+    "target_0_bona_fide": 2580,
+    "target_1_spoof": 22800
+  },
+  "exact_full_precision_repr": "0.11315789473684211",
+  "float_hex": "0x1.cf7ea712dcf7fp-4",
+  "formula": "number of target=0 TRAIN clips / number of target=1 TRAIN clips",
+  "target_encoding": {
+    "0": "bona fide",
+    "1": "spoof"
+  },
+  "value": 0.11315789473684211
+}
