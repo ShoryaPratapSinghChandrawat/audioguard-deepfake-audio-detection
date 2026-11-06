@@ -9,6 +9,7 @@ import torch
 from torch import nn
 from torch.utils.data import Dataset, DataLoader
 from src.features.acoustic import cached
+from src.evaluation.metrics import empirical_eer
 
 
 class SmallCNN(nn.Module):
@@ -86,9 +87,10 @@ def make_loader(rows, features, kind, scaler, cfg, shuffle=False, seed=0):
                       num_workers=cfg["num_workers"], generator=generator)
 
 
-def epoch(model, loader, loss_fn, device, optimizer=None):
+def epoch(model, loader, loss_fn, device, optimizer=None, return_scores=False):
     model.train(optimizer is not None)
     total, correct, count = 0., 0, 0
+    scores, labels = [], []
     with torch.set_grad_enabled(optimizer is not None):
         for x, y in loader:
             x, y = x.to(device), y.to(device)
@@ -102,7 +104,11 @@ def epoch(model, loader, loss_fn, device, optimizer=None):
             total += float(loss.detach()) * len(y)
             correct += int(((logits >= 0) == (y == 1)).sum())
             count += len(y)
-    return {"loss": total/count, "accuracy": correct/count, "n": count}
+            if return_scores:
+                scores.extend(logits.detach().cpu().tolist())
+                labels.extend(y.detach().cpu().tolist())
+    result = {"loss": total/count, "accuracy": correct/count, "n": count}
+    return (result, (np.asarray(labels), np.asarray(scores))) if return_scores else result
 
 
 def balanced_sanity_rows(rows, count, seed):
@@ -158,8 +164,11 @@ def fit(train, dev, features, kind, scaler, cfg, seed, device):
     history, best, stale, state, best_epoch = [], float("inf"), 0, None, None
     for index in range(cfg["epochs"]):
         tr = epoch(model, training, loss_fn, device, optimizer)
-        dv = epoch(model, validation, loss_fn, device)
-        history.append({"epoch": index+1, "train": tr, "dev": dv})
+        dv, (dev_labels, dev_scores) = epoch(model, validation, loss_fn, device, return_scores=True)
+        dev_eer = empirical_eer(dev_labels, dev_scores)["eer"]
+        history.append({"epoch": index+1, "train": tr, "dev": dv, "dev_eer": dev_eer})
+        print(f"Epoch {index+1}/{cfg['epochs']}: train_loss={tr['loss']:.8f} "
+              f"dev_loss={dv['loss']:.8f} dev_eer={dev_eer:.8f}", flush=True)
         if dv["loss"] < best - cfg["min_delta"]:
             best, stale, best_epoch = dv["loss"], 0, index+1
             state = {name: value.detach().cpu().clone() for name, value in model.state_dict().items()}
@@ -177,5 +186,5 @@ def predict(model, rows, features, kind, scaler, cfg, device):
     values = []
     with torch.no_grad():
         for x, _ in make_loader(rows, features, kind, scaler, cfg):
-            values.extend(torch.sigmoid(model(x.to(device))).cpu().tolist())
+            values.extend(model(x.to(device)).cpu().tolist())
     return np.asarray(values)

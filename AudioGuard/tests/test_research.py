@@ -62,6 +62,20 @@ def test_cnn_both_inputs_and_logits():
     assert tensor_input(np.ones((60, 2)), scaler, 64).shape == (1, 60, 64)
 
 
+def test_cnn_predict_returns_raw_logits(monkeypatch):
+    from src.models import cnn
+    cfg = load_config("configs/research.yaml")["cnn"]
+    torch.set_num_threads(1)
+    model = SmallCNN(cfg).eval()
+    batch = torch.ones(2, 1, 64, 64)
+    monkeypatch.setattr(cnn, "make_loader", lambda *a, **k: [(batch, torch.zeros(2))])
+    with torch.no_grad():
+        expected = model(batch).numpy()
+    actual = cnn.predict(model, [{}, {}], {}, "logmel", {}, cfg, "cpu")
+    assert np.allclose(actual, expected)
+    assert not np.allclose(actual, torch.sigmoid(torch.from_numpy(expected)).numpy())
+
+
 def test_sanity_unique_and_train_only():
     rows = [{"partition": "train", "label": i % 2, "utterance": str(i)} for i in range(80)]
     selected = balanced_sanity_rows(rows, 64, 1)
@@ -118,19 +132,21 @@ def test_early_stop_restores_best_dev_checkpoint(monkeypatch):
     losses, training_calls = iter([.7, .3, .4, .6]), []
     monkeypatch.setattr(cnn, "make_loader", lambda *a, **k: [])
 
-    def fake_epoch(model, loader, loss_fn, device, optimizer=None):
+    def fake_epoch(model, loader, loss_fn, device, optimizer=None, return_scores=False):
         if optimizer is not None:
             training_calls.append(True)
             with torch.no_grad():
                 next(model.parameters()).fill_(len(training_calls))
             return {"loss": .5, "accuracy": .5, "n": 2}
-        return {"loss": next(losses), "accuracy": .5, "n": 2}
+        result = {"loss": next(losses), "accuracy": .5, "n": 2}
+        return (result, (np.array([0, 1]), np.array([-.4, .6]))) if return_scores else result
 
     monkeypatch.setattr(cnn, "epoch", fake_epoch)
     rows = [{"label": 0}, {"label": 1}]
     model, info = cnn.fit(rows, rows, {}, "logmel", {}, cfg, 1, "cpu")
     assert info["best_epoch"] == 2
     assert len(info["history"]) == 4
+    assert all("dev_eer" in row for row in info["history"])
     assert info["pos_weight"] == 1
     assert torch.all(next(model.parameters()) == 2)
 

@@ -29,6 +29,8 @@ def read(path):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", default="configs/research.yaml")
+    parser.add_argument("--skip-demo", action="store_true",
+                        help="verify saved results and checkpoints without constructing the Gradio demo")
     args = parser.parse_args()
     cfg = config(args.config)
     checked = []
@@ -51,11 +53,15 @@ def main():
             for key in ("false_positives", "false_negatives"):
                 assert [r["utterance"] for r in derived["top_errors"][key]] == [r["utterance"] for r in obj["top_errors"][key]]
             checked.append(str(path))
-    from demo.app import build
-    build(Path(cfg["output"]) / cfg["models"][0]).close()
+    demo_built = False
+    if not args.skip_demo:
+        from demo.app import build
+        build(Path(cfg["output"]) / cfg["models"][0]).close()
+        demo_built = True
     write_json(Path(cfg["output"]) / "verification.json", {"status": "passed", "checked_conditions": checked,
-               "dev_thresholds_verified": True, "checkpoints_load": True, "gradio_builds": True})
-    print("Verified metrics, plot arrays, thresholds, checkpoints and demo for:", cfg["models"])
+               "dev_thresholds_verified": True, "checkpoints_load": True, "gradio_builds": demo_built})
+    print("Verified metrics, plot arrays, thresholds and checkpoints for:", cfg["models"])
+    print("Gradio demo built:", demo_built)
 
 
 if __name__ == "__main__":

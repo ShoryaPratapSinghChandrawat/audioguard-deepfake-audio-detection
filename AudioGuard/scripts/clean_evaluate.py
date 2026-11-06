@@ -22,7 +22,7 @@ from src.evaluation.analysis import attack_claims, summary
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", default="configs/research.yaml")
-    parser.add_argument("--model", choices=("svm_mfcc",), default="svm_mfcc")
+    parser.add_argument("--model", choices=("svm_mfcc", "cnn_logmel"), default="svm_mfcc")
     args = parser.parse_args()
 
     cfg = config(args.config)
@@ -47,8 +47,25 @@ def main():
         raise ValueError("Protocols changed after training")
 
     model, scaler, device = load_model(out, meta)
-    svc = model[-1]
-    classes = [int(value) for value in svc.classes_]
+    if name == "svm_mfcc":
+        svc = model[-1]
+        classes = [int(value) for value in svc.classes_]
+        polarity = {
+            "score_type": "SVM decision function",
+            "classes": classes,
+            "expected_classes_order": [0, 1],
+            "classes_order_matches_expected": classes == [0, 1],
+            "higher_score_means_spoof": classes[-1] == 1,
+            "raw_scores_reversed": False,
+        }
+    else:
+        classes = [0, 1]
+        polarity = {
+            "score_type": "raw CNN logit",
+            "target_encoding": {"0": "bona fide", "1": "spoof"},
+            "higher_score_means_spoof": True,
+            "raw_scores_reversed": False,
+        }
     scores = predict_rows(data["eval"], cfg, name, model, scaler, device)
     scores = np.asarray(scores, dtype=np.float64)
     if scores.shape != (len(data["eval"]),) or not np.isfinite(scores).all():
@@ -68,14 +85,7 @@ def main():
         "threshold_source": "complete clean DEV only; frozen before EVAL scoring",
         "artifact_sha256": meta["artifact_sha256"],
         "attack_verification": annotation,
-        "score_polarity": {
-            "svc_classes": classes,
-            "expected_classes_order": [0, 1],
-            "classes_order_matches_expected": classes == [0, 1],
-            "decision_function_positive_class": classes[-1],
-            "higher_score_means_spoof_by_classes_order": classes[-1] == 1,
-            "raw_scores_reversed": False,
-        },
+        "score_polarity": polarity,
     }
     result.update(summary(data["eval"], scores, threshold, cfg["analysis"]["top_errors"]))
     write_json(result_path, result)
@@ -85,7 +95,7 @@ def main():
         "n": len(data["eval"]),
         "threshold_source": result["threshold_source"],
         "threshold": threshold,
-        "svc_classes": classes,
+        "score_polarity": polarity,
         "scores_csv": str(scores_path),
         "result_json": str(result_path),
     }, indent=2))
