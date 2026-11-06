@@ -1,0 +1,940 @@
+{
+  "model": "svm_mfcc",
+  "threshold_source": "complete clean DEV only; frozen before EVAL",
+  "threshold": 0.8227455542399777,
+  "dev": {
+    "n": 24844,
+    "bonafide": 2548,
+    "spoof": 22296,
+    "threshold": 0.8227455542399777,
+    "confusion_matrix": [
+      [
+        2338,
+        210
+      ],
+      [
+        1838,
+        20458
+      ]
+    ],
+    "tn": 2338,
+    "fp": 210,
+    "fn": 1838,
+    "tp": 20458,
+    "precision_by_class": {
+      "bonafide": 0.5598659003831418,
+      "spoof": 0.989839365202245
+    },
+    "recall_by_class": {
+      "bonafide": 0.9175824175824175,
+      "spoof": 0.9175636885540007
+    },
+    "f1_by_class": {
+      "bonafide": 0.6954193932183225,
+      "spoof": 0.9523321850851876
+    },
+    "support_by_class": {
+      "bonafide": 2548,
+      "spoof": 22296
+    },
+    "f1_spoof": 0.9523321850851876,
+    "macro_f1": 0.823875789151755,
+    "balanced_accuracy": 0.9175730530682091,
+    "spoof_false_accept_rate": 0.08243631144599928,
+    "bonafide_false_reject_rate": 0.08241758241758242,
+    "conventional_fpr": 0.08241758241758242,
+    "conventional_fnr": 0.08243631144599928,
+    "roc_auc_original_scores": 0.9719224580202206,
+    "roc_auc_negated_scores_diagnostic": 0.02807754197977942,
+    "pooled_eer": 0.08242694693179081,
+    "pooled_eer_method": "nearest finite empirical ROC; mean FAR/FRR",
+    "rate_definitions": {
+      "TP": "spoof correctly classified as spoof",
+      "FN": "spoof classified as bona fide",
+      "FP": "bona fide classified as spoof",
+      "TN": "bona fide correctly classified as bona fide",
+      "spoof_false_accept_rate": "FN / (TP + FN), per the requested definition",
+      "bonafide_false_reject_rate": "FP / (TN + FP), per the requested definition",
+      "conventional_fpr": "FP / (FP + TN), denominator is all bona fide trials",
+      "conventional_fnr": "FN / (FN + TP), denominator is all spoof trials"
+    }
+  },
+  "eval": {
+    "n": 71237,
+    "bonafide": 7355,
+    "spoof": 63882,
+    "threshold": 0.8227455542399777,
+    "confusion_matrix": [
+      [
+        7028,
+        327
+      ],
+      [
+        13400,
+        50482
+      ]
+    ],
+    "tn": 7028,
+    "fp": 327,
+    "fn": 13400,
+    "tp": 50482,
+    "precision_by_class": {
+      "bonafide": 0.3440375954572156,
+      "spoof": 0.9935641323387588
+    },
+    "recall_by_class": {
+      "bonafide": 0.9555404486743712,
+      "spoof": 0.7902382517767134
+    },
+    "f1_by_class": {
+      "bonafide": 0.5059208868732679,
+      "spoof": 0.8803131893522596
+    },
+    "support_by_class": {
+      "bonafide": 7355,
+      "spoof": 63882
+    },
+    "f1_spoof": 0.8803131893522596,
+    "macro_f1": 0.6931170381127637,
+    "balanced_accuracy": 0.8728893502255423,
+    "spoof_false_accept_rate": 0.2097617482232867,
+    "bonafide_false_reject_rate": 0.04445955132562882,
+    "conventional_fpr": 0.04445955132562882,
+    "conventional_fnr": 0.2097617482232867,
+    "roc_auc_original_scores": 0.9389919798380812,
+    "roc_auc_negated_scores_diagnostic": 0.06100802016191861,
+    "pooled_eer": 0.12782465210170063,
+    "pooled_eer_method": "nearest finite empirical ROC; mean FAR/FRR",
+    "rate_definitions": {
+      "TP": "spoof correctly classified as spoof",
+      "FN": "spoof classified as bona fide",
+      "FP": "bona fide classified as spoof",
+      "TN": "bona fide correctly classified as bona fide",
+      "spoof_false_accept_rate": "FN / (TP + FN), per the requested definition",
+      "bonafide_false_reject_rate": "FP / (TN + FP), per the requested definition",
+      "conventional_fpr": "FP / (FP + TN), denominator is all bona fide trials",
+      "conventional_fnr": "FN / (FN + TP), denominator is all spoof trials"
+    }
+  },
+  "per_attack_eval": {
+    "A07": {
+      "scope": "this spoof attack plus the same shared EVAL bona fide pool",
+      "eer_label": "DIAGNOSTIC; not a deployment threshold",
+      "metrics": {
+        "n": 12269,
+        "bonafide": 7355,
+        "spoof": 4914,
+        "threshold": 0.8227455542399777,
+        "confusion_matrix": [
+          [
+            7028,
+            327
+          ],
+          [
+            500,
+            4414
+          ]
+        ],
+        "tn": 7028,
+        "fp": 327,
+        "fn": 500,
+        "tp": 4414,
+        "precision_by_class": {
+          "bonafide": 0.9335812964930924,
+          "spoof": 0.9310272094494833
+        },
+        "recall_by_class": {
+          "bonafide": 0.9555404486743712,
+          "spoof": 0.8982498982498982
+        },
+        "f1_by_class": {
+          "bonafide": 0.9444332459853524,
+          "spoof": 0.9143448990160539
+        },
+        "support_by_class": {
+          "bonafide": 7355,
+          "spoof": 4914
+        },
+        "f1_spoof": 0.9143448990160539,
+        "macro_f1": 0.9293890725007031,
+        "balanced_accuracy": 0.9268951734621347,
+        "spoof_false_accept_rate": 0.10175010175010175,
+        "bonafide_false_reject_rate": 0.04445955132562882,
+        "conventional_fpr": 0.04445955132562882,
+        "conventional_fnr": 0.10175010175010175,
+        "roc_auc_original_scores": 0.9722385880101719,
+        "roc_auc_negated_scores_diagnostic": 0.027761411989828035,
+        "pooled_eer": 0.0572117649955855,
+        "pooled_eer_method": "nearest finite empirical ROC; mean FAR/FRR",
+        "rate_definitions": {
+          "TP": "spoof correctly classified as spoof",
+          "FN": "spoof classified as bona fide",
+          "FP": "bona fide classified as spoof",
+          "TN": "bona fide correctly classified as bona fide",
+          "spoof_false_accept_rate": "FN / (TP + FN), per the requested definition",
+          "bonafide_false_reject_rate": "FP / (TN + FP), per the requested definition",
+          "conventional_fpr": "FP / (FP + TN), denominator is all bona fide trials",
+          "conventional_fnr": "FN / (FN + TP), denominator is all spoof trials"
+        }
+      }
+    },
+    "A08": {
+      "scope": "this spoof attack plus the same shared EVAL bona fide pool",
+      "eer_label": "DIAGNOSTIC; not a deployment threshold",
+      "metrics": {
+        "n": 12269,
+        "bonafide": 7355,
+        "spoof": 4914,
+        "threshold": 0.8227455542399777,
+        "confusion_matrix": [
+          [
+            7028,
+            327
+          ],
+          [
+            254,
+            4660
+          ]
+        ],
+        "tn": 7028,
+        "fp": 327,
+        "fn": 254,
+        "tp": 4660,
+        "precision_by_class": {
+          "bonafide": 0.9651194726723428,
+          "spoof": 0.9344295167435331
+        },
+        "recall_by_class": {
+          "bonafide": 0.9555404486743712,
+          "spoof": 0.9483109483109483
+        },
+        "f1_by_class": {
+          "bonafide": 0.9603060736489718,
+          "spoof": 0.9413190586809413
+        },
+        "support_by_class": {
+          "bonafide": 7355,
+          "spoof": 4914
+        },
+        "f1_spoof": 0.9413190586809413,
+        "macro_f1": 0.9508125661649566,
+        "balanced_accuracy": 0.9519256984926597,
+        "spoof_false_accept_rate": 0.05168905168905169,
+        "bonafide_false_reject_rate": 0.04445955132562882,
+        "conventional_fpr": 0.04445955132562882,
+        "conventional_fnr": 0.05168905168905169,
+        "roc_auc_original_scores": 0.9867458698865905,
+        "roc_auc_negated_scores_diagnostic": 0.013254130113409512,
+        "pooled_eer": 0.04539591511039509,
+        "pooled_eer_method": "nearest finite empirical ROC; mean FAR/FRR",
+        "rate_definitions": {
+          "TP": "spoof correctly classified as spoof",
+          "FN": "spoof classified as bona fide",
+          "FP": "bona fide classified as spoof",
+          "TN": "bona fide correctly classified as bona fide",
+          "spoof_false_accept_rate": "FN / (TP + FN), per the requested definition",
+          "bonafide_false_reject_rate": "FP / (TN + FP), per the requested definition",
+          "conventional_fpr": "FP / (FP + TN), denominator is all bona fide trials",
+          "conventional_fnr": "FN / (FN + TP), denominator is all spoof trials"
+        }
+      }
+    },
+    "A09": {
+      "scope": "this spoof attack plus the same shared EVAL bona fide pool",
+      "eer_label": "DIAGNOSTIC; not a deployment threshold",
+      "metrics": {
+        "n": 12269,
+        "bonafide": 7355,
+        "spoof": 4914,
+        "threshold": 0.8227455542399777,
+        "confusion_matrix": [
+          [
+            7028,
+            327
+          ],
+          [
+            0,
+            4914
+          ]
+        ],
+        "tn": 7028,
+        "fp": 327,
+        "fn": 0,
+        "tp": 4914,
+        "precision_by_class": {
+          "bonafide": 1.0,
+          "spoof": 0.9376073268460218
+        },
+        "recall_by_class": {
+          "bonafide": 0.9555404486743712,
+          "spoof": 1.0
+        },
+        "f1_by_class": {
+          "bonafide": 0.9772648265313217,
+          "spoof": 0.9677991137370753
+        },
+        "support_by_class": {
+          "bonafide": 7355,
+          "spoof": 4914
+        },
+        "f1_spoof": 0.9677991137370753,
+        "macro_f1": 0.9725319701341986,
+        "balanced_accuracy": 0.9777702243371855,
+        "spoof_false_accept_rate": 0.0,
+        "bonafide_false_reject_rate": 0.04445955132562882,
+        "conventional_fpr": 0.04445955132562882,
+        "conventional_fnr": 0.0,
+        "roc_auc_original_scores": 0.9978242217535216,
+        "roc_auc_negated_scores_diagnostic": 0.002175778246478447,
+        "pooled_eer": 0.02787586183235402,
+        "pooled_eer_method": "nearest finite empirical ROC; mean FAR/FRR",
+        "rate_definitions": {
+          "TP": "spoof correctly classified as spoof",
+          "FN": "spoof classified as bona fide",
+          "FP": "bona fide classified as spoof",
+          "TN": "bona fide correctly classified as bona fide",
+          "spoof_false_accept_rate": "FN / (TP + FN), per the requested definition",
+          "bonafide_false_reject_rate": "FP / (TN + FP), per the requested definition",
+          "conventional_fpr": "FP / (FP + TN), denominator is all bona fide trials",
+          "conventional_fnr": "FN / (FN + TP), denominator is all spoof trials"
+        }
+      }
+    },
+    "A10": {
+      "scope": "this spoof attack plus the same shared EVAL bona fide pool",
+      "eer_label": "DIAGNOSTIC; not a deployment threshold",
+      "metrics": {
+        "n": 12269,
+        "bonafide": 7355,
+        "spoof": 4914,
+        "threshold": 0.8227455542399777,
+        "confusion_matrix": [
+          [
+            7028,
+            327
+          ],
+          [
+            150,
+            4764
+          ]
+        ],
+        "tn": 7028,
+        "fp": 327,
+        "fn": 150,
+        "tp": 4764,
+        "precision_by_class": {
+          "bonafide": 0.9791028141543605,
+          "spoof": 0.9357690041249264
+        },
+        "recall_by_class": {
+          "bonafide": 0.9555404486743712,
+          "spoof": 0.9694749694749695
+        },
+        "f1_by_class": {
+          "bonafide": 0.9671781462877589,
+          "spoof": 0.9523238380809596
+        },
+        "support_by_class": {
+          "bonafide": 7355,
+          "spoof": 4914
+        },
+        "f1_spoof": 0.9523238380809596,
+        "macro_f1": 0.9597509921843592,
+        "balanced_accuracy": 0.9625077090746703,
+        "spoof_false_accept_rate": 0.030525030525030524,
+        "bonafide_false_reject_rate": 0.04445955132562882,
+        "conventional_fpr": 0.04445955132562882,
+        "conventional_fnr": 0.030525030525030524,
+        "roc_auc_original_scores": 0.9800780079502038,
+        "roc_auc_negated_scores_diagnostic": 0.019921992049796264,
+        "pooled_eer": 0.04074430994893269,
+        "pooled_eer_method": "nearest finite empirical ROC; mean FAR/FRR",
+        "rate_definitions": {
+          "TP": "spoof correctly classified as spoof",
+          "FN": "spoof classified as bona fide",
+          "FP": "bona fide classified as spoof",
+          "TN": "bona fide correctly classified as bona fide",
+          "spoof_false_accept_rate": "FN / (TP + FN), per the requested definition",
+          "bonafide_false_reject_rate": "FP / (TN + FP), per the requested definition",
+          "conventional_fpr": "FP / (FP + TN), denominator is all bona fide trials",
+          "conventional_fnr": "FN / (FN + TP), denominator is all spoof trials"
+        }
+      }
+    },
+    "A11": {
+      "scope": "this spoof attack plus the same shared EVAL bona fide pool",
+      "eer_label": "DIAGNOSTIC; not a deployment threshold",
+      "metrics": {
+        "n": 12269,
+        "bonafide": 7355,
+        "spoof": 4914,
+        "threshold": 0.8227455542399777,
+        "confusion_matrix": [
+          [
+            7028,
+            327
+          ],
+          [
+            5,
+            4909
+          ]
+        ],
+        "tn": 7028,
+        "fp": 327,
+        "fn": 5,
+        "tp": 4909,
+        "precision_by_class": {
+          "bonafide": 0.9992890658325039,
+          "spoof": 0.9375477463712758
+        },
+        "recall_by_class": {
+          "bonafide": 0.9555404486743712,
+          "spoof": 0.998982498982499
+        },
+        "f1_by_class": {
+          "bonafide": 0.9769252154573256,
+          "spoof": 0.9672906403940886
+        },
+        "support_by_class": {
+          "bonafide": 7355,
+          "spoof": 4914
+        },
+        "f1_spoof": 0.9672906403940886,
+        "macro_f1": 0.9721079279257071,
+        "balanced_accuracy": 0.9772614738284351,
+        "spoof_false_accept_rate": 0.0010175010175010174,
+        "bonafide_false_reject_rate": 0.04445955132562882,
+        "conventional_fpr": 0.04445955132562882,
+        "conventional_fnr": 0.0010175010175010174,
+        "roc_auc_original_scores": 0.9901729184530002,
+        "roc_auc_negated_scores_diagnostic": 0.009827081546999968,
+        "pooled_eer": 0.03863911348615634,
+        "pooled_eer_method": "nearest finite empirical ROC; mean FAR/FRR",
+        "rate_definitions": {
+          "TP": "spoof correctly classified as spoof",
+          "FN": "spoof classified as bona fide",
+          "FP": "bona fide classified as spoof",
+          "TN": "bona fide correctly classified as bona fide",
+          "spoof_false_accept_rate": "FN / (TP + FN), per the requested definition",
+          "bonafide_false_reject_rate": "FP / (TN + FP), per the requested definition",
+          "conventional_fpr": "FP / (FP + TN), denominator is all bona fide trials",
+          "conventional_fnr": "FN / (FN + TP), denominator is all spoof trials"
+        }
+      }
+    },
+    "A12": {
+      "scope": "this spoof attack plus the same shared EVAL bona fide pool",
+      "eer_label": "DIAGNOSTIC; not a deployment threshold",
+      "metrics": {
+        "n": 12269,
+        "bonafide": 7355,
+        "spoof": 4914,
+        "threshold": 0.8227455542399777,
+        "confusion_matrix": [
+          [
+            7028,
+            327
+          ],
+          [
+            137,
+            4777
+          ]
+        ],
+        "tn": 7028,
+        "fp": 327,
+        "fn": 137,
+        "tp": 4777,
+        "precision_by_class": {
+          "bonafide": 0.9808792742498256,
+          "spoof": 0.9359326018808778
+        },
+        "recall_by_class": {
+          "bonafide": 0.9555404486743712,
+          "spoof": 0.9721204721204721
+        },
+        "f1_by_class": {
+          "bonafide": 0.9680440771349862,
+          "spoof": 0.9536833699341186
+        },
+        "support_by_class": {
+          "bonafide": 7355,
+          "spoof": 4914
+        },
+        "f1_spoof": 0.9536833699341186,
+        "macro_f1": 0.9608637235345524,
+        "balanced_accuracy": 0.9638304603974217,
+        "spoof_false_accept_rate": 0.02787952787952788,
+        "bonafide_false_reject_rate": 0.04445955132562882,
+        "conventional_fpr": 0.04445955132562882,
+        "conventional_fnr": 0.02787952787952788,
+        "roc_auc_original_scores": 0.9889057112034678,
+        "roc_auc_negated_scores_diagnostic": 0.011094288796532164,
+        "pooled_eer": 0.03863911348615634,
+        "pooled_eer_method": "nearest finite empirical ROC; mean FAR/FRR",
+        "rate_definitions": {
+          "TP": "spoof correctly classified as spoof",
+          "FN": "spoof classified as bona fide",
+          "FP": "bona fide classified as spoof",
+          "TN": "bona fide correctly classified as bona fide",
+          "spoof_false_accept_rate": "FN / (TP + FN), per the requested definition",
+          "bonafide_false_reject_rate": "FP / (TN + FP), per the requested definition",
+          "conventional_fpr": "FP / (FP + TN), denominator is all bona fide trials",
+          "conventional_fnr": "FN / (FN + TP), denominator is all spoof trials"
+        }
+      }
+    },
+    "A13": {
+      "scope": "this spoof attack plus the same shared EVAL bona fide pool",
+      "eer_label": "DIAGNOSTIC; not a deployment threshold",
+      "metrics": {
+        "n": 12269,
+        "bonafide": 7355,
+        "spoof": 4914,
+        "threshold": 0.8227455542399777,
+        "confusion_matrix": [
+          [
+            7028,
+            327
+          ],
+          [
+            3,
+            4911
+          ]
+        ],
+        "tn": 7028,
+        "fp": 327,
+        "fn": 3,
+        "tp": 4911,
+        "precision_by_class": {
+          "bonafide": 0.9995733181624236,
+          "spoof": 0.9375715922107675
+        },
+        "recall_by_class": {
+          "bonafide": 0.9555404486743712,
+          "spoof": 0.9993894993894994
+        },
+        "f1_by_class": {
+          "bonafide": 0.9770610315584596,
+          "spoof": 0.9674940898345153
+        },
+        "support_by_class": {
+          "bonafide": 7355,
+          "spoof": 4914
+        },
+        "f1_spoof": 0.9674940898345153,
+        "macro_f1": 0.9722775606964875,
+        "balanced_accuracy": 0.9774649740319352,
+        "spoof_false_accept_rate": 0.0006105006105006105,
+        "bonafide_false_reject_rate": 0.04445955132562882,
+        "conventional_fpr": 0.04445955132562882,
+        "conventional_fnr": 0.0006105006105006105,
+        "roc_auc_original_scores": 0.9767769053968919,
+        "roc_auc_negated_scores_diagnostic": 0.02322309460310821,
+        "pooled_eer": 0.03863911348615634,
+        "pooled_eer_method": "nearest finite empirical ROC; mean FAR/FRR",
+        "rate_definitions": {
+          "TP": "spoof correctly classified as spoof",
+          "FN": "spoof classified as bona fide",
+          "FP": "bona fide classified as spoof",
+          "TN": "bona fide correctly classified as bona fide",
+          "spoof_false_accept_rate": "FN / (TP + FN), per the requested definition",
+          "bonafide_false_reject_rate": "FP / (TN + FP), per the requested definition",
+          "conventional_fpr": "FP / (FP + TN), denominator is all bona fide trials",
+          "conventional_fnr": "FN / (FN + TP), denominator is all spoof trials"
+        }
+      }
+    },
+    "A14": {
+      "scope": "this spoof attack plus the same shared EVAL bona fide pool",
+      "eer_label": "DIAGNOSTIC; not a deployment threshold",
+      "metrics": {
+        "n": 12269,
+        "bonafide": 7355,
+        "spoof": 4914,
+        "threshold": 0.8227455542399777,
+        "confusion_matrix": [
+          [
+            7028,
+            327
+          ],
+          [
+            49,
+            4865
+          ]
+        ],
+        "tn": 7028,
+        "fp": 327,
+        "fn": 49,
+        "tp": 4865,
+        "precision_by_class": {
+          "bonafide": 0.9930761622156281,
+          "spoof": 0.9370184899845917
+        },
+        "recall_by_class": {
+          "bonafide": 0.9555404486743712,
+          "spoof": 0.99002849002849
+        },
+        "f1_by_class": {
+          "bonafide": 0.9739467849223947,
+          "spoof": 0.9627943795764892
+        },
+        "support_by_class": {
+          "bonafide": 7355,
+          "spoof": 4914
+        },
+        "f1_spoof": 0.9627943795764892,
+        "macro_f1": 0.968370582249442,
+        "balanced_accuracy": 0.9727844693514306,
+        "spoof_false_accept_rate": 0.009971509971509971,
+        "bonafide_false_reject_rate": 0.04445955132562882,
+        "conventional_fpr": 0.04445955132562882,
+        "conventional_fnr": 0.009971509971509971,
+        "roc_auc_original_scores": 0.9959557274309144,
+        "roc_auc_negated_scores_diagnostic": 0.004044272569085617,
+        "pooled_eer": 0.028928460063742167,
+        "pooled_eer_method": "nearest finite empirical ROC; mean FAR/FRR",
+        "rate_definitions": {
+          "TP": "spoof correctly classified as spoof",
+          "FN": "spoof classified as bona fide",
+          "FP": "bona fide classified as spoof",
+          "TN": "bona fide correctly classified as bona fide",
+          "spoof_false_accept_rate": "FN / (TP + FN), per the requested definition",
+          "bonafide_false_reject_rate": "FP / (TN + FP), per the requested definition",
+          "conventional_fpr": "FP / (FP + TN), denominator is all bona fide trials",
+          "conventional_fnr": "FN / (FN + TP), denominator is all spoof trials"
+        }
+      }
+    },
+    "A15": {
+      "scope": "this spoof attack plus the same shared EVAL bona fide pool",
+      "eer_label": "DIAGNOSTIC; not a deployment threshold",
+      "metrics": {
+        "n": 12269,
+        "bonafide": 7355,
+        "spoof": 4914,
+        "threshold": 0.8227455542399777,
+        "confusion_matrix": [
+          [
+            7028,
+            327
+          ],
+          [
+            46,
+            4868
+          ]
+        ],
+        "tn": 7028,
+        "fp": 327,
+        "fn": 46,
+        "tp": 4868,
+        "precision_by_class": {
+          "bonafide": 0.9934973141080011,
+          "spoof": 0.9370548604427335
+        },
+        "recall_by_class": {
+          "bonafide": 0.9555404486743712,
+          "spoof": 0.9906389906389906
+        },
+        "f1_by_class": {
+          "bonafide": 0.9741492826945735,
+          "spoof": 0.963102186170739
+        },
+        "support_by_class": {
+          "bonafide": 7355,
+          "spoof": 4914
+        },
+        "f1_spoof": 0.963102186170739,
+        "macro_f1": 0.9686257344326562,
+        "balanced_accuracy": 0.9730897196566809,
+        "spoof_false_accept_rate": 0.009361009361009361,
+        "bonafide_false_reject_rate": 0.04445955132562882,
+        "conventional_fpr": 0.04445955132562882,
+        "conventional_fnr": 0.009361009361009361,
+        "roc_auc_original_scores": 0.9971214197590813,
+        "roc_auc_negated_scores_diagnostic": 0.002878580240918782,
+        "pooled_eer": 0.025668915267827608,
+        "pooled_eer_method": "nearest finite empirical ROC; mean FAR/FRR",
+        "rate_definitions": {
+          "TP": "spoof correctly classified as spoof",
+          "FN": "spoof classified as bona fide",
+          "FP": "bona fide classified as spoof",
+          "TN": "bona fide correctly classified as bona fide",
+          "spoof_false_accept_rate": "FN / (TP + FN), per the requested definition",
+          "bonafide_false_reject_rate": "FP / (TN + FP), per the requested definition",
+          "conventional_fpr": "FP / (FP + TN), denominator is all bona fide trials",
+          "conventional_fnr": "FN / (FN + TP), denominator is all spoof trials"
+        }
+      }
+    },
+    "A16": {
+      "scope": "this spoof attack plus the same shared EVAL bona fide pool",
+      "eer_label": "DIAGNOSTIC; not a deployment threshold",
+      "metrics": {
+        "n": 12269,
+        "bonafide": 7355,
+        "spoof": 4914,
+        "threshold": 0.8227455542399777,
+        "confusion_matrix": [
+          [
+            7028,
+            327
+          ],
+          [
+            900,
+            4014
+          ]
+        ],
+        "tn": 7028,
+        "fp": 327,
+        "fn": 900,
+        "tp": 4014,
+        "precision_by_class": {
+          "bonafide": 0.8864783047426842,
+          "spoof": 0.9246717346233587
+        },
+        "recall_by_class": {
+          "bonafide": 0.9555404486743712,
+          "spoof": 0.8168498168498168
+        },
+        "f1_by_class": {
+          "bonafide": 0.9197147156971799,
+          "spoof": 0.8674230145867099
+        },
+        "support_by_class": {
+          "bonafide": 7355,
+          "spoof": 4914
+        },
+        "f1_spoof": 0.8674230145867099,
+        "macro_f1": 0.8935688651419449,
+        "balanced_accuracy": 0.886195132762094,
+        "spoof_false_accept_rate": 0.18315018315018314,
+        "bonafide_false_reject_rate": 0.04445955132562882,
+        "conventional_fpr": 0.04445955132562882,
+        "conventional_fnr": 0.18315018315018314,
+        "roc_auc_original_scores": 0.9631144467990151,
+        "roc_auc_negated_scores_diagnostic": 0.036885553200984876,
+        "pooled_eer": 0.09544343538225253,
+        "pooled_eer_method": "nearest finite empirical ROC; mean FAR/FRR",
+        "rate_definitions": {
+          "TP": "spoof correctly classified as spoof",
+          "FN": "spoof classified as bona fide",
+          "FP": "bona fide classified as spoof",
+          "TN": "bona fide correctly classified as bona fide",
+          "spoof_false_accept_rate": "FN / (TP + FN), per the requested definition",
+          "bonafide_false_reject_rate": "FP / (TN + FP), per the requested definition",
+          "conventional_fpr": "FP / (FP + TN), denominator is all bona fide trials",
+          "conventional_fnr": "FN / (FN + TP), denominator is all spoof trials"
+        }
+      }
+    },
+    "A17": {
+      "scope": "this spoof attack plus the same shared EVAL bona fide pool",
+      "eer_label": "DIAGNOSTIC; not a deployment threshold",
+      "metrics": {
+        "n": 12269,
+        "bonafide": 7355,
+        "spoof": 4914,
+        "threshold": 0.8227455542399777,
+        "confusion_matrix": [
+          [
+            7028,
+            327
+          ],
+          [
+            4016,
+            898
+          ]
+        ],
+        "tn": 7028,
+        "fp": 327,
+        "fn": 4016,
+        "tp": 898,
+        "precision_by_class": {
+          "bonafide": 0.6363636363636364,
+          "spoof": 0.7330612244897959
+        },
+        "recall_by_class": {
+          "bonafide": 0.9555404486743712,
+          "spoof": 0.18274318274318274
+        },
+        "f1_by_class": {
+          "bonafide": 0.7639545627479755,
+          "spoof": 0.29255579084541455
+        },
+        "support_by_class": {
+          "bonafide": 7355,
+          "spoof": 4914
+        },
+        "f1_spoof": 0.29255579084541455,
+        "macro_f1": 0.528255176796695,
+        "balanced_accuracy": 0.569141815708777,
+        "spoof_false_accept_rate": 0.8172568172568172,
+        "bonafide_false_reject_rate": 0.04445955132562882,
+        "conventional_fpr": 0.04445955132562882,
+        "conventional_fnr": 0.8172568172568172,
+        "roc_auc_original_scores": 0.7172656987748762,
+        "roc_auc_negated_scores_diagnostic": 0.2827343012251238,
+        "pooled_eer": 0.34354207114234303,
+        "pooled_eer_method": "nearest finite empirical ROC; mean FAR/FRR",
+        "rate_definitions": {
+          "TP": "spoof correctly classified as spoof",
+          "FN": "spoof classified as bona fide",
+          "FP": "bona fide classified as spoof",
+          "TN": "bona fide correctly classified as bona fide",
+          "spoof_false_accept_rate": "FN / (TP + FN), per the requested definition",
+          "bonafide_false_reject_rate": "FP / (TN + FP), per the requested definition",
+          "conventional_fpr": "FP / (FP + TN), denominator is all bona fide trials",
+          "conventional_fnr": "FN / (FN + TP), denominator is all spoof trials"
+        }
+      }
+    },
+    "A18": {
+      "scope": "this spoof attack plus the same shared EVAL bona fide pool",
+      "eer_label": "DIAGNOSTIC; not a deployment threshold",
+      "metrics": {
+        "n": 12269,
+        "bonafide": 7355,
+        "spoof": 4914,
+        "threshold": 0.8227455542399777,
+        "confusion_matrix": [
+          [
+            7028,
+            327
+          ],
+          [
+            3416,
+            1498
+          ]
+        ],
+        "tn": 7028,
+        "fp": 327,
+        "fn": 3416,
+        "tp": 1498,
+        "precision_by_class": {
+          "bonafide": 0.6729222520107239,
+          "spoof": 0.8208219178082192
+        },
+        "recall_by_class": {
+          "bonafide": 0.9555404486743712,
+          "spoof": 0.30484330484330485
+        },
+        "f1_by_class": {
+          "bonafide": 0.7897072869262318,
+          "spoof": 0.4445763466389672
+        },
+        "support_by_class": {
+          "bonafide": 7355,
+          "spoof": 4914
+        },
+        "f1_spoof": 0.4445763466389672,
+        "macro_f1": 0.6171418167825995,
+        "balanced_accuracy": 0.630191876758838,
+        "spoof_false_accept_rate": 0.6951566951566952,
+        "bonafide_false_reject_rate": 0.04445955132562882,
+        "conventional_fpr": 0.04445955132562882,
+        "conventional_fnr": 0.6951566951566952,
+        "roc_auc_original_scores": 0.851675217548773,
+        "roc_auc_negated_scores_diagnostic": 0.14832478245122704,
+        "pooled_eer": 0.22551953422109783,
+        "pooled_eer_method": "nearest finite empirical ROC; mean FAR/FRR",
+        "rate_definitions": {
+          "TP": "spoof correctly classified as spoof",
+          "FN": "spoof classified as bona fide",
+          "FP": "bona fide classified as spoof",
+          "TN": "bona fide correctly classified as bona fide",
+          "spoof_false_accept_rate": "FN / (TP + FN), per the requested definition",
+          "bonafide_false_reject_rate": "FP / (TN + FP), per the requested definition",
+          "conventional_fpr": "FP / (FP + TN), denominator is all bona fide trials",
+          "conventional_fnr": "FN / (FN + TP), denominator is all spoof trials"
+        }
+      }
+    },
+    "A19": {
+      "scope": "this spoof attack plus the same shared EVAL bona fide pool",
+      "eer_label": "DIAGNOSTIC; not a deployment threshold",
+      "metrics": {
+        "n": 12269,
+        "bonafide": 7355,
+        "spoof": 4914,
+        "threshold": 0.8227455542399777,
+        "confusion_matrix": [
+          [
+            7028,
+            327
+          ],
+          [
+            3924,
+            990
+          ]
+        ],
+        "tn": 7028,
+        "fp": 327,
+        "fn": 3924,
+        "tp": 990,
+        "precision_by_class": {
+          "bonafide": 0.6417092768444119,
+          "spoof": 0.7517084282460137
+        },
+        "recall_by_class": {
+          "bonafide": 0.9555404486743712,
+          "spoof": 0.20146520146520147
+        },
+        "f1_by_class": {
+          "bonafide": 0.7677937400994155,
+          "spoof": 0.3177660086663457
+        },
+        "support_by_class": {
+          "bonafide": 7355,
+          "spoof": 4914
+        },
+        "f1_spoof": 0.3177660086663457,
+        "macro_f1": 0.5427798743828806,
+        "balanced_accuracy": 0.5785028250697863,
+        "spoof_false_accept_rate": 0.7985347985347986,
+        "bonafide_false_reject_rate": 0.04445955132562882,
+        "conventional_fpr": 0.04445955132562882,
+        "conventional_fnr": 0.7985347985347986,
+        "roc_auc_original_scores": 0.7890210049285508,
+        "roc_auc_negated_scores_diagnostic": 0.21097899507144915,
+        "pooled_eer": 0.28453080268172043,
+        "pooled_eer_method": "nearest finite empirical ROC; mean FAR/FRR",
+        "rate_definitions": {
+          "TP": "spoof correctly classified as spoof",
+          "FN": "spoof classified as bona fide",
+          "FP": "bona fide classified as spoof",
+          "TN": "bona fide correctly classified as bona fide",
+          "spoof_false_accept_rate": "FN / (TP + FN), per the requested definition",
+          "bonafide_false_reject_rate": "FP / (TN + FP), per the requested definition",
+          "conventional_fpr": "FP / (FP + TN), denominator is all bona fide trials",
+          "conventional_fnr": "FN / (FN + TP), denominator is all spoof trials"
+        }
+      }
+    }
+  },
+  "score_polarity": {
+    "svc_classes_ordering": [
+      0,
+      1
+    ],
+    "expected_classes_order": [
+      0,
+      1
+    ],
+    "classes_order_matches_expected": true,
+    "binary_decision_function_positive_side_class": 1,
+    "higher_score_means_spoof_by_classes_order": true,
+    "audioGuard_metric_convention": "score >= threshold predicts spoof; ROC-AUC uses spoof label 1",
+    "raw_scores_reversed": false,
+    "dev_auc_original": 0.9719224580202206,
+    "dev_auc_negated_diagnostic": 0.02807754197977942,
+    "eval_auc_original": 0.9389919798380812,
+    "eval_auc_negated_diagnostic": 0.06100802016191861,
+    "interpretation": "Original score orientation favors spoof-positive ranking."
+  },
+  "prediction_files": [
+    "results\\real_svm\\svm_mfcc\\dev_predictions.csv",
+    "results\\real_svm\\svm_mfcc\\eval_clean_predictions.csv"
+  ],
+  "scaler_artifact": "results\\real_svm\\svm_mfcc\\scaler.joblib",
+  "scaler_sha256": "37da090cbb2788689d32ed4a2e7fb32264418184470fe5b5d55e03e6587d2b11"
+}

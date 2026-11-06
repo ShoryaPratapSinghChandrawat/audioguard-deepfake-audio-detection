@@ -1,0 +1,47 @@
+{
+  "status": "PASS",
+  "checks": "exact protocol trial sets, counts, labels, attacks, columns, nonempty values, finite scores, unique utterances",
+  "dev": {
+    "file": "results\\real_svm\\svm_mfcc\\dev_scores.csv",
+    "bytes": 2872192,
+    "row_count": 24844,
+    "unique_utterances": 24844,
+    "expected_protocol_trials": 24844,
+    "bonafide_target0": 2548,
+    "spoof_target1": 22296,
+    "spoof_attack_ids": [
+      "A01",
+      "A02",
+      "A03",
+      "A04",
+      "A05",
+      "A06"
+    ],
+    "missing_values_or_nonfinite_or_metadata_errors": []
+  },
+  "eval": {
+    "file": "results\\real_svm\\svm_mfcc\\eval_clean_scores.csv",
+    "bytes": 8319062,
+    "row_count": 71237,
+    "unique_utterances": 71237,
+    "expected_protocol_trials": 71237,
+    "bonafide_target0": 7355,
+    "spoof_target1": 63882,
+    "spoof_attack_ids": [
+      "A07",
+      "A08",
+      "A09",
+      "A10",
+      "A11",
+      "A12",
+      "A13",
+      "A14",
+      "A15",
+      "A16",
+      "A17",
+      "A18",
+      "A19"
+    ],
+    "missing_values_or_nonfinite_or_metadata_errors": []
+  }
+}
