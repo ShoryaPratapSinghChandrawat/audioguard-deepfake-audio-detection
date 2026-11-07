@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import numpy as np
 import pytest
 import soundfile as sf
@@ -102,3 +104,73 @@ def test_cleanup_only_removes_app_owned_temporary_files(tmp_path):
     assert not upload.exists()
     assert not cleanup_upload(external, app_temp)
     assert external.exists()
+
+
+def test_examples_allow_only_the_four_selected_eval_audio_files(tmp_path, monkeypatch):
+    from demo import app as demo_app
+
+    audio_root = tmp_path / "external" / "ASVspoof2019_LA_eval" / "flac"
+    audio_root.mkdir(parents=True)
+    rows = [
+        {"utterance": "bf_one", "label": 0, "attack": "-"},
+        {"utterance": "bf_two", "label": 0, "attack": "-"},
+        {"utterance": "sp_a01", "label": 1, "attack": "A01"},
+        {"utterance": "sp_a02", "label": 1, "attack": "A02"},
+        {"utterance": "sp_a03", "label": 1, "attack": "A01"},
+    ]
+    for row in rows:
+        (audio_root / f"{row['utterance']}.flac").write_bytes(b"fixture")
+
+    monkeypatch.setattr(
+        demo_app,
+        "load_config",
+        lambda _: {"dataset": {"protocols": {"eval": "protocol.txt"},
+                               "audio_roots": {"eval": str(audio_root)}}},
+    )
+    monkeypatch.setattr(demo_app, "parse_protocol", lambda *_: rows)
+
+    examples, labels, allowed_paths = demo_app._examples("unused.local.yaml")
+
+    expected = [
+        str((audio_root / "bf_one.flac").resolve()),
+        str((audio_root / "bf_two.flac").resolve()),
+        str((audio_root / "sp_a01.flac").resolve()),
+        str((audio_root / "sp_a02.flac").resolve()),
+    ]
+    assert allowed_paths == expected
+    assert examples == [[path] for path in expected]
+    assert len(set(allowed_paths)) == 4
+    assert len(labels) == 4
+
+
+def test_gradio_example_cache_allows_only_byte_identical_selected_files(tmp_path):
+    from demo import app as demo_app
+
+    source_root = tmp_path / "dataset" / "eval"
+    cache_root = tmp_path / "app-temp"
+    source_root.mkdir(parents=True)
+    cache_root.mkdir()
+    source_paths = []
+    processed = {}
+    for index, utterance in enumerate(("bf_one", "bf_two", "sp_a01", "sp_a02")):
+        source = source_root / f"{utterance}.flac"
+        source.write_bytes(f"audio-{index}".encode())
+        cached = cache_root / f"hash-{index}" / source.name
+        cached.parent.mkdir()
+        cached.write_bytes(source.read_bytes())
+        source_paths.append(str(source.resolve()))
+        processed[index] = [{"path": str(cached)}]
+
+    class Examples:
+        non_none_processed_examples = processed
+
+    allowed_copies = demo_app._gradio_example_cache_paths(
+        Examples(), source_paths, cache_root
+    )
+
+    assert allowed_copies == [
+        str((cache_root / f"hash-{index}" / Path(source).name).resolve())
+        for index, source in enumerate(source_paths)
+    ]
+    assert all(Path(path).is_file() for path in allowed_copies)
+    assert all(Path(path).is_relative_to(cache_root.resolve()) for path in allowed_copies)

@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import atexit
+import filecmp
 import json
 import logging
 import os
@@ -40,6 +41,20 @@ from src.data.protocol import parse_protocol
 CNN_RUN_DEFAULT = ROOT / "results/real_cnn_logmel/cnn_logmel"
 SVM_META_DEFAULT = ROOT / "results/real_svm/phase2_original/svm_mfcc"
 SVM_ARTIFACT_DEFAULT = ROOT / "results/phase4a/artifact_inputs/svm_mfcc"
+# Some Windows/Chromium builds label audio-only .webm files as video/webm,
+# which Gradio's audio-only uploader rejects before AudioGuard sees the file.
+# Re-tag only that browser File metadata; the original bytes and path stay intact.
+WEBM_UPLOAD_MIME_COMPAT = """<script>
+document.addEventListener("change", (event) => {
+  const input = event.target;
+  if (!(input instanceof HTMLInputElement) || input.type !== "file" || !input.files || input.files.length !== 1) return;
+  const file = input.files[0];
+  if (!file.name.toLowerCase().endsWith(".webm") || file.type !== "video/webm") return;
+  const transfer = new DataTransfer();
+  transfer.items.add(new File([file], file.name, {type: "audio/webm", lastModified: file.lastModified}));
+  input.files = transfer.files;
+}, true);
+</script>"""
 LOG_DIR = Path(os.environ.get("LOCALAPPDATA", tempfile.gettempdir())) / "AudioGuard" / "logs"
 LOG_DIR.mkdir(parents=True, exist_ok=True)
 LOGGER = logging.getLogger("audioguard.demo")
@@ -115,14 +130,47 @@ def _examples(dataset_config):
     audio_root = Path(dataset["audio_roots"]["eval"])
     examples = []
     labels = []
+    allowed_paths = []
     for row in selected:
-        path = audio_root / f"{row['utterance']}.flac"
+        path = (audio_root / f"{row['utterance']}.flac").resolve()
         if not path.is_file():
             raise FileNotFoundError(f"EVAL example audio is missing: {path}")
         examples.append([str(path)])
+        allowed_paths.append(str(path))
         attack_text = f", {row['attack']}" if row["label"] == 1 else ""
         labels.append(f"{row['utterance']} — {'spoof' if row['label'] else 'bona fide'}{attack_text}")
-    return examples, labels
+    return examples, labels, allowed_paths
+
+
+def _gradio_example_cache_paths(example_component, source_paths, temp_root=APP_TEMP_ROOT):
+    """Return only Gradio's exact temporary copies of the four selected examples.
+
+    Gradio 6 postprocesses ``gr.Examples`` audio into per-file copies in its
+    temporary directory. Those files are not covered by ``allowed_paths`` when
+    that argument is an explicit allowlist, so the browser cannot load them.
+    Add the copies individually after confirming their names and bytes match the
+    selected EVAL files; never expose the temporary directory itself.
+    """
+    temp_root = Path(temp_root).resolve()
+    source_by_name = {Path(path).name: Path(path).resolve() for path in source_paths}
+    cache_paths = []
+    for processed in getattr(example_component, "non_none_processed_examples", {}).values():
+        for value in processed:
+            if not isinstance(value, dict) or not value.get("path"):
+                continue
+            cached = Path(value["path"]).resolve()
+            if cached in source_by_name.values():
+                continue
+            if not cached.is_relative_to(temp_root):
+                continue
+            source = source_by_name.get(cached.name)
+            if source is None or not cached.is_file() or not filecmp.cmp(cached, source, shallow=False):
+                raise RuntimeError(f"Unexpected Gradio EVAL example cache file: {cached}")
+            cache_paths.append(str(cached))
+
+    if cache_paths and {Path(path).name for path in cache_paths} != set(source_by_name):
+        raise RuntimeError("Gradio did not create one verified cache copy per EVAL example")
+    return list(dict.fromkeys(cache_paths))
 
 
 def _figure_image(fig):
@@ -152,9 +200,9 @@ def _plots(audio, logmel):
     return _figure_image(wave_fig), _figure_image(mel_fig)
 
 
-def build(run_directory, dataset_config="configs/baseline.local.yaml",
-          svm_metadata_directory=SVM_META_DEFAULT,
-          svm_artifact_directory=SVM_ARTIFACT_DEFAULT):
+def _build_with_allowed_paths(run_directory, dataset_config="configs/baseline.local.yaml",
+                              svm_metadata_directory=SVM_META_DEFAULT,
+                              svm_artifact_directory=SVM_ARTIFACT_DEFAULT):
     run = Path(run_directory)
     if not run.is_absolute():
         run = ROOT / run
@@ -164,7 +212,7 @@ def build(run_directory, dataset_config="configs/baseline.local.yaml",
     except Exception:
         LOGGER.exception("Optional SVM baseline could not be loaded")
         svm = None
-    example_rows, example_labels = _examples(dataset_config)
+    example_rows, example_labels, allowed_paths = _examples(dataset_config)
 
     def analyse(path):
         try:
@@ -239,7 +287,22 @@ def build(run_directory, dataset_config="configs/baseline.local.yaml",
         button.click(analyse, inputs=audio,
                      outputs=[result, wave_output, mel_output, audio])
         gr.Markdown("### Official ASVspoof 2019 LA EVAL examples\n" + "\n".join(f"- {label}" for label in example_labels))
-        gr.Examples(examples=example_rows, inputs=audio, label="Load an EVAL example")
+        example_component = gr.Examples(
+            examples=example_rows, inputs=audio, label="Load an EVAL example"
+        )
+        allowed_paths.extend(
+            _gradio_example_cache_paths(example_component, allowed_paths)
+        )
+    return app, allowed_paths
+
+
+def build(run_directory, dataset_config="configs/baseline.local.yaml",
+          svm_metadata_directory=SVM_META_DEFAULT,
+          svm_artifact_directory=SVM_ARTIFACT_DEFAULT):
+    """Build the demo while preserving the public Blocks-returning API."""
+    app, _ = _build_with_allowed_paths(
+        run_directory, dataset_config, svm_metadata_directory, svm_artifact_directory
+    )
     return app
 
 
@@ -249,9 +312,10 @@ def main():
     parser.add_argument("--dataset-config", default="configs/baseline.local.yaml")
     parser.add_argument("--port", type=int, default=7860)
     args = parser.parse_args()
-    app = build(args.run, args.dataset_config)
+    app, allowed_paths = _build_with_allowed_paths(args.run, args.dataset_config)
     app.launch(server_name="127.0.0.1", server_port=args.port, share=False,
-               max_file_size=MAX_UPLOAD_BYTES)
+               max_file_size=MAX_UPLOAD_BYTES, allowed_paths=allowed_paths,
+               head=WEBM_UPLOAD_MIME_COMPAT)
 
 
 if __name__ == "__main__":
