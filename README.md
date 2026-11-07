@@ -1,149 +1,72 @@
-# audioguard-deepfake-audio-detection
+# AudioGuard
 
-Research workspace for **AudioGuard**: reproducible ASVspoof Logical Access (LA)
-deepfake-audio detection research — can detectors trained on known synthesis attacks
-recognize genuine and spoofed speech, including attacks absent from training, and
-withstand noise and lossy compression?
+AudioGuard is a reproducible research workspace for detecting spoofed speech in
+the Logical Access (LA) partition of ASVspoof 2019. The repository includes
+reports from experiments on the official train, development, and evaluation
+partitions. These findings apply to the reported ASVspoof 2019 LA setup; they do
+not establish universal deepfake detection.
 
-> **Research status: no benchmark evidence yet.**
-> The official ASVspoof LA dataset has **not** been supplied to this repository.
-> Every number produced so far comes from **synthetic tone fixtures** and validates
-> software wiring only. Nothing here is a real-speech deepfake-detection result, and
-> no recruitment-project conclusion is claimed.
+## Dataset and provenance
 
-## Layout
+The official ASVspoof 2019 LA audio and protocols are **not redistributed** in
+this repository. Obtain them from the [ASVspoof 2019 challenge page](https://www.asvspoof.org/index2019.html)
+or [University of Edinburgh DataShare](https://datashare.ed.ac.uk/handle/10283/3336).
+The dataset's own terms apply.
 
-The project lives in [`AudioGuard/`](AudioGuard/README.md), preserving its original
-workspace structure. Read [`AudioGuard/README.md`](AudioGuard/README.md),
-[`AudioGuard/docs/glossary.md`](AudioGuard/docs/glossary.md),
-[`AudioGuard/docs/research_guide.md`](AudioGuard/docs/research_guide.md) and the phase
-notes before defending or extending the work.
+This project was imported from an AudioGuard source archive; it was not written
+from scratch. Under the owner's specification, AI coding agents (Codex,
+Antigravity, and Arena) wrote most of the code. The owner specified, ran, and
+verified the experiments. This provenance statement is an owner-provided
+disclosure.
 
-```text
-AudioGuard/
-  configs/            # YAML hyperparameters, fixed seeds, synthetic smoke configs
-  src/
-    data/             # protocol parsing, partition loading, leakage checks
-    features/         # log-Mel, MFCC (+ delta/delta-delta), disk caching
-    models/           # SVM+MFCC, CNN, shortcut classifier
-    evaluation/       # metrics, per-attack/per-speaker analysis, plots
-    robustness/       # silence trim, noise, MP3 transforms, shortcut probes
-  scripts/            # audioguard.py, experiment.py, smoke.py, research_smoke.py,
-                      # verify_results.py, verify_research.py, package.py, ...
-  tests/              # pytest suite (synthetic fixtures)
-  demo/               # local Gradio demo (displays saved metrics only)
-  notebooks/          # Colab quickstart
-  docs/               # glossary, research guide, phase notes, saved validation JSON
-  data/ models/ results/ reports/figures/   # gitignored working dirs
-```
+## Research reports
 
-`src/data/` and `src/models/` are present and populated.
-
-## Provenance
-
-Imported verbatim from a source archive, not rebuilt from scratch:
-
-- Archive: `AudioGuard-source.zip`
-- Source repo: `ShoryaPratapSinghChandrawat/qff2026-phase1-s1-ising_chain`
-- Commit: `a18a7626cfa5e243deb441116cb4c6a388af28d1`
-- Git blob SHA-1 of the archive: `7b86e3bb113f5f72f18afb4c6a63a9a5c5028de0` (matches GitHub)
-- Archive SHA-256: `411b13597d2eb6f2ba14c59143c186a520afbe2e87a6238554d7dbfeb350e11c`
-- Integrity: all **67/67** files in `AudioGuard/MANIFEST.sha256.json` verified with zero
-  mismatches and no unmanifested files.
-
-The archive is not committed (it is an artifact, and matches the project's `*.zip`
-ignore rule). Rebuild a package with `python scripts/package.py` and re-verify with
-`python scripts/verify_archive.py`.
-
-## Install
-
-Dependencies are pinned. A virtual environment is required (PEP 668 blocks
-system-wide installs on many platforms) and `.venv/` is gitignored.
-
-```bash
-cd AudioGuard
-python -m venv .venv
-source .venv/bin/activate          # Windows: .\.venv\Scripts\activate
-python -m pip install -r requirements.txt   # or requirements-core.txt for the NumPy baseline only
-```
-
-## Verification actually run here
-
-Executed in this sandbox: Linux, Python 3.11.2, `numpy==1.26.4`,
-`scikit-learn==1.5.2`, `torch==2.5.1` (CUDA **not** available; CPU only),
-`gradio==5.49.1`.
-
-| Check | Command | Result |
+| Phase | Evidence | Scope |
 | --- | --- | --- |
-| Test suite | `python -m pytest -q` | **PASS** — 23 passed |
-| Research smoke (end-to-end) | `python scripts/research_smoke.py` | **PASS** — 3/3 stages |
-| `verify_research.py` | (inside research smoke) | **PASS** — metrics, plots, thresholds, checkpoints, demo verified for `svm_mfcc`, `cnn_logmel`, `cnn_mfcc`, `shortcut` |
-| Baseline smoke | `python scripts/smoke.py` | **PASS** — inspect, audit, train, evaluate, robustness, report all exit 0 |
+| Phase 2 | [MFCC + SVM report](AudioGuard/results/real_svm/experiment_summary.md) | Full official LA partitions; clean evaluation |
+| Phase 2.5 | [Independent SVM verification](AudioGuard/results/real_svm/phase2_addendum.md) | Saved score CSV validation and independent metric recomputation |
+| Phase 3 | [Log-Mel CNN report](AudioGuard/results/real_cnn_logmel/phase3_summary.md) | One-seed full official LA training and clean evaluation |
+| Phase 4A | [Error and shortcut analysis](AudioGuard/results/phase4a/phase4a_summary.md) | Saved clean EVAL scores, speaker spread, nuisance-cue analysis |
+| Phase 4B | [Verified robustness report](AudioGuard/results/phase4b/optimized_results/phase4b_summary_verified.md) | Fixed 10,000-clip **SUBSET RESULTS**; noise, MP3, and trimming |
+| Phase 5.1 | [Resampling diagnostics](AudioGuard/results/phase5_diagnostics/summary.md) | Small diagnostic sample; simulated resampling sensitivity |
 
-Scope of that evidence, quoted from the run output:
-`SYNTHETIC TONE SOFTWARE TEST ONLY; NOT ASVSPOOF`. Fixtures were 64 train / 16 dev /
-16 eval synthetic tones. Sample counts, protocol hashes and
-`subset_selection: "all protocol trials"` were logged, not assumed.
+Phase 4B is explicitly a fixed subset and is not a full-EVAL robustness result.
+The older [synthetic smoke report](AudioGuard/reports/run.md) is software-test
+evidence only, not ASVspoof benchmark evidence. See the [project README](AudioGuard/README.md)
+for environment setup, data mapping, reproduction commands, limitations, and
+the demo.
 
-One honest note on process: the **first** research-smoke attempt failed at
-`verify_research.py` with `ModuleNotFoundError: No module named 'gradio'`. That was an
-incomplete environment, not a code defect; after installing the pinned `gradio==5.49.1`
-the suite passed. That failure record remains in
-`AudioGuard/docs/initial_smoke_failure.json` and the earlier archived attempts.
+## Clean EVAL headline results
 
-## Research rules in force (unchanged)
+| Model | Pooled EER | ROC-AUC | Balanced accuracy |
+| --- | ---: | ---: | ---: |
+| MFCC SVM | 12.782465% | 0.938992 | 0.872889 |
+| Log-Mel CNN | 8.456524% | 0.969237 | 0.884696 |
 
-These are preserved exactly as implemented; this import did not relax them.
+Observed failure cases: A17 had the highest attack EER (30.2221% CNN; 34.3542% SVM); on the Phase 4B subset, CNN spoof recall fell near zero under noise at its frozen threshold, while SVM decisions approached all-spoof at 10 and 0 dB. These claims and the precise operating-point values are traced in the [final research report](AudioGuard/reports/final_research_report.md).
 
-- **No invented metrics.** Every reported number must come from a rerunnable script
-  that writes it to disk. There are no hand-entered benchmark values.
-- **Official partitions only.** Use the official ASVspoof LA train/dev/eval splits.
-  No random re-splitting; no PA protocols.
-- **Leakage checks preserved.** `src/data/protocol.py` raises on speaker or utterance
-  overlap between partitions *before* any model fitting.
-- **Dev-only selection.** Operating thresholds and CNN checkpoints are chosen on
-  clean train/dev only and frozen for every eval condition. Eval EER is a ranking
-  diagnostic, never a new threshold.
-- **Label convention.** Bonafide = 0, spoof = 1; higher scores mean spoof.
-- **Explicit scope.** Exact sample counts and subset identity are logged; a
-  sorted-prefix subset is debugging only.
-- **Inspect real data first.** Do not assume paths or protocol formats — run
-  `python scripts/audioguard.py inspect`.
-- **Config discipline.** Hyperparameters live in YAML, seeds are fixed, dependencies
-  pinned.
-- **No artifacts in Git.** Datasets, feature caches, virtual environments and model
-  weights are excluded.
-- **Failures are kept**, and synthetic tests stay clearly separated from benchmark
-  evidence.
+## Contents and artifacts
 
-## Known limitations
+Committed artifacts include the CNN `model.pt`, `scaler.npz`, and training
+metadata needed for the saved CNN run. This repository does not include the
+ASVspoof dataset, feature caches, per-clip score CSVs, local dataset configs,
+or SVM model/scaler files. Small aggregate reports and metrics are included;
+large local experiment outputs remain outside version control.
 
-- The official dataset is absent; no real ASVspoof LA performance has been measured.
-- Existing validation uses synthetic tone fixtures only, so it says nothing about
-  real speech generalisation, unseen-attack robustness or speaker effects.
-- Attack-ID membership can be checked against protocols, but protocol files do not
-  describe synthesis algorithms — synthesis-reuse claims **cannot** be verified from
-  trial protocols alone.
-- CUDA execution, Windows and Colab workflows, and full-dataset resource usage remain
-  **unverified** (only Linux/CPU was exercised here).
-- The demo is not a forensic or production security tool. Do not load untrusted
-  pickle/joblib checkpoints.
+## Demo and video
 
-## Next step
+Follow [the local demo instructions](AudioGuard/demo/README.md).
 
-Map the real official partitions and run the audit before any modelling:
+demo video: pending
 
-```bash
-cd AudioGuard
-python scripts/audioguard.py inspect   # print actual files/protocol previews
-python scripts/audioguard.py audit     # validates fields, rejects leakage
-python scripts/experiment.py suite --config configs/research.yaml
-python scripts/verify_research.py --config configs/research.yaml
-```
+The final demo was manually tested through a physical browser microphone
+(owner-reported). Live human speech returned bona fide. A separate uploaded
+audio sample containing ChatGPT-generated speech returned spoof. These are two
+manual smoke tests (one sample each), not independently labelled benchmark
+trials and not evidence of accuracy. Earlier microphone-preview issues occurred
+during development. The automated fake-microphone browser regression test is
+not part of the default test run.
 
-## AI-assistance disclosure
+## License status
 
-This project was built with AI assistance and imported into this repository by an AI
-coding agent. Follow your lab's disclosure requirements: do not falsify authorship,
-provenance or evidence, and keep the synthetic-vs-benchmark distinction explicit in
-any write-up.
+No license file; submitted for evaluation.

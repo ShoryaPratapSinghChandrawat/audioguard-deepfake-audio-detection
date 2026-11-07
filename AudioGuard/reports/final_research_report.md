@@ -1,0 +1,301 @@
+# AudioGuard final research report
+
+## Research question
+
+This study asks how two AudioGuard countermeasure pipelines distinguish bona
+fide from spoofed speech in the Logical Access (LA) evaluation of ASVspoof 2019,
+including attack IDs not present in training/development, and how their saved
+decisions change under selected waveform perturbations. It does not test
+general-purpose deepfake detection.
+
+## Project provenance and AI assistance
+
+This project was imported from a source archive; it was not written from
+scratch. Under the owner's specification, AI coding agents (Codex,
+Antigravity, and Arena) wrote most of the code. The owner specified, ran, and
+verified the experiments. This is an owner-provided disclosure, not a claim
+that every source file was independently authored or that the work began from
+an empty repository.
+
+## Dataset and audit
+
+The official ASVspoof 2019 LA partitions were used without re-splitting. The
+loader audit reported:
+
+| Partition | Trials | Bona fide (target 0) | Spoof (target 1) | Speakers | Spoof attacks |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Train | 25,380 | 2,580 | 22,800 | 20 | A01–A06 |
+| DEV | 24,844 | 2,548 | 22,296 | 20 | A01–A06 |
+| EVAL | 71,237 | 7,355 | 63,882 | 67 | A07–A19 |
+
+The saved audits report zero malformed protocol rows, missing protocol audio,
+speaker overlap, and utterance overlap. The training pipeline maps target 0 to
+bona fide and target 1 to spoof. The dataset is not redistributed here; its
+terms apply. Download information is available at
+https://www.asvspoof.org/index2019.html and
+https://datashare.ed.ac.uk/handle/10283/3336.
+
+## Methodology
+
+Both systems were trained using the official TRAIN partition. Model and
+operating-point selection used TRAIN/DEV only. Each clean DEV threshold was
+frozen before clean EVAL scoring and reused unchanged for the Phase 4B
+perturbations. The loader rejects speaker or utterance overlap between
+partitions before model fitting. Saved score CSVs and result reports are used
+for evaluation; EVAL is not used for training, checkpoint choice, or threshold
+selection.
+
+The SVM pipeline extracts 20 MFCCs using a 64-filter HTK mel frontend, 512-point
+FFT/window, and 160-sample hop at 16 kHz. Nine-frame regression deltas and
+delta-deltas yield 60 coefficients per frame. Framewise mean and standard
+deviation produce 120 pooled values; a TRAIN-fit scaler and an RBF SVM
+(`C=1.0`, `gamma=scale`, `class_weight=balanced`) produce a spoof-positive
+decision score. The SVC was fit on TRAIN only.
+
+The CNN uses a 64-band Log-Mel frontend at 16 kHz with a 512-sample Hann window,
+160-sample hop, 512-point FFT, and 0–8 kHz range. TRAIN-fitted per-band
+normalization is applied before a 400-frame center crop or right zero-padding.
+The saved model has convolution channels `[16, 32, 64, 128]`, dropout 0.3,
+global pooling, and a single raw-logit output. It was trained with weighted
+binary cross-entropy, AdamW (`learning_rate=0.001`, `weight_decay=0.01`), batch
+size 32, and DEV-loss early stopping (patience 7). The saved checkpoint is the
+minimum-DEV-weighted-loss checkpoint. The run used one seed (2026). The target
+encoding is 0=bona fide and 1=spoof; higher SVM score or CNN logit means more
+spoof-like.
+
+The comparison changes representation, pooling, crop/padding behavior,
+optimizer, and model architecture. It is **not an architecture-only ablation**.
+The empirical EER is the nearest finite ROC operating point unless otherwise
+specified; the independent SVM report also gives a separately interpolated
+EER. Confusion-based rates use the frozen DEV threshold.
+
+## Clean full-partition results
+
+Rates are fractions; `EER` is nearest / linearly interpolated. These are clean
+full-partition results, not subset results.
+
+| Split | Model | ROC-AUC | EER nearest / interpolated | Balanced accuracy | Spoof recall | Bona fide FPR | Frozen threshold |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| DEV | MFCC SVM | 0.971922 | 8.242695% / 8.241758% | 0.917573 | 0.917564 | 0.082418 | 0.8227455542399777 |
+| EVAL | MFCC SVM | 0.938992 | 12.782465% / 12.784509% | 0.872889 | 0.790238 | 0.044460 | 0.8227455542399777 |
+| DEV | Log-Mel CNN | 0.999523 | 0.981700% / 0.981162% | 0.990183 | 0.990178 | 0.009812 | 0.1990397870540619 |
+| EVAL | Log-Mel CNN | 0.969237 | 8.456524% / 8.456832% | 0.884696 | 0.779453 | 0.010061 | 0.1990397870540619 |
+
+On clean EVAL, the CNN has lower pooled EER and higher ROC-AUC and balanced
+accuracy than the SVM in this run; its spoof recall is lower. This is mixed
+metric evidence from one seed, not a declaration that one pipeline is
+universally better.
+
+### EVAL attack comparison
+
+Per-attack EER pairs each attack's spoof trials with the partition's shared
+bona fide pool. Lower EER is better for that diagnostic. The winner column
+states only which saved system had lower EER for that attack.
+
+| Attack | CNN nearest EER | SVM nearest EER | Lower observed EER |
+| --- | ---: | ---: | --- |
+| A07 | 0.3667% | 5.7212% | CNN |
+| A08 | 1.9727% | 4.5396% | CNN |
+| A09 | 0.5059% | 2.7876% | CNN |
+| A10 | 5.1508% | 4.0744% | SVM |
+| A11 | 1.7282% | 3.8639% | CNN |
+| A12 | 9.8058% | 3.8639% | SVM |
+| A13 | 7.9553% | 3.8639% | SVM |
+| A14 | 7.4732% | 2.8928% | SVM |
+| A15 | 10.5392% | 2.5669% | SVM |
+| A16 | 1.1408% | 9.5443% | CNN |
+| A17 | 30.2221% | 34.3542% | CNN; high for both |
+| A18 | 1.1646% | 22.5520% | CNN |
+| A19 | 2.6076% | 28.4531% | CNN |
+
+The CNN has lower observed EER on some attacks and the SVM on others. A17 has
+the highest EER of the listed attacks for both saved systems and is difficult
+for both in this comparison. Per-attack EER is diagnostic, not a separate
+operating threshold.
+
+## Unseen-system context
+
+The protocols place A01–A06 in TRAIN/DEV and A07–A19 in EVAL. The ASVspoof 2019
+database paper identifies A07–A15, A17, and A18 as unknown systems for this
+comparison; A16 reuses the algorithm associated with A04, and A19 reuses the
+algorithm associated with A06. The paper further describes A17 as sharing the
+VAE framework used for A05 while using a different generalized direct
+waveform-modification generator. These are dataset-specific system
+relationships, not evidence of generalization beyond this benchmark. See the
+[ASVspoof 2019 database paper](https://doi.org/10.1016/j.csl.2020.101114).
+
+The saved Phase 4A report pools attacks into the 11 unknown systems and the
+two reused-reference systems, each with the EVAL bona fide pool:
+
+| Model | Group | Attacks | Bona fide / spoof N | Pooled EER | Spoof recall @ frozen threshold | Miss rate @ frozen threshold |
+|---|---|---|---:|---:|---:|---:|
+| CNN | unknown_11 | A07–A15, A17, A18 | 7355 / 54054 | 9.298% | 74.625% | 25.375% |
+| CNN | A16+A19 | A16, A19 | 7355 / 9828 | 2.025% | 96.205% | 3.795% |
+| SVM | unknown_11 | A07–A15, A17, A18 | 7355 / 54054 | 10.604% | 84.134% | 15.866% |
+| SVM | A16+A19 | A16, A19 | 7355 / 9828 | 21.399% | 50.916% | 49.084% |
+
+These are measured group results and do not imply that all attacks within a
+group behave alike.
+
+## Phase 4A: error spread and nuisance cues
+
+On EVAL, CNN per-speaker bona fide false-positive rates ranged from 0% (0/68
+for a minimum-denominator zero-error speaker) to 36.3014% (53/146, LA_0041);
+spoof miss rates ranged from 8.4402% (79/936, LA_0002) to 49.3590% (462/936,
+LA_0015). The SVM ranges were 0% (0/68 for a minimum-denominator zero-error
+speaker) to 75.000% (51/68, LA_0032) and 12.500% (117/936, LA_0048) to
+32.173% (527/1638, LA_0026), respectively. These ranges describe variability
+across speakers and do not establish that either model identifies speakers.
+
+A separate TRAIN-fit logistic shortcut baseline used duration, leading silence,
+and waveform RMS; its threshold was selected on DEV. Its EVAL ROC-AUC was
+0.868884. This shows that the combined nuisance cues carry predictive
+information in this dataset. It does not show that the CNN or SVM relies on
+those cues. Score-duration correlations were also observed within classes:
+CNN rho was -0.488282 for bona fide and -0.025573 for spoof; SVM rho was
+-0.152133 for bona fide and 0.223908 for spoof. Correlation is not a causal
+attribution of model behavior.
+
+## Phase 4B: fixed-subset robustness (**SUBSET RESULTS**)
+
+The fixed subset contains 10,000 clips (1,030 bona fide, 8,970 spoof; 690
+spoof clips per attack A07–A19). Its manifest SHA-256 is
+`f42ddcad02c1d708190278b65d6edba563a7e23a09f12fba761889090992b8ea`. The same
+saved model checkpoints, TRAIN-fit normalization, and frozen full-DEV
+thresholds were used throughout. Phase 4B is **not full-EVAL**.
+
+| Condition | Model | Pooled EER | ROC-AUC | Balanced accuracy | Spoof recall @ frozen threshold | Bona fide FPR @ frozen threshold |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| Clean subset | CNN | 8.2344% | 0.971571 | 0.886225 | 0.775362 | 0.002913 |
+| Clean subset | SVM | 13.8815% | 0.930078 | 0.863781 | 0.791639 | 0.064078 |
+| Noise 20 dB | CNN | 29.2438% | 0.804872 | 0.503902 | 0.007804 | 0.000000 |
+| Noise 20 dB | SVM | 39.7094% | 0.651955 | 0.577880 | 0.959643 | 0.803883 |
+| Noise 10 dB | CNN | 39.4300% | 0.677935 | 0.500223 | 0.000446 | 0.000000 |
+| Noise 10 dB | SVM | 46.1296% | 0.547710 | 0.501893 | 0.996990 | 0.993204 |
+| Noise 0 dB | CNN | 41.3429% | 0.636500 | 0.500056 | 0.000111 | 0.000000 |
+| Noise 0 dB | SVM | 48.5416% | 0.516664 | 0.500070 | 0.994314 | 0.994175 |
+| MP3 128 kbps | CNN | 12.3300% | 0.945570 | 0.677173 | 0.989298 | 0.634951 |
+| MP3 128 kbps | SVM | 13.5910% | 0.930975 | 0.873886 | 0.812821 | 0.065049 |
+| MP3 64 kbps | CNN | 13.0099% | 0.941227 | 0.672971 | 0.989632 | 0.643689 |
+| MP3 64 kbps | SVM | 13.3991% | 0.930558 | 0.875177 | 0.819287 | 0.068932 |
+| Trimmed | CNN | 20.1918% | 0.888638 | 0.801031 | 0.790412 | 0.188350 |
+| Trimmed | SVM | 30.3893% | 0.764547 | 0.699411 | 0.873579 | 0.474757 |
+
+At the frozen threshold under tested noise, CNN spoof recall approaches zero
+while its bona fide FPR is zero. SVM decisions approach all-spoof behavior at
+10 dB and 0 dB, where both spoof recall and bona fide FPR are near one. The
+pooled EER values alone do not show these specific thresholded error patterns;
+ranking and the frozen operating point answer different questions. These
+results concern this fixed subset and the tested transformations only.
+
+## Phase 5.1: resampling sensitivity
+
+All 20 resampled inputs in the saved diagnostic table scored above their
+reference logits. The largest positive raw-logit shift was
+`+13.798001766204834` for one simulated FFmpeg 16→8→16 kHz path. The closest
+post-resampling score to the frozen threshold was `-1.1284289360046387`, a
+bona fide clip `1.3274687230587005` below the threshold. No label flips were
+observed among the five selected large-margin clips across the tested
+resampling paths. The report's spectral measurements, including changes in
+6–8 kHz power and the last Log-Mel band, are consistent with a high-band
+contribution but do not establish a mechanism. This small, selected diagnostic
+does not establish a universal resampling effect or predict behavior for other
+clips, codecs, devices, or resamplers.
+
+## Training and input-length notes
+
+The saved CNN run completed 26 epochs and selected epoch 19 by minimum DEV
+weighted BCE. After that checkpoint, DEV loss rose or varied while training
+loss continued to fall. The TRAIN-only positive weight was
+`2580 / 22800 = 0.11315789473684211`. Clips shorter than 400 frames were
+right-zero-padded after normalization: this affected 77.67% of TRAIN bona fide
+and 72.64% of TRAIN spoof clips, and ranged from 70.74% to 78.46% across the
+reported partition/class groups. Padding may discard duration-related
+variation and is a limitation of this fixed-length input pipeline.
+
+The Phase 4B subset MP3 conditions show a marked frozen-threshold tradeoff for
+the CNN: at 128 kbps its spoof recall was 98.9298% while bona fide FPR was
+63.4951%; at 64 kbps those values were 98.9632% and 64.3689%. Trimming also
+changed both models' rankings and frozen-threshold errors: CNN EER was 20.1918%
+with 79.0412% spoof recall and 18.8350% bona fide FPR; SVM EER was 30.3893%
+with 87.3579% spoof recall and 47.4757% bona fide FPR. These observations
+apply only to the tested encodings and trim procedure, not natural recording
+conditions.
+
+## Process notes from the project log
+
+- **Checkout line endings:** an earlier Windows
+  checkout had a CRLF/LF discrepancy during archive-integrity work. It is a
+  repository-handling issue, not model evidence.
+- **Manifest side effect:** an earlier packaging test was
+  reported to rewrite a tracked manifest. The current regression test writes
+  its package to `tmp_path` and asserts that the tracked manifest bytes remain
+  unchanged (`tests/test_research.py`).
+- **GPU detection:**
+  Windows initially reported the RTX 2050 as a phantom device. The saved Phase
+  3 report records the later successful CUDA run on the RTX 2050. No driver
+  recovery procedure is claimed here.
+- **Script scope incident:** a prior workflow
+  reportedly invoked a script outside its intended task scope. This is a
+  process lesson, not an experiment result; no saved benchmark value derives
+  from that event.
+- **Resampling sensitivity:** the positive logit changes were larger than
+  expected on some selected clips, despite no flips in the five selected
+  large-margin examples. Spectral observations are suggestive only, as
+  described above.
+
+The historical CRLF mismatch, earlier manifest rewrite, initial phantom-device
+report, and script-scope incident come from the project log rather than saved
+experiment artifacts. They are process notes, not benchmark evidence. The
+later CUDA training run and current manifest-preservation regression test are
+documented in the linked Phase 3 report and `tests/test_research.py`.
+
+## Limitations and conclusion
+
+The clean comparison uses one seed and one benchmark (ASVspoof 2019 LA). Phase
+4B uses one fixed 10,000-clip subset, one seed, one family of tested
+perturbations per condition, and additive synthetic noise; it is not a complete
+evaluation of natural recording variability. The Phase 5.1 result is a small
+diagnostic, not a population estimate. The study does not establish universal
+deepfake detection or generalization beyond ASVspoof 2019 LA. The SVM/CNN
+comparison changes multiple pipeline components, so it cannot isolate the
+effect of architecture. The official ASVspoof convention treats bona fide as
+positive; AudioGuard uses spoof as positive, consistently within its own
+reports. Published metrics are contextual unless conventions and pipelines
+match. min t-DCF was not computed.
+
+On this saved run, both systems provide useful clean LA discrimination, show
+different per-attack strengths, and exhibit substantially different
+fixed-threshold behavior under Phase 4B noise. The CNN's clean aggregate metrics
+are better on some measures, while the SVM's clean spoof recall is higher; the
+attack-level and perturbation results prevent a single overall ranking. The
+evidence supports conclusions only at the scopes and conditions measured above.
+
+## Claims traceability
+
+| Claim | Saved evidence |
+| --- | --- |
+| SVM clean EVAL: EER 12.782465%, ROC-AUC 0.938992, balanced accuracy 0.872889 | `results/real_svm/experiment_summary.md`; independently checked in `results/real_svm/phase2_addendum.md` |
+| CNN clean EVAL: EER 8.456524%, ROC-AUC 0.969237, balanced accuracy 0.884696 | `results/real_cnn_logmel/phase3_summary.md` and `phase3_recomputed_metrics.json` |
+| A17 has the highest listed attack EER: CNN 30.2221%, SVM 34.3542% | `results/real_cnn_logmel/phase3_summary.md` per-attack table |
+| Phase 4B noise: CNN spoof recall 0.7804%, 0.0446%, 0.0111% and 0% bona fide FPR at 20/10/0 dB; SVM spoof recall/FPR 99.6990%/99.3204% at 10 dB and 99.4314%/99.4175% at 0 dB | `results/phase4b/optimized_results/phase4b_summary_verified.md` and `phase4b_metrics.json` |
+| Phase 4B trimmed CNN/SVM results, including EER 20.1918%/30.3893% and frozen-threshold error rates | `results/phase4b/optimized_results/phase4b_summary_verified.md` and `phase4b_metrics.json` |
+| Unknown_11 and A16+A19 pooled results | `results/phase4a/phase4a_summary.md` |
+| Training duration, selected epoch, TRAIN-only positive weight, and crop/pad lengths | `results/real_cnn_logmel/phase3_summary.md`, `cnn_logmel/training.json`, `pos_weight_train.json`, and `clip_length_analysis.json` |
+| Phase 5.1 score shifts and threshold margins | `results/phase5_diagnostics/summary.md` |
+
+The phase reports contain full condition tables and methodology. Headline
+values above are copied from those saved artifacts; they are not newly
+computed.
+
+## Reports and demo
+
+- [Phase 2 SVM report](../results/real_svm/experiment_summary.md)
+- [Phase 2.5 independent SVM addendum](../results/real_svm/phase2_addendum.md)
+- [Phase 3 CNN report](../results/real_cnn_logmel/phase3_summary.md)
+- [Phase 4A analysis](../results/phase4a/phase4a_summary.md)
+- [Phase 4B verified subset report](../results/phase4b/optimized_results/phase4b_summary_verified.md)
+- [Phase 5.1 diagnostics](../results/phase5_diagnostics/summary.md)
+- [Demo instructions](../demo/README.md)
+
+demo video: pending

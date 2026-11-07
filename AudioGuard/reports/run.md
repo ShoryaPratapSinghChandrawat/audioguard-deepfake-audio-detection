@@ -1,4 +1,9 @@
-# AudioGuard experiment report
+# SYNTHETIC SMOKE-TEST REPORT — NOT ASVSPOOF BENCHMARK EVIDENCE
+
+This file reports only a synthetic software smoke test. Its fixtures and every
+metric below are synthetic; none of these values are ASVspoof results, real
+speech results, or evidence of deepfake-detection accuracy. Real-data results
+are reported separately in the Phase 2–5.1 reports linked from the READMEs.
 
 Scope: results/smoke/run. Paths containing smoke refer to SYNTHETIC SOFTWARE TESTS, NOT ASVspoof.
 Higher score = spoof; bonafide=0, spoof=1.
