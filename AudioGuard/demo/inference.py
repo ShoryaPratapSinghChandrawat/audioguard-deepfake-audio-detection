@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import logging
+import math
 import os
 import subprocess
 import tempfile
@@ -140,14 +141,28 @@ class FrozenCNN:
     def from_run(cls, run_directory):
         run = Path(run_directory)
         meta = json.loads((run / "training.json").read_text(encoding="utf-8"))
-        result = json.loads((run / "eval_clean.json").read_text(encoding="utf-8"))
         if meta.get("name") != "cnn_logmel":
             raise ValueError("The demo requires the saved cnn_logmel Phase 3 run.")
-        if result.get("status") != "completed":
-            raise ValueError("The saved clean evaluation is not complete.")
-        threshold = float(result["threshold"])
-        if threshold != float(meta["threshold_selection"]["threshold"]):
-            raise ValueError("Saved evaluation and training thresholds disagree.")
+        metrics_path = run.parent / "phase3_recomputed_metrics.json"
+        try:
+            training_threshold_value = meta["threshold_selection"]["threshold"]
+            metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
+            metrics_threshold_value = metrics["cnn"]["eval"]["threshold_full_precision"]
+        except (OSError, KeyError, TypeError, json.JSONDecodeError) as exc:
+            raise ValueError(
+                "Saved TRAIN threshold or tracked Phase 3 EVAL threshold is unavailable."
+            ) from exc
+        if (isinstance(training_threshold_value, bool) or
+                not isinstance(training_threshold_value, (int, float)) or
+                isinstance(metrics_threshold_value, bool) or
+                not isinstance(metrics_threshold_value, (int, float))):
+            raise ValueError("Saved TRAIN and Phase 3 EVAL thresholds must be numeric.")
+        threshold = float(training_threshold_value)
+        metrics_threshold = float(metrics_threshold_value)
+        if not math.isfinite(threshold) or not math.isfinite(metrics_threshold):
+            raise ValueError("Saved TRAIN and Phase 3 EVAL thresholds must be finite.")
+        if threshold != metrics_threshold:
+            raise ValueError("Saved training and Phase 3 recomputed thresholds disagree.")
         model, scaler, device = load_model(run, meta)
         return cls(model, scaler, device, meta["config"], threshold)
 

@@ -18,8 +18,14 @@ a safe user-facing message. Details go to the local
 
 The demo uses `scripts.experiment.load_model` to validate and load the saved
 `cnn_logmel` checkpoint and TRAIN-fitted normalization arrays. It reads the
-frozen DEV threshold from the saved `eval_clean.json` and checks that it exactly
-matches `training.json`.
+frozen DEV threshold from `training.json` and requires exact equality with
+`cnn.eval.threshold_full_precision` in the tracked
+`results/real_cnn_logmel/phase3_recomputed_metrics.json`. It does not depend on
+the untracked `eval_clean.json` file and never refits the threshold.
+
+The official EVAL example panel is optional. Without a local dataset config or
+the selected EVAL audio files, the demo shows a brief availability note; file
+upload and microphone inference remain available.
 
 The input path is shared by uploads and microphone recordings:
 

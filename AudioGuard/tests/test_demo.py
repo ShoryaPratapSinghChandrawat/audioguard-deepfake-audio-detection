@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 import numpy as np
@@ -109,6 +110,8 @@ def test_cleanup_only_removes_app_owned_temporary_files(tmp_path):
 def test_examples_allow_only_the_four_selected_eval_audio_files(tmp_path, monkeypatch):
     from demo import app as demo_app
 
+    config_path = tmp_path / "baseline.local.yaml"
+    config_path.write_text("dataset: {}\n", encoding="utf-8")
     audio_root = tmp_path / "external" / "ASVspoof2019_LA_eval" / "flac"
     audio_root.mkdir(parents=True)
     rows = [
@@ -129,7 +132,7 @@ def test_examples_allow_only_the_four_selected_eval_audio_files(tmp_path, monkey
     )
     monkeypatch.setattr(demo_app, "parse_protocol", lambda *_: rows)
 
-    examples, labels, allowed_paths = demo_app._examples("unused.local.yaml")
+    examples, labels, allowed_paths, notice = demo_app._examples(config_path)
 
     expected = [
         str((audio_root / "bf_one.flac").resolve()),
@@ -141,6 +144,7 @@ def test_examples_allow_only_the_four_selected_eval_audio_files(tmp_path, monkey
     assert examples == [[path] for path in expected]
     assert len(set(allowed_paths)) == 4
     assert len(labels) == 4
+    assert notice is None
 
 
 def test_gradio_example_cache_allows_only_byte_identical_selected_files(tmp_path):
@@ -174,3 +178,107 @@ def test_gradio_example_cache_allows_only_byte_identical_selected_files(tmp_path
     ]
     assert all(Path(path).is_file() for path in allowed_copies)
     assert all(Path(path).is_relative_to(cache_root.resolve()) for path in allowed_copies)
+
+
+def test_examples_panel_is_optional_when_local_config_is_missing(tmp_path):
+    from demo.app import _examples
+
+    examples, labels, allowed_paths, notice = _examples(tmp_path / "baseline.local.yaml")
+
+    assert examples == []
+    assert labels == []
+    assert allowed_paths == []
+    assert "local dataset config was not found" in notice
+
+
+def test_examples_panel_is_optional_when_selected_eval_audio_is_missing(tmp_path, monkeypatch):
+    from demo import app as demo_app
+
+    config_path = tmp_path / "baseline.local.yaml"
+    config_path.write_text("dataset: {}\n", encoding="utf-8")
+    audio_root = tmp_path / "eval" / "flac"
+    rows = [
+        {"utterance": "bf_one", "label": 0, "attack": "-"},
+        {"utterance": "bf_two", "label": 0, "attack": "-"},
+        {"utterance": "sp_a01", "label": 1, "attack": "A01"},
+        {"utterance": "sp_a02", "label": 1, "attack": "A02"},
+    ]
+    monkeypatch.setattr(
+        demo_app,
+        "load_config",
+        lambda _: {"dataset": {"protocols": {"eval": "protocol.txt"},
+                               "audio_roots": {"eval": str(audio_root)}}},
+    )
+    monkeypatch.setattr(demo_app, "parse_protocol", lambda *_: rows)
+
+    examples, labels, allowed_paths, notice = demo_app._examples(config_path)
+
+    assert examples == []
+    assert labels == []
+    assert allowed_paths == []
+    assert "selected EVAL audio is missing" in notice
+
+
+def _write_temporary_frozen_threshold_artifacts(tmp_path, *, metrics_threshold):
+    from demo import inference
+
+    run = tmp_path / "cnn_logmel"
+    run.mkdir()
+    (run / "training.json").write_text(
+        json.dumps({
+            "name": "cnn_logmel",
+            "threshold_selection": {"threshold": 0.1990397870540619},
+            "config": {"cnn": {"frames": 400}},
+        }),
+        encoding="utf-8",
+    )
+    (tmp_path / "phase3_recomputed_metrics.json").write_text(
+        json.dumps({"cnn": {"eval": {"threshold_full_precision": metrics_threshold}}}),
+        encoding="utf-8",
+    )
+    assert not (run / "eval_clean.json").exists()
+    return run, inference
+
+
+def test_frozen_cnn_loads_threshold_without_eval_clean_json(tmp_path, monkeypatch):
+    run, inference = _write_temporary_frozen_threshold_artifacts(
+        tmp_path, metrics_threshold=0.1990397870540619
+    )
+    expected = (object(), {"mean": np.zeros(64), "std": np.ones(64)}, "cpu")
+    monkeypatch.setattr(inference, "load_model", lambda *_: expected)
+
+    loaded = inference.FrozenCNN.from_run(run)
+
+    assert loaded.threshold == 0.1990397870540619
+    assert loaded.model is expected[0]
+    assert loaded.device == "cpu"
+
+
+def test_frozen_cnn_rejects_threshold_mismatch_before_loading_model(tmp_path, monkeypatch):
+    run, inference = _write_temporary_frozen_threshold_artifacts(
+        tmp_path, metrics_threshold=0.2
+    )
+    monkeypatch.setattr(
+        inference, "load_model",
+        lambda *_: pytest.fail("Model loading must not happen after a threshold mismatch"),
+    )
+
+    with pytest.raises(ValueError, match="training and Phase 3 recomputed thresholds disagree"):
+        inference.FrozenCNN.from_run(run)
+
+
+def test_frozen_cnn_loads_tracked_phase3_artifacts_without_eval_clean_json():
+    from demo.inference import FrozenCNN
+
+    project_root = Path(__file__).resolve().parents[1]
+    run = project_root / "results/real_cnn_logmel/cnn_logmel"
+    metrics_path = run.parent / "phase3_recomputed_metrics.json"
+
+    assert (run / "model.pt").is_file()
+    assert (run / "scaler.npz").is_file()
+    assert (run / "training.json").is_file()
+    assert metrics_path.is_file()
+
+    frozen = FrozenCNN.from_run(run)
+
+    assert frozen.threshold == 0.1990397870540619

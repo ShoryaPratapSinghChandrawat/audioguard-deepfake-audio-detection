@@ -114,8 +114,19 @@ def _examples(dataset_config):
     cfg_path = Path(dataset_config)
     if not cfg_path.is_absolute():
         cfg_path = ROOT / cfg_path
-    dataset = load_config(cfg_path)["dataset"]
-    rows = parse_protocol(dataset["protocols"]["eval"], "eval")
+    if not cfg_path.is_file():
+        return [], [], [], (
+            "Official EVAL examples are unavailable because the local dataset config "
+            "was not found. Upload or record audio to use the demo."
+        )
+    try:
+        dataset = load_config(cfg_path)["dataset"]
+        rows = parse_protocol(dataset["protocols"]["eval"], "eval")
+    except FileNotFoundError:
+        return [], [], [], (
+            "Official EVAL examples are unavailable because the local EVAL protocol "
+            "was not found. Upload or record audio to use the demo."
+        )
     bona_fide = [r for r in rows if r["label"] == 0][:2]
     attacks = sorted({r["attack"] for r in rows if r["label"] == 1})
     selected_spoof = []
@@ -126,7 +137,10 @@ def _examples(dataset_config):
             break
     selected = bona_fide + selected_spoof
     if len(bona_fide) != 2 or len(selected_spoof) != 2 or len({r["attack"] for r in selected_spoof}) != 2:
-        raise ValueError("Could not select two bona fide and two distinct-attack EVAL examples")
+        return [], [], [], (
+            "Official EVAL examples are unavailable because the EVAL protocol did "
+            "not contain enough examples. Upload or record audio to use the demo."
+        )
     audio_root = Path(dataset["audio_roots"]["eval"])
     examples = []
     labels = []
@@ -134,12 +148,15 @@ def _examples(dataset_config):
     for row in selected:
         path = (audio_root / f"{row['utterance']}.flac").resolve()
         if not path.is_file():
-            raise FileNotFoundError(f"EVAL example audio is missing: {path}")
+            return [], [], [], (
+                "Official EVAL examples are unavailable because selected EVAL audio "
+                "is missing. Upload or record audio to use the demo."
+            )
         examples.append([str(path)])
         allowed_paths.append(str(path))
         attack_text = f", {row['attack']}" if row["label"] == 1 else ""
         labels.append(f"{row['utterance']} — {'spoof' if row['label'] else 'bona fide'}{attack_text}")
-    return examples, labels, allowed_paths
+    return examples, labels, allowed_paths, None
 
 
 def _gradio_example_cache_paths(example_component, source_paths, temp_root=APP_TEMP_ROOT):
@@ -212,7 +229,7 @@ def _build_with_allowed_paths(run_directory, dataset_config="configs/baseline.lo
     except Exception:
         LOGGER.exception("Optional SVM baseline could not be loaded")
         svm = None
-    example_rows, example_labels, allowed_paths = _examples(dataset_config)
+    example_rows, example_labels, allowed_paths, examples_notice = _examples(dataset_config)
 
     def analyse(path):
         try:
@@ -286,13 +303,16 @@ def _build_with_allowed_paths(run_directory, dataset_config="configs/baseline.lo
             mel_output = gr.Image(label="Log-Mel spectrogram", type="pil")
         button.click(analyse, inputs=audio,
                      outputs=[result, wave_output, mel_output, audio])
-        gr.Markdown("### Official ASVspoof 2019 LA EVAL examples\n" + "\n".join(f"- {label}" for label in example_labels))
-        example_component = gr.Examples(
-            examples=example_rows, inputs=audio, label="Load an EVAL example"
-        )
-        allowed_paths.extend(
-            _gradio_example_cache_paths(example_component, allowed_paths)
-        )
+        if example_rows:
+            gr.Markdown("### Official ASVspoof 2019 LA EVAL examples\n" + "\n".join(f"- {label}" for label in example_labels))
+            example_component = gr.Examples(
+                examples=example_rows, inputs=audio, label="Load an EVAL example"
+            )
+            allowed_paths.extend(
+                _gradio_example_cache_paths(example_component, allowed_paths)
+            )
+        else:
+            gr.Markdown(f"### Official ASVspoof 2019 LA EVAL examples\n{examples_notice}")
     return app, allowed_paths
 
 
