@@ -1,66 +1,257 @@
-"""Local Gradio research demo using a frozen run and JSON-backed evaluation panel.
+"""Private, local-only Gradio interface for the frozen Phase 3 Log-Mel CNN."""
+from __future__ import annotations
 
-The displayed benchmark numbers are never literals: absent results show an explicit
-unavailable message. Arbitrary audio is not a validated deployment distribution.
-"""
 import argparse
+import atexit
 import json
+import logging
+import os
+import shutil
 import sys
+import tempfile
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+# Gradio stores incoming upload and microphone files here. This process-specific
+# directory is app-owned and is removed on callback or process shutdown.
+APP_TEMP_ROOT = Path(tempfile.mkdtemp(prefix="audioguard-phase5-gradio-")).resolve()
+os.environ["GRADIO_TEMP_DIR"] = str(APP_TEMP_ROOT)
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
 import gradio as gr
-from scripts.experiment import load_model, predict_rows
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import numpy as np
+from PIL import Image
 
-NOTICE = """Research prototype — not a forensic verdict or calibrated confidence.
-Synthetic/unknown-domain audio, languages, microphones, silence and compression can
-produce errors. A detector cannot establish a speaker's identity or consent.
-Upload mono audio at the sample rate specified in the frozen frontend configuration.
-Evaluation statistics below come only from this run's saved results, not this upload.
-Do not upload sensitive recordings to a shared instance. No public share link is enabled.
-"""
+from demo.inference import (
+    MAX_DURATION_SECONDS,
+    MAX_UPLOAD_BYTES,
+    DemoInputError,
+    FrozenCNN,
+    FrozenSVM,
+    cleanup_upload,
+    load_waveform,
+)
+from src.common import load_config
+from src.data.protocol import parse_protocol
+
+CNN_RUN_DEFAULT = ROOT / "results/real_cnn_logmel/cnn_logmel"
+SVM_META_DEFAULT = ROOT / "results/real_svm/phase2_original/svm_mfcc"
+SVM_ARTIFACT_DEFAULT = ROOT / "results/phase4a/artifact_inputs/svm_mfcc"
+LOG_DIR = Path(os.environ.get("LOCALAPPDATA", tempfile.gettempdir())) / "AudioGuard" / "logs"
+LOG_DIR.mkdir(parents=True, exist_ok=True)
+LOGGER = logging.getLogger("audioguard.demo")
+if not LOGGER.handlers:
+    handler = logging.FileHandler(LOG_DIR / "audioguard-demo.log", encoding="utf-8")
+    handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
+    LOGGER.addHandler(handler)
+    LOGGER.setLevel(logging.INFO)
 
 
-def build(run):
-    run = Path(run)
-    meta = json.loads((run / "training.json").read_text(encoding="utf-8"))
-    model, scaler, device = load_model(run, meta)
-    result_path = run / "eval_clean.json"
-    if result_path.exists():
-        result = json.loads(result_path.read_text(encoding="utf-8"))
-        panel = {"scope": meta["scope"], "status": result["status"],
-                 "metrics": result.get("metrics"), "data_scope": result.get("dataset_audit", {}).get("used_counts")}
-    else:
-        panel = {"status": "No saved evaluation results. Performance is unknown.", "scope": meta["scope"]}
+def _cleanup_app_temp():
+    # APP_TEMP_ROOT was freshly created by this process; never clean any other path.
+    shutil.rmtree(APP_TEMP_ROOT, ignore_errors=True)
 
-    def predict(path):
-        if path is None:
-            raise gr.Error("Choose an audio file first.")
+
+atexit.register(_cleanup_app_temp)
+
+
+def _limitations_text(run):
+    phase3_path = Path(run).resolve().parent / "phase3_recomputed_metrics.json"
+    phase4_path = ROOT / "results/phase4b/optimized_results/phase4b_metrics.json"
+    try:
+        phase3 = json.loads(phase3_path.read_text(encoding="utf-8"))
+        phase4 = json.loads(phase4_path.read_text(encoding="utf-8"))
+        clean_eer = float(phase3["cnn"]["eval"]["nearest_point_eer"])
+
+        def pct(numerator, denominator):
+            return 100.0 * numerator / denominator if denominator else float("nan")
+
+        conditions = phase4["conditions"]
+        noise = conditions["noise_20dB"]["CNN"]
+        mp3_64 = conditions["mp3_64kbps"]["CNN"]
+        mp3_128 = conditions["mp3_128kbps"]["CNN"]
+        predicted_bona_fide = pct(noise["tn"] + noise["fn"], noise["n"])
+        mp3_64_bf_spoof = pct(mp3_64["fp"], mp3_64["tn"] + mp3_64["fp"])
+        mp3_128_bf_spoof = pct(mp3_128["fp"], mp3_128["tn"] + mp3_128["fp"])
+        evidence = (
+            f"Saved Phase 3 clean EVAL nearest-point EER: {clean_eer:.2%}. "
+            f"On the saved Phase 4B subset at the frozen threshold, the CNN labeled "
+            f"{predicted_bona_fide:.1f}% of clips bona fide under 20 dB added noise. "
+            f"Under MP3, it labeled {mp3_64_bf_spoof:.1f}% (64 kbps) and "
+            f"{mp3_128_bf_spoof:.1f}% (128 kbps) of bona fide clips spoof."
+        )
+    except (OSError, KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
+        LOGGER.exception("Saved limitation metrics could not be loaded")
+        evidence = "Saved Phase 3/4B robustness metrics are unavailable; no numerical summary is shown."
+    return (
+        "### Scope and limitations\n"
+        "Trained on ASVspoof 2019 LA only. This is not a general deepfake detector "
+        "and is not proof of identity or authenticity. Microphone results are "
+        "exploratory demonstrations, not benchmark results; room noise and "
+        "compression can change predictions.\n\n" + evidence
+    )
+
+
+def _examples(dataset_config):
+    cfg_path = Path(dataset_config)
+    if not cfg_path.is_absolute():
+        cfg_path = ROOT / cfg_path
+    dataset = load_config(cfg_path)["dataset"]
+    rows = parse_protocol(dataset["protocols"]["eval"], "eval")
+    bona_fide = [r for r in rows if r["label"] == 0][:2]
+    attacks = sorted({r["attack"] for r in rows if r["label"] == 1})
+    selected_spoof = []
+    for attack in attacks:
+        row = next(r for r in rows if r["label"] == 1 and r["attack"] == attack)
+        selected_spoof.append(row)
+        if len(selected_spoof) == 2:
+            break
+    selected = bona_fide + selected_spoof
+    if len(bona_fide) != 2 or len(selected_spoof) != 2 or len({r["attack"] for r in selected_spoof}) != 2:
+        raise ValueError("Could not select two bona fide and two distinct-attack EVAL examples")
+    audio_root = Path(dataset["audio_roots"]["eval"])
+    examples = []
+    labels = []
+    for row in selected:
+        path = audio_root / f"{row['utterance']}.flac"
+        if not path.is_file():
+            raise FileNotFoundError(f"EVAL example audio is missing: {path}")
+        examples.append([str(path)])
+        attack_text = f", {row['attack']}" if row["label"] == 1 else ""
+        labels.append(f"{row['utterance']} — {'spoof' if row['label'] else 'bona fide'}{attack_text}")
+    return examples, labels
+
+
+def _figure_image(fig):
+    from io import BytesIO
+    buffer = BytesIO()
+    fig.savefig(buffer, format="png", dpi=120, bbox_inches="tight")
+    plt.close(fig)
+    buffer.seek(0)
+    image = Image.open(buffer).convert("RGB")
+    image.load()
+    buffer.close()
+    return image
+
+
+def _plots(audio, logmel):
+    times = np.arange(len(audio), dtype=np.float64) / 16000.0
+    wave_fig, wave_ax = plt.subplots(figsize=(9, 2.4))
+    wave_ax.plot(times, audio, linewidth=0.55)
+    wave_ax.set(xlabel="Time (seconds)", ylabel="Amplitude", title="Resampled mono waveform")
+    wave_ax.grid(alpha=0.2)
+
+    mel_fig, mel_ax = plt.subplots(figsize=(9, 3.2))
+    duration = len(audio) / 16000.0
+    mel_ax.imshow(logmel, origin="lower", aspect="auto", extent=(0, duration, 0, logmel.shape[0]),
+                  interpolation="nearest", cmap="magma")
+    mel_ax.set(xlabel="Time (seconds)", ylabel="Mel band", title="Log-Mel frontend input")
+    return _figure_image(wave_fig), _figure_image(mel_fig)
+
+
+def build(run_directory, dataset_config="configs/baseline.local.yaml",
+          svm_metadata_directory=SVM_META_DEFAULT,
+          svm_artifact_directory=SVM_ARTIFACT_DEFAULT):
+    run = Path(run_directory)
+    if not run.is_absolute():
+        run = ROOT / run
+    cnn = FrozenCNN.from_run(run)
+    try:
+        svm = FrozenSVM.from_artifacts(svm_metadata_directory, svm_artifact_directory)
+    except Exception:
+        LOGGER.exception("Optional SVM baseline could not be loaded")
+        svm = None
+    example_rows, example_labels = _examples(dataset_config)
+
+    def analyse(path):
         try:
-            row = {"path": path, "label": 0, "utterance": "user_upload"}
-            value = float(predict_rows([row], meta["config"], meta["name"], model, scaler, device)[0])
-            threshold = meta["threshold_selection"]["threshold"]
-            return {"score": value, "dev_threshold": threshold,
-                    "prediction": "spoof" if value >= threshold else "bonafide",
-                    "score_direction": "higher means spoof; not calibrated confidence"}
-        except Exception as exc:
-            raise gr.Error(str(exc)) from exc
+            audio, warning = load_waveform(path, temp_root=APP_TEMP_ROOT)
+            logit, logmel = cnn.infer(audio)
+            label = "spoof" if logit >= cnn.threshold else "bona fide"
+            margin = logit - cnn.threshold
+            output = {
+                "predicted_label": label,
+                "raw_logit": logit,
+                "frozen_dev_threshold": cnn.threshold,
+                "margin_from_threshold": margin,
+                "score_note": "Raw model logit; this score is not a calibrated probability.",
+                "warning": warning,
+            }
+            if svm is not None:
+                svm_score = svm.infer(audio)
+                output["SVM baseline"] = {
+                    "predicted_label": "spoof" if svm_score >= svm.threshold else "bona fide",
+                    "raw_score": svm_score,
+                    "frozen_dev_threshold": svm.threshold,
+                    "margin_from_threshold": svm_score - svm.threshold,
+                }
+            waveform_plot, logmel_plot = _plots(audio, logmel)
+            return output, waveform_plot, logmel_plot, None
+        except DemoInputError as exc:
+            LOGGER.info("Rejected upload: %s", exc)
+            return {"error": str(exc)}, None, None, None
+        except Exception:
+            LOGGER.exception("Unexpected local inference failure")
+            return {"error": "Audio could not be analyzed. Check the file and try again."}, None, None, None
+        finally:
+            try:
+                cleanup_upload(path, APP_TEMP_ROOT)
+            except OSError:
+                LOGGER.exception("Could not remove app-owned upload temporary file")
 
-    with gr.Blocks(title="AudioGuard research demo") as app:
-        gr.Markdown("# AudioGuard\n" + NOTICE)
-        gr.JSON(panel, label="Saved evaluation evidence")
-        audio = gr.Audio(type="filepath", label="Upload mono audio", sources=["upload"])
-        button = gr.Button("Analyze with frozen dev threshold")
-        output = gr.JSON(label="Research prediction")
-        button.click(predict, inputs=audio, outputs=output)
+    size_mib = MAX_UPLOAD_BYTES / (1024 * 1024)
+    notice = (
+        "**Privacy:** when run locally, audio stays on this machine. If hosted "
+        "elsewhere, audio is sent to that server. Audio is removed from this app's "
+        "temporary storage after analysis.\n\n"
+        f"Upload limit: {size_mib:.0f} MiB. Maximum duration: "
+        f"{MAX_DURATION_SECONDS:.0f} seconds. Audio shorter than 1 second is "
+        "accepted with a warning. Silent, empty, corrupt, and unsupported inputs are rejected."
+    )
+    preprocessing = (
+        "**Preprocessing parity:** 16 kHz mono float32 input; the training "
+        "`soundfile` reader is used directly when the input already has that "
+        "format. Other supported inputs are decoded, downmixed to mono, and "
+        "resampled to 16 kHz with FFmpeg. No peak normalization is applied. "
+        "The saved 64-band Log-Mel frontend, saved TRAIN mean/std, and the "
+        "400-frame center-crop or right zero-pad are used."
+    )
+    with gr.Blocks(title="AudioGuard local research demo") as app:
+        gr.Markdown("# AudioGuard — local research demo")
+        gr.Markdown(notice)
+        gr.Markdown(_limitations_text(run))
+        gr.Markdown(preprocessing)
+        if svm is None:
+            gr.Markdown("**SVM baseline:** unavailable (both local model and scaler files are required).")
+        else:
+            gr.Markdown("**SVM baseline:** Phase 2 MFCC/SVM comparator; shown separately from the Phase 3 CNN.")
+        audio = gr.Audio(type="filepath", label="Upload a file or record with the browser microphone",
+                         sources=["upload", "microphone"], format=None)
+        gr.Markdown("Use the microphone's start/stop controls, then select **Analyse audio**.")
+        button = gr.Button("Analyse audio")
+        result = gr.JSON(label="Prediction (raw scores, not probabilities)")
+        with gr.Row():
+            wave_output = gr.Image(label="Waveform", type="pil")
+            mel_output = gr.Image(label="Log-Mel spectrogram", type="pil")
+        button.click(analyse, inputs=audio,
+                     outputs=[result, wave_output, mel_output, audio])
+        gr.Markdown("### Official ASVspoof 2019 LA EVAL examples\n" + "\n".join(f"- {label}" for label in example_labels))
+        gr.Examples(examples=example_rows, inputs=audio, label="Load an EVAL example")
     return app
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--run", default="results/research/cnn_logmel")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--run", required=True, help="Frozen Phase 3 CNN run directory")
+    parser.add_argument("--dataset-config", default="configs/baseline.local.yaml")
     parser.add_argument("--port", type=int, default=7860)
     args = parser.parse_args()
-    build(args.run).launch(server_name="0.0.0.0", server_port=args.port, share=False)
+    app = build(args.run, args.dataset_config)
+    app.launch(server_name="127.0.0.1", server_port=args.port, share=False,
+               max_file_size=MAX_UPLOAD_BYTES)
 
 
 if __name__ == "__main__":

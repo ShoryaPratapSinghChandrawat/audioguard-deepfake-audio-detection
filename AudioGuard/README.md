@@ -128,10 +128,15 @@ across hardware. CUDA is selected automatically when usable; otherwise CPU. CUDA
 execution and full-dataset resource usage remain untested here. Only fitting/inference
 of the CNN use the selected Torch device; handcrafted features run on CPU.
 
-```bash
-python demo/app.py --run results/research/cnn_logmel
-python scripts/package.py
+```powershell
+.\.venv\Scripts\python.exe demo\app.py --run results/real_cnn_logmel/cnn_logmel --dataset-config configs/baseline.local.yaml --port 7860
 ```
+
+The Phase 3 demo binds only to `127.0.0.1` with Gradio sharing disabled. It accepts
+WAV, FLAC, MP3, WebM and Opus uploads or browser-microphone recordings, enforces
+25 MiB and 30-second limits, and removes app-managed audio after analysis. See
+[`demo/README.md`](demo/README.md) for the frozen CNN preprocessing path, privacy
+notes, validation steps and error behavior.
 
 Do not load untrusted pickle/joblib checkpoints. The demo is not a forensic or
 production security tool. Native FFmpeg is preferred, with a pinned executable-wheel
