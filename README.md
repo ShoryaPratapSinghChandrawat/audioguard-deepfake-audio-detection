@@ -13,12 +13,6 @@ this repository. Obtain them from the [ASVspoof 2019 challenge page](https://www
 or [University of Edinburgh DataShare](https://datashare.ed.ac.uk/handle/10283/3336).
 The dataset's own terms apply.
 
-This project was imported from an AudioGuard source archive; it was not written
-from scratch. Under the owner's specification, AI coding agents (Codex,
-Antigravity, and Arena) wrote most of the code. The owner specified, ran, and
-verified the experiments. This provenance statement is an owner-provided
-disclosure.
-
 ## Research reports
 
 | Phase | Evidence | Scope |
