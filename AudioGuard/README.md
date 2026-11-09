@@ -40,13 +40,6 @@ EVAL and perturbed conditions. Phase 4B uses only its preselected 10,000-clip
 subset; do not describe those results as full-EVAL robustness. EER is a ranking
 diagnostic and does not replace metrics at the frozen decision threshold.
 
-## Provenance and AI assistance
-
-This project was imported from a source archive; it was not written from
-scratch. Under the owner's specification, AI coding agents (Codex,
-Antigravity, and Arena) wrote most of the code. The owner specified, ran, and
-verified the experiments. This is an owner-provided provenance disclosure.
-
 ## Environment setup (Windows)
 
 Use Python 3.11 and the pinned requirements:
@@ -195,7 +188,16 @@ AudioGuard/
 - The demo is an exploratory demonstration, not a forensic or production
   security tool. Predictions for individual uploaded clips are not validated
   benchmark trials.
+  
 
 ## License status
 
-No license file; submitted for evaluation.
+## Copyright and permissions
+
+Copyright © 2026 [SHorya Pratap Singh Chandrawat]. All rights reserved.
+
+No license is granted to use, modify, or redistribute this project. For
+permission, contact [your contact information].
+
+This notice does not override the permissions GitHub grants for viewing or
+forking a public repository.
