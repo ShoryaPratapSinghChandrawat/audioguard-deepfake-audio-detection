@@ -69,4 +69,12 @@ not part of the default test run.
 
 ## License status
 
-No license file; submitted for evaluation.
+N## Copyright and permissions
+
+Copyright © 2026 [Shorya Pratap Singh Chandrawat]. All rights reserved.
+
+No license is granted to use, modify, or redistribute this project. For
+permission, contact [your contact information].
+
+This notice does not override the permissions GitHub grants for viewing or
+forking a public repository.
