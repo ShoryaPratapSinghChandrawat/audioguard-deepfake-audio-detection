@@ -51,7 +51,7 @@ large local experiment outputs remain outside version control.
 
 Follow [the local demo instructions](AudioGuard/demo/README.md).
 
-demo video: pending
+Demo video: pending.
 
 The final demo was manually tested through a physical browser microphone
 (owner-reported). Live human speech returned bona fide. A separate uploaded
@@ -61,14 +61,13 @@ trials and not evidence of accuracy. Earlier microphone-preview issues occurred
 during development. The automated fake-microphone browser regression test is
 not part of the default test run.
 
-## License status
+## Copyright and permissions
 
-N## Copyright and permissions
-
-Copyright © 2026 [Shorya Pratap Singh Chandrawat]. All rights reserved.
+Copyright © 2026 [Shorya Pratap Singh Chandrawat](https://github.com/ShoryaPratapSinghChandrawat). All rights reserved.
 
 No license is granted to use, modify, or redistribute this project. For
-permission, contact [your contact information].
+permission requests, contact me through my
+[GitHub profile](https://github.com/ShoryaPratapSinghChandrawat).
 
 This notice does not override the permissions GitHub grants for viewing or
 forking a public repository.
