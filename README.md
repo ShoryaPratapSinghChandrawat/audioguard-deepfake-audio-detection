@@ -47,19 +47,17 @@ ASVspoof dataset, feature caches, per-clip score CSVs, local dataset configs,
 or SVM model/scaler files. Small aggregate reports and metrics are included;
 large local experiment outputs remain outside version control.
 
-## Demo and video
+## Demo
 
 Follow [the local demo instructions](AudioGuard/demo/README.md).
 
-Demo video: pending.
-
-The final demo was manually tested through a physical browser microphone
-(owner-reported). Live human speech returned bona fide. A separate uploaded
-audio sample containing ChatGPT-generated speech returned spoof. These are two
-manual smoke tests (one sample each), not independently labelled benchmark
-trials and not evidence of accuracy. Earlier microphone-preview issues occurred
-during development. The automated fake-microphone browser regression test is
-not part of the default test run.
+A demo video is not currently published. The final demo was manually tested
+through a physical browser microphone (owner-reported): one live-human-speech
+sample returned bona fide and one uploaded ChatGPT-generated-speech sample
+returned spoof. These are two manual smoke tests, not independently labelled
+benchmark trials and not evidence of detection accuracy. Earlier
+microphone-preview issues occurred during development. The automated
+fake-microphone browser regression test is not part of the default test run.
 
 ## Copyright and permissions
 
